@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"name": "ADVdash",
+			"path": "."
+		}
+	],
+	"settings": {
+		"cSpell.words": [
+			"hsync",
+			"HSYNC",
+			"indev",
+			"INDEV",
+			"pclk",
+			"PCLK",
+			"Rpms",
+			"touchpad",
+			"vsync",
+			"VSYNC"
+		]
+	}
+}
