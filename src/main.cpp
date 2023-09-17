@@ -11,6 +11,7 @@
 muTimer testTimer;
 
 bool entry = true;
+int count = 0;
 
 /*******************************************************************************
  * Display Selection
@@ -177,9 +178,9 @@ void loop()
 {
   lv_timer_handler();
 
-  if(testTimer.cycleTrigger(50)){
+  if(true){
     
-    _ui_bar_increment(ui_RpmsBar, 1, LV_ANIM_OFF);
+    lv_bar_set_value(ui_RpmsBar, random(100), LV_ANIM_OFF);
     lv_label_set_text_fmt(ui_RpmsValue, "%d", (lv_bar_get_value(ui_RpmsBar) * 100));
 
     if(lv_bar_get_value(ui_RpmsBar) >= 50 && entry){
@@ -192,6 +193,29 @@ void loop()
       entry = true;
       lv_bar_set_value(ui_RpmsBar, 0, LV_ANIM_OFF);
     }
+
+    lv_bar_set_value(ui_Bar1, random(50), LV_ANIM_OFF);
+    lv_label_set_text_fmt(ui_Bar1Value, "%d", random(50));
+    
+    lv_bar_set_value(ui_Bar2, random(100), LV_ANIM_OFF);
+    lv_label_set_text_fmt(ui_Bar2Value, "%d", random(100));
+
+    lv_arc_set_value(ui_Arc1, random(80));
+    lv_label_set_text_fmt(ui_ArcValue1, "%d", random(80));
+
+    lv_arc_set_value(ui_Arc2, random(35));
+    lv_label_set_text_fmt(ui_ArcValue2, "%d", random(35));
+
+    lv_arc_set_value(ui_Arc3, random(50));
+    lv_label_set_text_fmt(ui_ArcValue3, "%d", random(50));
+
+    lv_arc_set_value(ui_MainArc, random(100));
+    lv_label_set_text_fmt(ui_MainArcValue, "%d", random(100));
+
+    lv_label_set_text_fmt(ui_SpeedValue, "%d", random(40));
+
+    lv_bar_set_value(ui_TpsBar, random(180), LV_ANIM_OFF);
+
   }
   
   delay(5);

@@ -26,20 +26,60 @@ extern lv_obj_t *ui_GearPanel;
 extern lv_obj_t *ui_GearValue;
 extern lv_obj_t *ui_SpeedPanel;
 extern lv_obj_t *ui_SpeedValue;
-extern lv_obj_t *ui_SpeedUnit;
 extern lv_obj_t *ui_TpsBar;
-extern lv_obj_t *ui_DisplayB;
+extern lv_obj_t *ui_MainArc;
+extern lv_obj_t *ui_MainArcValue;
+extern lv_obj_t *ui_MainArcUnit;
+extern lv_obj_t *ui_MainArcName;
+extern lv_obj_t *ui_mainArcBG;
+extern lv_obj_t *ui_MainAletPanel;
+extern lv_obj_t *ui_MainAlertText;
+extern lv_obj_t *ui_MainLabelGear;
+extern lv_obj_t *ui_MainAlertSpeed;
+extern lv_obj_t *ui_Bar1;
+extern lv_obj_t *ui_Bar1BG;
+extern lv_obj_t *ui_Bar1Value;
+extern lv_obj_t *ui_Bar1Unit;
+extern lv_obj_t *ui_Bar1Name;
+extern lv_obj_t *ui_Bar2;
+extern lv_obj_t *ui_Bar2BG;
+extern lv_obj_t *ui_Bar2Name;
+extern lv_obj_t *ui_Bar2Value;
+extern lv_obj_t *ui_Bar2Unit;
+extern lv_obj_t *ui_Arc2;
+extern lv_obj_t *ui_ArcValue2;
+extern lv_obj_t *ui_ArcUnit2;
+extern lv_obj_t *ui_ArcName2;
+extern lv_obj_t *ui_ArcBG2;
+extern lv_obj_t *ui_Arc1;
+extern lv_obj_t *ui_ArcValue1;
+extern lv_obj_t *ui_ArcUnit1;
+extern lv_obj_t *ui_ArcName1;
+extern lv_obj_t *ui_ArcBG1;
+extern lv_obj_t *ui_Arc3;
+extern lv_obj_t *ui_ArcValue3;
+extern lv_obj_t *ui_ArcUnit3;
+extern lv_obj_t *ui_ArcName3;
+extern lv_obj_t *ui_ArcBG3;
+extern lv_obj_t *ui_Arc4;
+extern lv_obj_t *ui_ArcValue4;
+extern lv_obj_t *ui_ArcUnit4;
+extern lv_obj_t *ui_ArcName4;
+extern lv_obj_t *ui_ArcBG4;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_rpmscalet_png);   // assets\RPMscaleT.png
+LV_IMG_DECLARE( ui_img_arcscalenored_png);   // assets\arcScaleNoRed.png
+LV_IMG_DECLARE( ui_img_barscale_png);   // assets\barScale.png
+LV_IMG_DECLARE( ui_img_arcscale_png);   // assets\arcScale.png
 
-LV_FONT_DECLARE( ui_font_RussoOne14);
-LV_FONT_DECLARE( ui_font_RussoOne50);
 LV_FONT_DECLARE( ui_font_ArameBold100);
-LV_FONT_DECLARE( ui_font_ArameBold150);
-LV_FONT_DECLARE( ui_font_ArameBold50);
 LV_FONT_DECLARE( ui_font_ArameBold14);
+LV_FONT_DECLARE( ui_font_ArameBold150);
+LV_FONT_DECLARE( ui_font_ArameBold20);
 LV_FONT_DECLARE( ui_font_ArameBold30);
+LV_FONT_DECLARE( ui_font_ArameBold40);
+LV_FONT_DECLARE( ui_font_ArameBold50);
 
 void ui_init(void);
 
