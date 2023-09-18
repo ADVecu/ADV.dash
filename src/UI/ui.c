@@ -8,9 +8,9 @@
 
 ///////////////////// VARIABLES ////////////////////
 
-
 // SCREEN: ui_Screen1
 void ui_Screen1_screen_init(void);
+void ui_event_Screen1(lv_event_t *e);
 lv_obj_t *ui_Screen1;
 lv_obj_t *ui_RpmsBG;
 lv_obj_t *ui_RedLineBar;
@@ -32,15 +32,15 @@ lv_obj_t *ui_MainAlertText;
 lv_obj_t *ui_MainLabelGear;
 lv_obj_t *ui_MainAlertSpeed;
 lv_obj_t *ui_Bar1;
-lv_obj_t *ui_Bar1BG;
-lv_obj_t *ui_Bar1Value;
-lv_obj_t *ui_Bar1Unit;
-lv_obj_t *ui_Bar1Name;
+lv_obj_t *ui_BarBG1;
+lv_obj_t *ui_BarValue1;
+lv_obj_t *ui_BarUnit1;
+lv_obj_t *ui_BarName1;
 lv_obj_t *ui_Bar2;
-lv_obj_t *ui_Bar2BG;
-lv_obj_t *ui_Bar2Name;
-lv_obj_t *ui_Bar2Value;
-lv_obj_t *ui_Bar2Unit;
+lv_obj_t *ui_BarBG2;
+lv_obj_t *ui_BarName2;
+lv_obj_t *ui_BarValue2;
+lv_obj_t *ui_BarUnit2;
 lv_obj_t *ui_Arc2;
 lv_obj_t *ui_ArcValue2;
 lv_obj_t *ui_ArcUnit2;
@@ -61,28 +61,100 @@ lv_obj_t *ui_ArcValue4;
 lv_obj_t *ui_ArcUnit4;
 lv_obj_t *ui_ArcName4;
 lv_obj_t *ui_ArcBG4;
+lv_obj_t *ui_Panel1;
+lv_obj_t *ui_PanelValue1;
+lv_obj_t *ui_PanelName1;
+lv_obj_t *ui_Panel2;
+lv_obj_t *ui_PanelValue2;
+lv_obj_t *ui_PanelName2;
+lv_obj_t *ui_Panel3;
+lv_obj_t *ui_PanelValue3;
+lv_obj_t *ui_PanelName3;
+lv_obj_t *ui_Panel4;
+lv_obj_t *ui_PanelValue4;
+lv_obj_t *ui_PanelName4;
+lv_obj_t *ui_Panel5;
+lv_obj_t *ui_PanelValue5;
+lv_obj_t *ui_PanelName5;
+lv_obj_t *ui_Panel6;
+lv_obj_t *ui_PanelValue6;
+lv_obj_t *ui_PanelName6;
+lv_obj_t *ui_Bar3;
+lv_obj_t *ui_BarBG3;
+lv_obj_t *ui_BarName3;
+lv_obj_t *ui_BarValue3;
+lv_obj_t *ui_BarUnit3;
+lv_obj_t *ui_Bar4;
+lv_obj_t *ui_BarBG4;
+lv_obj_t *ui_BarName4;
+lv_obj_t *ui_BarValue4;
+lv_obj_t *ui_BarUnit4;
+lv_obj_t *ui_IndicPanel1;
+lv_obj_t *ui_IndicValue1;
+lv_obj_t *ui_IndicPanel2;
+lv_obj_t *ui_IndicValue2;
+lv_obj_t *ui_IndicPanel3;
+lv_obj_t *ui_IndicValue3;
+lv_obj_t *ui_IndicPanel4;
+lv_obj_t *ui_IndicValue4;
+lv_obj_t *ui_IndicPanel5;
+lv_obj_t *ui_IndicValue5;
+lv_obj_t *ui_IndicPanel6;
+lv_obj_t *ui_IndicValue6;
+lv_obj_t *ui_Button1;
+lv_obj_t *ui_ButtonLabel1;
+
+// SCREEN: ui_Screen2
+void ui_Screen2_screen_init(void);
+void ui_event_Screen2(lv_event_t *e);
+lv_obj_t *ui_Screen2;
+lv_obj_t *ui_Chart1;
+lv_obj_t *ui_Chart2;
 lv_obj_t *ui____initial_actions0;
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
-    #error "LV_COLOR_DEPTH should be 16bit to match SquareLine Studio's settings"
+#error "LV_COLOR_DEPTH should be 16bit to match SquareLine Studio's settings"
 #endif
-#if LV_COLOR_16_SWAP !=0
-    #error "LV_COLOR_16_SWAP should be 0 to match SquareLine Studio's settings"
+#if LV_COLOR_16_SWAP != 0
+#error "LV_COLOR_16_SWAP should be 0 to match SquareLine Studio's settings"
 #endif
 
 ///////////////////// ANIMATIONS ////////////////////
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_Screen1(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t *target = lv_event_get_target(e);
+    if (event_code == LV_EVENT_GESTURE && lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT)
+    {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(&ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen2_screen_init);
+        _ui_screen_delete(&ui_Screen1);
+    }
+}
+void ui_event_Screen2(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t *target = lv_event_get_target(e);
+    if (event_code == LV_EVENT_GESTURE && lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT)
+    {
+        lv_indev_wait_release(lv_indev_get_act());
+        _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen1_screen_init);
+        _ui_screen_delete(&ui_Screen2);
+    }
+}
 
 ///////////////////// SCREENS ////////////////////
 
-void ui_init( void )
+void ui_init(void)
 {
-lv_disp_t *dispp = lv_disp_get_default();
-lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), true, LV_FONT_DEFAULT);
-lv_disp_set_theme(dispp, theme);
-ui_Screen1_screen_init();
-ui____initial_actions0 = lv_obj_create(NULL);
-lv_disp_load_scr( ui_Screen1);
+    lv_disp_t *dispp = lv_disp_get_default();
+    lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), true, LV_FONT_DEFAULT);
+    lv_disp_set_theme(dispp, theme);
+    ui_Screen1_screen_init();
+    ui_Screen2_screen_init();
+    ui____initial_actions0 = lv_obj_create(NULL);
+    lv_disp_load_scr(ui_Screen1);
 }

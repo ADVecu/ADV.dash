@@ -1,4 +1,5 @@
 screens/ui_Screen1.c
+screens/ui_Screen2.c
 ui.c
 components/ui_comp_hook.c
 ui_helpers.c
@@ -6,6 +7,7 @@ images/ui_img_rpmscalet_png.c
 images/ui_img_arcscalenored_png.c
 images/ui_img_barscale_png.c
 images/ui_img_arcscale_png.c
+images/ui_img_barscalered_png.c
 fonts/ui_font_ArameBold100.c
 fonts/ui_font_ArameBold14.c
 fonts/ui_font_ArameBold150.c

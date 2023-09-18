@@ -1,7 +1,7 @@
 
 #include <lvgl.h>
 #include <Arduino_GFX_Library.h>
-//#include <demos/lv_demos.h>
+// #include <demos/lv_demos.h>
 #include "UI/ui.h"
 #include "muTimer.h"
 
@@ -9,6 +9,8 @@
 #define GFX_BL DF_GFX_BL // default backlight pin
 
 muTimer testTimer;
+muTimer testTimer2;
+muTimer testTimer3;
 
 bool entry = true;
 int count = 0;
@@ -163,12 +165,10 @@ void setup()
   lv_indev_drv_register(&indev_drv);
 
   /* LVGL Demos*/
-  //lv_demo_widgets();
+  // lv_demo_widgets();
 
   /* Main UI init Function*/
-    ui_init();//ui from Squareline or GUI Guider
-
-
+  ui_init(); // ui from Squareline or GUI Guider
 }
 
 /*******************************************************************************
@@ -178,45 +178,83 @@ void loop()
 {
   lv_timer_handler();
 
-  if(true){
-    
-    lv_bar_set_value(ui_RpmsBar, random(100), LV_ANIM_OFF);
-    lv_label_set_text_fmt(ui_RpmsValue, "%d", (lv_bar_get_value(ui_RpmsBar) * 100));
+  if (lv_scr_act() == ui_Screen1 && true)
+  {
+    lv_bar_set_value(ui_RpmsBar, random(8, 9), LV_ANIM_OFF);
+    lv_label_set_text_fmt(ui_RpmsValue, "%d", random(800, 900));
 
-    if(lv_bar_get_value(ui_RpmsBar) >= 50 && entry){
-      lv_obj_set_style_bg_color(ui_RpmsBar, lv_color_hex(0xFF0000), LV_PART_INDICATOR | LV_STATE_DEFAULT );
+    if (lv_bar_get_value(ui_RpmsBar) >= 50 && entry)
+    {
+      lv_obj_set_style_bg_color(ui_RpmsBar, lv_color_hex(0xFF0000), LV_PART_INDICATOR | LV_STATE_DEFAULT);
       entry = false;
     }
 
-    if(lv_bar_get_value(ui_RpmsBar) >= 100){
-      lv_obj_set_style_bg_color(ui_RpmsBar, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT );
+    if (lv_bar_get_value(ui_RpmsBar) >= 100)
+    {
+      lv_obj_set_style_bg_color(ui_RpmsBar, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT);
       entry = true;
       lv_bar_set_value(ui_RpmsBar, 0, LV_ANIM_OFF);
     }
 
-    lv_bar_set_value(ui_Bar1, random(50), LV_ANIM_OFF);
-    lv_label_set_text_fmt(ui_Bar1Value, "%d", random(50));
-    
-    lv_bar_set_value(ui_Bar2, random(100), LV_ANIM_OFF);
-    lv_label_set_text_fmt(ui_Bar2Value, "%d", random(100));
+    lv_arc_set_value(ui_Arc1, random(45, 48));
+    lv_label_set_text_fmt(ui_ArcValue1, "%d", random(45, 48));
 
-    lv_arc_set_value(ui_Arc1, random(80));
-    lv_label_set_text_fmt(ui_ArcValue1, "%d", random(80));
+    lv_arc_set_value(ui_Arc2, random(10, 15));
+    lv_label_set_text_fmt(ui_ArcValue2, "%d", random(10, 15));
+    lv_arc_set_value(ui_Arc4, random(50, 60));
+    lv_label_set_text_fmt(ui_ArcValue4, "%d", random(50, 60));
 
-    lv_arc_set_value(ui_Arc2, random(35));
-    lv_label_set_text_fmt(ui_ArcValue2, "%d", random(35));
+    lv_arc_set_value(ui_MainArc, random(30, 90));
+    lv_label_set_text_fmt(ui_MainArcValue, "%d", random(30, 90));
 
-    lv_arc_set_value(ui_Arc3, random(50));
-    lv_label_set_text_fmt(ui_ArcValue3, "%d", random(50));
+    lv_label_set_text_fmt(ui_PanelValue1, "%d", random(100));
 
-    lv_arc_set_value(ui_MainArc, random(100));
-    lv_label_set_text_fmt(ui_MainArcValue, "%d", random(100));
+    lv_label_set_text_fmt(ui_PanelValue2, "%d", random(100));
+    lv_label_set_text_fmt(ui_PanelValue4, "%d", random(100));
+    lv_label_set_text_fmt(ui_PanelValue5, "%d", random(100));
 
-    lv_label_set_text_fmt(ui_SpeedValue, "%d", random(40));
+    lv_label_set_text_fmt(ui_SpeedValue, "%d", random(80, 85));
 
-    lv_bar_set_value(ui_TpsBar, random(180), LV_ANIM_OFF);
+    lv_bar_set_value(ui_TpsBar, random(50, 60), LV_ANIM_OFF);
 
+    if (testTimer.cycleTrigger(500))
+    {
+
+      lv_label_set_text_fmt(ui_PanelValue6, "%d", random(90, 98));
+
+      lv_bar_set_value(ui_Bar2, random(50, 52), LV_ANIM_OFF);
+      lv_label_set_text_fmt(ui_BarValue2, "%d", random(100));
+
+      lv_label_set_text_fmt(ui_GearValue, "%d", random(7));
+    }
+
+    if (testTimer2.cycleTrigger(1000))
+    {
+
+      lv_bar_set_value(ui_Bar1, random(80, 82), LV_ANIM_OFF);
+      lv_label_set_text_fmt(ui_BarValue1, "%d", random(80, 82));
+
+      lv_bar_set_value(ui_Bar3, random(40, 50), LV_ANIM_OFF);
+      lv_label_set_text_fmt(ui_BarValue2, "%d", random(40, 50));
+
+      lv_bar_set_value(ui_Bar4, random(70, 75), LV_ANIM_OFF);
+      lv_label_set_text_fmt(ui_BarValue4, "%d", random(70, 75));
+
+      lv_arc_set_value(ui_Arc3, random(95, 105));
+      lv_label_set_text_fmt(ui_ArcValue3, "%d", random(95, 105));
+
+      lv_label_set_text_fmt(ui_PanelValue3, "%d", random(85, 87));
+    }
   }
-  
+
+  if (lv_scr_act() == ui_Screen2 && true)
+  {
+    if (testTimer3.delayOn(true, 1000))
+
+    {
+      lv_chart_series_t *serie = lv_chart_get_series_next(ui_Chart1, NULL);
+      lv_chart_set_next_value(ui_Chart1, serie, lv_rand(80, 90));
+    }
+  }
   delay(5);
 }
