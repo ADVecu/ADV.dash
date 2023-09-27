@@ -532,8 +532,7 @@
             "InheritedType": 2
           }
         ],
-        "saved_objtypeKey": "SCREEN",
-        "tree_closed": true
+        "saved_objtypeKey": "SCREEN"
       },
       {
         "guid": "GUID72805693-380016S4492256",
@@ -1144,6 +1143,7 @@
               {
                 "nid": 2004358226,
                 "strtype": "BAR/Value_start",
+                "integer": 20,
                 "InheritedType": 6
               }
             ],
@@ -31588,7 +31588,7 @@
     "theme_color2": 0,
     "exportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\src\\UI",
     "projectExportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\SquerLine Project",
-    "backup_cnt": 508,
+    "backup_cnt": 662,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "CPP_FILE",
