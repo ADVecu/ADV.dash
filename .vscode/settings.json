@@ -1,5 +1,12 @@
 {
     "cSpell.words": [
-        "Squareline"
-    ]
+        "canbus",
+        "gpio",
+        "KBITS",
+        "rpms",
+        "Squareline",
+        "twai",
+        "TWAI"
+    ],
+    "cmake.configureOnOpen": false
 }

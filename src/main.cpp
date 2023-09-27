@@ -1,9 +1,12 @@
 
 #include <lvgl.h>
 #include <Arduino_GFX_Library.h>
-// #include <demos/lv_demos.h>
+#include <driver/twai.h>
+#include <driver/gpio.h>
 #include "UI/ui.h"
 #include "muTimer.h"
+#include "controllers/canBus/can_bus.h"
+#include "controllers/uiControl/ui_control.h"
 
 #define TFT_BL 2
 #define GFX_BL DF_GFX_BL // default backlight pin
@@ -11,9 +14,11 @@
 muTimer testTimer;
 muTimer testTimer2;
 muTimer testTimer3;
+muTimer testTimer4;
 
 bool entry = true;
 int count = 0;
+bool initScreen = true;
 
 /*******************************************************************************
  * Display Selection
@@ -136,7 +141,7 @@ void setup()
   lcd->setTextSize(2);
   delay(200);
 #ifdef TFT_BL
-  pinMode(TFT_BL, OUTPUT);
+  pinMode((gpio_num_t)TFT_BL, OUTPUT);
   analogWrite(TFT_BL, 255);
 #endif
   lv_init();
@@ -169,6 +174,12 @@ void setup()
 
   /* Main UI init Function*/
   ui_init(); // ui from Squareline or GUI Guider
+
+  // CAN BUS Init
+  canbus_init();
+
+  // UI Initial Configurations
+  ui_init_config();
 }
 
 /*******************************************************************************
@@ -178,83 +189,16 @@ void loop()
 {
   lv_timer_handler();
 
-  if (lv_scr_act() == ui_Screen1 && true)
+  if (testTimer4.delayOn(initScreen, 1000))
   {
-    lv_bar_set_value(ui_RpmsBar, random(8, 9), LV_ANIM_OFF);
-    lv_label_set_text_fmt(ui_RpmsValue, "%d", random(800, 900));
+    _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 0, ui_MainScreen_screen_init);
 
-    if (lv_bar_get_value(ui_RpmsBar) >= 50 && entry)
+    if (lv_scr_act() == ui_WelcomeScreen)
     {
-      lv_obj_set_style_bg_color(ui_RpmsBar, lv_color_hex(0xFF0000), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-      entry = false;
-    }
-
-    if (lv_bar_get_value(ui_RpmsBar) >= 100)
-    {
-      lv_obj_set_style_bg_color(ui_RpmsBar, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-      entry = true;
-      lv_bar_set_value(ui_RpmsBar, 0, LV_ANIM_OFF);
-    }
-
-    lv_arc_set_value(ui_Arc1, random(45, 48));
-    lv_label_set_text_fmt(ui_ArcValue1, "%d", random(45, 48));
-
-    lv_arc_set_value(ui_Arc2, random(10, 15));
-    lv_label_set_text_fmt(ui_ArcValue2, "%d", random(10, 15));
-    lv_arc_set_value(ui_Arc4, random(50, 60));
-    lv_label_set_text_fmt(ui_ArcValue4, "%d", random(50, 60));
-
-    lv_arc_set_value(ui_MainArc, random(30, 90));
-    lv_label_set_text_fmt(ui_MainArcValue, "%d", random(30, 90));
-
-    lv_label_set_text_fmt(ui_PanelValue1, "%d", random(100));
-
-    lv_label_set_text_fmt(ui_PanelValue2, "%d", random(100));
-    lv_label_set_text_fmt(ui_PanelValue4, "%d", random(100));
-    lv_label_set_text_fmt(ui_PanelValue5, "%d", random(100));
-
-    lv_label_set_text_fmt(ui_SpeedValue, "%d", random(80, 85));
-
-    lv_bar_set_value(ui_TpsBar, random(50, 60), LV_ANIM_OFF);
-
-    if (testTimer.cycleTrigger(500))
-    {
-
-      lv_label_set_text_fmt(ui_PanelValue6, "%d", random(90, 98));
-
-      lv_bar_set_value(ui_Bar2, random(50, 52), LV_ANIM_OFF);
-      lv_label_set_text_fmt(ui_BarValue2, "%d", random(100));
-
-      lv_label_set_text_fmt(ui_GearValue, "%d", random(7));
-    }
-
-    if (testTimer2.cycleTrigger(1000))
-    {
-
-      lv_bar_set_value(ui_Bar1, random(80, 82), LV_ANIM_OFF);
-      lv_label_set_text_fmt(ui_BarValue1, "%d", random(80, 82));
-
-      lv_bar_set_value(ui_Bar3, random(40, 50), LV_ANIM_OFF);
-      lv_label_set_text_fmt(ui_BarValue2, "%d", random(40, 50));
-
-      lv_bar_set_value(ui_Bar4, random(70, 75), LV_ANIM_OFF);
-      lv_label_set_text_fmt(ui_BarValue4, "%d", random(70, 75));
-
-      lv_arc_set_value(ui_Arc3, random(95, 105));
-      lv_label_set_text_fmt(ui_ArcValue3, "%d", random(95, 105));
-
-      lv_label_set_text_fmt(ui_PanelValue3, "%d", random(85, 87));
+      initScreen = false;
+      _ui_screen_delete(&ui_WelcomeScreen);
     }
   }
 
-  if (lv_scr_act() == ui_Screen2 && true)
-  {
-    if (testTimer3.delayOn(true, 1000))
-
-    {
-      lv_chart_series_t *serie = lv_chart_get_series_next(ui_Chart1, NULL);
-      lv_chart_set_next_value(ui_Chart1, serie, lv_rand(80, 90));
-    }
-  }
   delay(5);
 }

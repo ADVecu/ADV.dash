@@ -7,132 +7,142 @@
 #define _ADVDASH_UI_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-#include "lvgl.h"
+    #include "lvgl.h"
 
 #include "ui_helpers.h"
 #include "ui_events.h"
-    // SCREEN: ui_Screen1
-    void ui_Screen1_screen_init(void);
-    void ui_event_Screen1(lv_event_t *e);
-    extern lv_obj_t *ui_Screen1;
-    extern lv_obj_t *ui_RpmsBG;
-    extern lv_obj_t *ui_RedLineBar;
-    extern lv_obj_t *ui_RpmsBar;
-    extern lv_obj_t *ui_RpmsValue;
-    extern lv_obj_t *ui_RpmsText;
-    extern lv_obj_t *ui_GearPanel;
-    extern lv_obj_t *ui_GearValue;
-    extern lv_obj_t *ui_SpeedPanel;
-    extern lv_obj_t *ui_SpeedValue;
-    extern lv_obj_t *ui_TpsBar;
-    extern lv_obj_t *ui_MainArc;
-    extern lv_obj_t *ui_MainArcValue;
-    extern lv_obj_t *ui_MainArcUnit;
-    extern lv_obj_t *ui_MainArcName;
-    extern lv_obj_t *ui_mainArcBG;
-    extern lv_obj_t *ui_MainAletPanel;
-    extern lv_obj_t *ui_MainAlertText;
-    extern lv_obj_t *ui_MainLabelGear;
-    extern lv_obj_t *ui_MainAlertSpeed;
-    extern lv_obj_t *ui_Bar1;
-    extern lv_obj_t *ui_BarBG1;
-    extern lv_obj_t *ui_BarValue1;
-    extern lv_obj_t *ui_BarUnit1;
-    extern lv_obj_t *ui_BarName1;
-    extern lv_obj_t *ui_Bar2;
-    extern lv_obj_t *ui_BarBG2;
-    extern lv_obj_t *ui_BarName2;
-    extern lv_obj_t *ui_BarValue2;
-    extern lv_obj_t *ui_BarUnit2;
-    extern lv_obj_t *ui_Arc2;
-    extern lv_obj_t *ui_ArcValue2;
-    extern lv_obj_t *ui_ArcUnit2;
-    extern lv_obj_t *ui_ArcName2;
-    extern lv_obj_t *ui_ArcBG2;
-    extern lv_obj_t *ui_Arc1;
-    extern lv_obj_t *ui_ArcValue1;
-    extern lv_obj_t *ui_ArcUnit1;
-    extern lv_obj_t *ui_ArcName1;
-    extern lv_obj_t *ui_ArcBG1;
-    extern lv_obj_t *ui_Arc3;
-    extern lv_obj_t *ui_ArcValue3;
-    extern lv_obj_t *ui_ArcUnit3;
-    extern lv_obj_t *ui_ArcName3;
-    extern lv_obj_t *ui_ArcBG3;
-    extern lv_obj_t *ui_Arc4;
-    extern lv_obj_t *ui_ArcValue4;
-    extern lv_obj_t *ui_ArcUnit4;
-    extern lv_obj_t *ui_ArcName4;
-    extern lv_obj_t *ui_ArcBG4;
-    extern lv_obj_t *ui_Panel1;
-    extern lv_obj_t *ui_PanelValue1;
-    extern lv_obj_t *ui_PanelName1;
-    extern lv_obj_t *ui_Panel2;
-    extern lv_obj_t *ui_PanelValue2;
-    extern lv_obj_t *ui_PanelName2;
-    extern lv_obj_t *ui_Panel3;
-    extern lv_obj_t *ui_PanelValue3;
-    extern lv_obj_t *ui_PanelName3;
-    extern lv_obj_t *ui_Panel4;
-    extern lv_obj_t *ui_PanelValue4;
-    extern lv_obj_t *ui_PanelName4;
-    extern lv_obj_t *ui_Panel5;
-    extern lv_obj_t *ui_PanelValue5;
-    extern lv_obj_t *ui_PanelName5;
-    extern lv_obj_t *ui_Panel6;
-    extern lv_obj_t *ui_PanelValue6;
-    extern lv_obj_t *ui_PanelName6;
-    extern lv_obj_t *ui_Bar3;
-    extern lv_obj_t *ui_BarBG3;
-    extern lv_obj_t *ui_BarName3;
-    extern lv_obj_t *ui_BarValue3;
-    extern lv_obj_t *ui_BarUnit3;
-    extern lv_obj_t *ui_Bar4;
-    extern lv_obj_t *ui_BarBG4;
-    extern lv_obj_t *ui_BarName4;
-    extern lv_obj_t *ui_BarValue4;
-    extern lv_obj_t *ui_BarUnit4;
-    extern lv_obj_t *ui_IndicPanel1;
-    extern lv_obj_t *ui_IndicValue1;
-    extern lv_obj_t *ui_IndicPanel2;
-    extern lv_obj_t *ui_IndicValue2;
-    extern lv_obj_t *ui_IndicPanel3;
-    extern lv_obj_t *ui_IndicValue3;
-    extern lv_obj_t *ui_IndicPanel4;
-    extern lv_obj_t *ui_IndicValue4;
-    extern lv_obj_t *ui_IndicPanel5;
-    extern lv_obj_t *ui_IndicValue5;
-    extern lv_obj_t *ui_IndicPanel6;
-    extern lv_obj_t *ui_IndicValue6;
-    extern lv_obj_t *ui_Button1;
-    extern lv_obj_t *ui_ButtonLabel1;
-    // SCREEN: ui_Screen2
-    void ui_Screen2_screen_init(void);
-    void ui_event_Screen2(lv_event_t *e);
-    extern lv_obj_t *ui_Screen2;
-    extern lv_obj_t *ui_Chart1;
-    extern lv_obj_t *ui_Chart2;
-    extern lv_obj_t *ui____initial_actions0;
+// SCREEN: ui_WelcomeScreen
+void ui_WelcomeScreen_screen_init(void);
+extern lv_obj_t *ui_WelcomeScreen;
+extern lv_obj_t *ui_Image1;
+// SCREEN: ui_MainScreen
+void ui_MainScreen_screen_init(void);
+void ui_event_MainScreen( lv_event_t * e);
+extern lv_obj_t *ui_MainScreen;
+extern lv_obj_t *ui_RpmsBG;
+extern lv_obj_t *ui_RedLineBar;
+extern lv_obj_t *ui_RpmsBar;
+extern lv_obj_t *ui_RpmsValue;
+extern lv_obj_t *ui_RpmsText;
+extern lv_obj_t *ui_GearPanel;
+extern lv_obj_t *ui_GearValue;
+extern lv_obj_t *ui_SpeedPanel;
+extern lv_obj_t *ui_SpeedValue;
+extern lv_obj_t *ui_TpsBar;
+extern lv_obj_t *ui_MainArc;
+extern lv_obj_t *ui_MainArcValue;
+extern lv_obj_t *ui_MainArcUnit;
+extern lv_obj_t *ui_MainArcName;
+extern lv_obj_t *ui_mainArcBG;
+extern lv_obj_t *ui_MainAletPanel;
+extern lv_obj_t *ui_MainAlertText;
+extern lv_obj_t *ui_MainLabelGear;
+extern lv_obj_t *ui_MainAlertSpeed;
+extern lv_obj_t *ui_Bar1;
+extern lv_obj_t *ui_BarBG1;
+extern lv_obj_t *ui_BarValue1;
+extern lv_obj_t *ui_BarUnit1;
+extern lv_obj_t *ui_BarName1;
+extern lv_obj_t *ui_Bar2;
+extern lv_obj_t *ui_BarBG2;
+extern lv_obj_t *ui_BarName2;
+extern lv_obj_t *ui_BarValue2;
+extern lv_obj_t *ui_BarUnit2;
+extern lv_obj_t *ui_Arc2;
+extern lv_obj_t *ui_ArcValue2;
+extern lv_obj_t *ui_ArcUnit2;
+extern lv_obj_t *ui_ArcName2;
+extern lv_obj_t *ui_ArcBG2;
+extern lv_obj_t *ui_Arc1;
+extern lv_obj_t *ui_ArcValue1;
+extern lv_obj_t *ui_ArcUnit1;
+extern lv_obj_t *ui_ArcName1;
+extern lv_obj_t *ui_ArcBG1;
+extern lv_obj_t *ui_Arc3;
+extern lv_obj_t *ui_ArcValue3;
+extern lv_obj_t *ui_ArcUnit3;
+extern lv_obj_t *ui_ArcName3;
+extern lv_obj_t *ui_ArcBG3;
+extern lv_obj_t *ui_Arc4;
+extern lv_obj_t *ui_ArcValue4;
+extern lv_obj_t *ui_ArcUnit4;
+extern lv_obj_t *ui_ArcName4;
+extern lv_obj_t *ui_ArcBG4;
+extern lv_obj_t *ui_Panel1;
+extern lv_obj_t *ui_PanelValue1;
+extern lv_obj_t *ui_PanelName1;
+extern lv_obj_t *ui_Panel2;
+extern lv_obj_t *ui_PanelValue2;
+extern lv_obj_t *ui_PanelName2;
+extern lv_obj_t *ui_Panel3;
+extern lv_obj_t *ui_PanelValue3;
+extern lv_obj_t *ui_PanelName3;
+extern lv_obj_t *ui_Panel4;
+extern lv_obj_t *ui_PanelValue4;
+extern lv_obj_t *ui_PanelName4;
+extern lv_obj_t *ui_Panel5;
+extern lv_obj_t *ui_PanelValue5;
+extern lv_obj_t *ui_PanelName5;
+extern lv_obj_t *ui_Panel6;
+extern lv_obj_t *ui_PanelValue6;
+extern lv_obj_t *ui_PanelName6;
+extern lv_obj_t *ui_Bar3;
+extern lv_obj_t *ui_BarBG3;
+extern lv_obj_t *ui_BarName3;
+extern lv_obj_t *ui_BarValue3;
+extern lv_obj_t *ui_BarUnit3;
+extern lv_obj_t *ui_Bar4;
+extern lv_obj_t *ui_BarBG4;
+extern lv_obj_t *ui_BarName4;
+extern lv_obj_t *ui_BarValue4;
+extern lv_obj_t *ui_BarUnit4;
+extern lv_obj_t *ui_IndicPanel1;
+extern lv_obj_t *ui_IndicValue1;
+extern lv_obj_t *ui_IndicPanel2;
+extern lv_obj_t *ui_IndicValue2;
+extern lv_obj_t *ui_IndicPanel3;
+extern lv_obj_t *ui_IndicValue3;
+extern lv_obj_t *ui_IndicPanel4;
+extern lv_obj_t *ui_IndicValue4;
+extern lv_obj_t *ui_IndicPanel5;
+extern lv_obj_t *ui_IndicValue5;
+extern lv_obj_t *ui_IndicPanel6;
+extern lv_obj_t *ui_IndicValue6;
+void ui_event_Button1( lv_event_t * e);
+extern lv_obj_t *ui_Button1;
+extern lv_obj_t *ui_ButtonLabel1;
+extern lv_obj_t *ui_CriticalAlertPanel;
+extern lv_obj_t *ui_CriticalAlertText;
+// SCREEN: ui_Screen2
+void ui_Screen2_screen_init(void);
+void ui_event_Screen2( lv_event_t * e);
+extern lv_obj_t *ui_Screen2;
+extern lv_obj_t *ui_Chart1;
+extern lv_obj_t *ui_Chart2;
+// SCREEN: ui_Screen3
+void ui_Screen3_screen_init(void);
+extern lv_obj_t *ui_Screen3;
+extern lv_obj_t *ui____initial_actions0;
 
-    LV_IMG_DECLARE(ui_img_rpmscalet_png);     // assets\RPMscaleT.png
-    LV_IMG_DECLARE(ui_img_arcscalenored_png); // assets\arcScaleNoRed.png
-    LV_IMG_DECLARE(ui_img_barscale_png);      // assets\barScale.png
-    LV_IMG_DECLARE(ui_img_arcscale_png);      // assets\arcScale.png
-    LV_IMG_DECLARE(ui_img_barscalered_png);   // assets\barScaleRed.png
+LV_IMG_DECLARE( ui_img_advecu200_png);   // assets\Advecu200.png
+LV_IMG_DECLARE( ui_img_rpmscalet_png);   // assets\RPMscaleT.png
+LV_IMG_DECLARE( ui_img_arcscalenored_png);   // assets\arcScaleNoRed.png
+LV_IMG_DECLARE( ui_img_barscale_png);   // assets\barScale.png
+LV_IMG_DECLARE( ui_img_arcscale_png);   // assets\arcScale.png
+LV_IMG_DECLARE( ui_img_barscalered_png);   // assets\barScaleRed.png
 
-    LV_FONT_DECLARE(ui_font_ArameBold100);
-    LV_FONT_DECLARE(ui_font_ArameBold14);
-    LV_FONT_DECLARE(ui_font_ArameBold150);
-    LV_FONT_DECLARE(ui_font_ArameBold20);
-    LV_FONT_DECLARE(ui_font_ArameBold30);
-    LV_FONT_DECLARE(ui_font_ArameBold40);
-    LV_FONT_DECLARE(ui_font_ArameBold50);
+LV_FONT_DECLARE( ui_font_ArameBold100);
+LV_FONT_DECLARE( ui_font_ArameBold14);
+LV_FONT_DECLARE( ui_font_ArameBold150);
+LV_FONT_DECLARE( ui_font_ArameBold20);
+LV_FONT_DECLARE( ui_font_ArameBold30);
+LV_FONT_DECLARE( ui_font_ArameBold40);
+LV_FONT_DECLARE( ui_font_ArameBold50);
 
-    void ui_init(void);
+void ui_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
