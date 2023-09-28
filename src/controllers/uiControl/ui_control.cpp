@@ -5,6 +5,7 @@
 // Widgets
 #include "widgets/rpms_bar.h"
 
+//Database instance
 Database db;
 
 /**
@@ -12,6 +13,7 @@ Database db;
  */
 void ui_init_config()
 {
-
     rpmsBar rpmsBar(db.getRpmsRedline(), db.getRpmsWarning());
+
+   
 }
