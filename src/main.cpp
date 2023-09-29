@@ -200,7 +200,5 @@ void loop()
     }
   }
 
-  canbus_read();
-
   delay(5);
 }
