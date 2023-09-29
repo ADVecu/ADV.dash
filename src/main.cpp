@@ -189,6 +189,7 @@ void loop()
 {
   lv_timer_handler();
 
+  // TODO: Create a xTask for this function and move to ui_control.cpp
   if (testTimer4.delayOn(initScreen, 1000))
   {
     _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 0, ui_MainScreen_screen_init);

@@ -112,7 +112,7 @@ void canbus_read(void *pvParameters)
         }
         else
         {
-        TODO: // Handle this error, for example, send a message to the UI to display an error message on the screen
+            // TODO:  Handle this error, for example, send a message to the UI to display an error message on the screen, and set all the values to 0
             printf("Failed to receive message\n");
         }
 
@@ -148,6 +148,6 @@ void canbus_read(void *pvParameters)
         // Send the CAN data to the queue for use in the UI
         xQueueSend(canbus_queue, &canbus_data, 1000);
 
-        //vTaskDelay(10);
+        // vTaskDelay(10);
     }
 }

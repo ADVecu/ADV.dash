@@ -1,6 +1,5 @@
 #include "UI/ui.h"
 #include "rpms_bar.h"
-#include <Arduino.h>
 
 rpmsBar::rpmsBar(uint16_t rpmsRedline, uint16_t rpmsWarning)
 {
@@ -15,6 +14,8 @@ rpmsBar::rpmsBar(uint16_t rpmsRedline, uint16_t rpmsWarning)
 
 void rpmsBar::setRPMs(uint16_t rpm)
 {
+
+    // TODO: Test Warning color change
     if (_previousRpm != rpm)
     {
         _previousRpm = rpm;
@@ -51,5 +52,5 @@ void rpmsBar::setWarning(uint16_t warning)
     if (warning != _rpmsWarning)
     {
         _rpmsWarning = warning;
-        }
+    }
 }
