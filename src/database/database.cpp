@@ -49,5 +49,185 @@ uint16_t Database::getRpmsWarning()
 }
 
 /*******************************************************************************
- * RPMs Data
- *******************************************************************************/
+ * Bar Gauges Data
+ ********************************************************************************/
+
+void Database::saveBarGaugeType(bar_number_t gaugeNumber, gauge_type gaugeType)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUChar(String("barGaugeType" + String(gaugeNumber)).c_str(), (uint8_t)gaugeType);
+
+    preferences.end();
+}
+
+gauge_type Database::getBarGaugeType(bar_number_t gaugeNumber)
+{
+    gauge_type gaugeType;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case BAR_1:
+        gaugeType = (gauge_type)preferences.getUChar("barGaugeType1", (uint8_t)gauge_type::FUEL_LEVEL);
+        break;
+    case BAR_2:
+        gaugeType = (gauge_type)preferences.getUChar("barGaugeType2", (uint8_t)gauge_type::BATTERY_VOLTAGE);
+        break;
+    case BAR_3:
+        gaugeType = (gauge_type)preferences.getUChar("barGaugeType3", (uint8_t)gauge_type::AIR_TEMP);
+        break;
+    case BAR_4:
+        gaugeType = (gauge_type)preferences.getUChar("barGaugeType4", (uint8_t)gauge_type::OIL_TEMP);
+        break;
+    }
+
+    preferences.end();
+
+    return gaugeType;
+}
+
+void Database::saveBarGaugeHighWarningValue(bar_number_t gaugeNumber, uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("barGaugeHW" + String(gaugeNumber)).c_str(), warningValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getBarGaugeHighWarningValue(bar_number_t gaugeNumber)
+{
+    uint16_t warningValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case BAR_1:
+        warningValue = preferences.getUShort("barGaugeHW1", FUEL_LEVEL_HIGH_WARNING_DEFAULT);
+        break;
+    case BAR_2:
+        warningValue = preferences.getUShort("barGaugeHW2", BATTERY_VOLTAGE_HIGH_WARNING_DEFAULT);
+        break;
+    case BAR_3:
+        warningValue = preferences.getUShort("barGaugeHW3", AIR_TEMP_HIGH_WARNING_DEFAULT);
+        break;
+    case BAR_4:
+        warningValue = preferences.getUShort("barGaugeHW4", OIL_TEMP_HIGH_WARNING_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveBarGaugeHighAlertValue(bar_number_t gaugeNumber, uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("barGaugeHA" + String(gaugeNumber)).c_str(), alertValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getBarGaugeHighAlertValue(bar_number_t gaugeNumber)
+{
+    uint16_t alertValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case BAR_1:
+        alertValue = preferences.getUShort("barGaugeHA1", FUEL_LEVEL_HIGH_ALERT_DEFAULT);
+        break;
+    case BAR_2:
+        alertValue = preferences.getUShort("barGaugeHA2", BATTERY_VOLTAGE_HIGH_ALERT_DEFAULT);
+        break;
+    case BAR_3:
+        alertValue = preferences.getUShort("barGaugeHA3", AIR_TEMP_HIGH_ALERT_DEFAULT);
+        break;
+    case BAR_4:
+        alertValue = preferences.getUShort("barGaugeHA4", OIL_TEMP_HIGH_ALERT_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveBarGaugeLowWarningValue(bar_number_t gaugeNumber, uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("barGaugeLW" + String(gaugeNumber)).c_str(), warningValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getBarGaugeLowWarningValue(bar_number_t gaugeNumber)
+{
+    uint16_t warningValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case BAR_1:
+        warningValue = preferences.getUShort("barGaugeLW1", FUEL_LEVEL_LOW_WARNING_DEFAULT);
+        break;
+    case BAR_2:
+        warningValue = preferences.getUShort("barGaugeLW2", BATTERY_VOLTAGE_LOW_WARNING_DEFAULT);
+        break;
+    case BAR_3:
+        warningValue = preferences.getUShort("barGaugeLW3", AIR_TEMP_LOW_WARNING_DEFAULT);
+        break;
+    case BAR_4:
+        warningValue = preferences.getUShort("barGaugeLW4", OIL_TEMP_LOW_WARNING_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveBarGaugeLowAlertValue(bar_number_t gaugeNumber, uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("barGaugeLA" + String(gaugeNumber)).c_str(), alertValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getBarGaugeLowAlertValue(bar_number_t gaugeNumber)
+{
+    uint16_t alertValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case BAR_1:
+        alertValue = preferences.getUShort("barGaugeLA1", FUEL_LEVEL_LOW_ALERT_DEFAULT);
+        break;
+    case BAR_2:
+        alertValue = preferences.getUShort("barGaugeLA2", BATTERY_VOLTAGE_LOW_ALERT_DEFAULT);
+        break;
+    case BAR_3:
+        alertValue = preferences.getUShort("barGaugeLA3", AIR_TEMP_LOW_ALERT_DEFAULT);
+        break;
+    case BAR_4:
+        alertValue = preferences.getUShort("barGaugeLA4", OIL_TEMP_LOW_ALERT_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return alertValue;
+}

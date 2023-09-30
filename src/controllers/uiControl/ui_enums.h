@@ -1,11 +1,14 @@
+#ifndef _UI_ENUMS_H
+#define _UI_ENUMS_H
+
 #include <Arduino.h>
 
 #define TEMP_MAX_VALUE 120
 #define TEMP_MIN_VALUE 0
 #define PRESSURE_MAX_VALUE 100
 #define PRESSURE_MIN_VALUE 0
-#define VOLTAGE_MAX_VALUE 16
-#define VOLTAGE_MIN_VALUE 8
+#define VOLTAGE_MAX_VALUE 16000
+#define VOLTAGE_MIN_VALUE 8000
 #define FUEL_MAX_VALUE 100
 #define FUEL_MIN_VALUE 0
 #define DUTY_MAX_VALUE 100
@@ -19,7 +22,7 @@
  * @brief Define the type of gauge to display
  *
  */
-enum class gauge_type
+enum gauge_type
 {
     COOLANT_TEMP,
     OIL_TEMP,
@@ -33,3 +36,16 @@ enum class gauge_type
     AFR
 
 };
+
+/**
+ * @brief Bar widget number
+ */
+typedef enum bar_number
+{
+    BAR_1 = 1, // Top Left bar
+    BAR_2,     // Top Right bar
+    BAR_3,     // Bottom Left bar
+    BAR_4      // Bottom Right bar
+} bar_number_t;
+
+#endif // _UI_ENUMS_H
