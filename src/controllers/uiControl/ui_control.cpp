@@ -12,6 +12,7 @@
 // Database instance
 Database db;
 
+// CAN bus data queue
 QueueSetHandle_t canbus_queue;
 
 /**
@@ -39,111 +40,84 @@ void ui_task(void *pvParameters)
 {
     // Initialize the CAN message struct
     canbus_data_t rx_msg;
-    uint16_t _battVoltage = 0;
+    uint8_t i = 0;
 
     // Initialize all the widgets and set the initial values
     rpmsBar rpmsBar(db.getRpmsRedline(), db.getRpmsWarning());
 
-    gp_bar gp_Bar_1(db.getBarGaugeHighWarningValue(bar_number_t::BAR_1), 
-                db.getBarGaugeHighAlertValue(bar_number_t::BAR_1), 
-                db.getBarGaugeLowWarningValue(bar_number_t::BAR_1), 
-                db.getBarGaugeLowAlertValue(bar_number_t::BAR_1), 
-                db.getBarGaugeType(bar_number_t::BAR_1), 
-                bar_number_t::BAR_1);
-    
+    gp_bar gp_Bar_1(db.getBarGaugeHighWarningValue(bar_number_t::BAR_1),
+                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_1),
+                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_1),
+                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_1),
+                    db.getBarGaugeType(bar_number_t::BAR_1),
+                    bar_number_t::BAR_1);
+
     gp_bar gp_Bar_2(db.getBarGaugeHighWarningValue(bar_number_t::BAR_2),
-                db.getBarGaugeHighAlertValue(bar_number_t::BAR_2),
-                db.getBarGaugeLowWarningValue(bar_number_t::BAR_2),
-                db.getBarGaugeLowAlertValue(bar_number_t::BAR_2),
-                db.getBarGaugeType(bar_number_t::BAR_2),
-                bar_number_t::BAR_2);
+                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_2),
+                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_2),
+                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_2),
+                    db.getBarGaugeType(bar_number_t::BAR_2),
+                    bar_number_t::BAR_2);
 
     gp_bar gp_Bar_3(db.getBarGaugeHighWarningValue(bar_number_t::BAR_3),
-                db.getBarGaugeHighAlertValue(bar_number_t::BAR_3),
-                db.getBarGaugeLowWarningValue(bar_number_t::BAR_3),
-                db.getBarGaugeLowAlertValue(bar_number_t::BAR_3),
-                db.getBarGaugeType(bar_number_t::BAR_3),
-                bar_number_t::BAR_3);
-    
+                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_3),
+                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_3),
+                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_3),
+                    db.getBarGaugeType(bar_number_t::BAR_3),
+                    bar_number_t::BAR_3);
+
     gp_bar gp_Bar_4(db.getBarGaugeHighWarningValue(bar_number_t::BAR_4),
-                db.getBarGaugeHighAlertValue(bar_number_t::BAR_4),
-                db.getBarGaugeLowWarningValue(bar_number_t::BAR_4),
-                db.getBarGaugeLowAlertValue(bar_number_t::BAR_4),
-                db.getBarGaugeType(bar_number_t::BAR_4),
-                bar_number_t::BAR_4);
-    
+                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_4),
+                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_4),
+                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_4),
+                    db.getBarGaugeType(bar_number_t::BAR_4),
+                    bar_number_t::BAR_4);
+
+    gp_bar gp_bar_array[4] = {gp_Bar_1, gp_Bar_2, gp_Bar_3, gp_Bar_4};
+
+    // Infinite loop
     while (1)
     {
-
         // Read the CAN bus queue
         if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE)
         {
             // Update the rpms bar
             rpmsBar.setRPMs(rx_msg.rpms);
-            
-            // Update the bar gauge 1
-            switch(gp_Bar_1.getGaugeType()){
+
+            // iterate through the bar gauges and update the values
+            for (i = 0; i < 4; i++)
+            {
+                switch (gp_bar_array[i].getGaugeType())
+                {
                 case gauge_type::COOLANT_TEMP:
-                    gp_Bar_1.setValue(rx_msg.coolant_temp);
+                    gp_bar_array[i].setValue(rx_msg.coolant_temp);
                     break;
                 case gauge_type::OIL_TEMP:
-                    gp_Bar_1.setValue(rx_msg.aux1_temp);
+                    gp_bar_array[i].setValue(rx_msg.aux1_temp);
                     break;
                 case gauge_type::AIR_TEMP:
-                    gp_Bar_1.setValue(rx_msg.air_temp);
+                    gp_bar_array[i].setValue(rx_msg.air_temp);
                     break;
                 case gauge_type::OIL_PRESSURE:
-                    gp_Bar_1.setValue(rx_msg.oil_pressure);
+                    gp_bar_array[i].setValue(rx_msg.oil_pressure);
                     break;
                 case gauge_type::FUEL_PRESSURE:
-                    gp_Bar_1.setValue(rx_msg.fuel_pressure); 
+                    gp_bar_array[i].setValue(rx_msg.fuel_pressure);
                     break;
                 case gauge_type::BATTERY_VOLTAGE:
-                    gp_Bar_1.setValue(rx_msg.battery_voltage);
+                    gp_bar_array[i].setValue(rx_msg.battery_voltage);
                     break;
                 case gauge_type::FUEL_LEVEL:
-                    gp_Bar_1.setValue(rx_msg.fuel_level);
+                    gp_bar_array[i].setValue(rx_msg.fuel_level);
                     break;
                 case gauge_type::INJ_DUTY:
-                    gp_Bar_1.setValue(rx_msg.inj_duty);
+                    gp_bar_array[i].setValue(rx_msg.inj_duty);
                     break;
                 case gauge_type::MANIFOLD_PRESSURE:
-                    gp_Bar_1.setValue(rx_msg.map);
+                    gp_bar_array[i].setValue(rx_msg.map);
                     break;
-            }
-
-            // Update the bar gauge 2
-            switch (gp_Bar_2.getGaugeType())
-            {
-            case gauge_type::COOLANT_TEMP:
-                gp_Bar_2.setValue(rx_msg.coolant_temp);
-                break;
-            case gauge_type::OIL_TEMP:
-                gp_Bar_2.setValue(rx_msg.aux1_temp);
-                break;
-            case gauge_type::AIR_TEMP:
-                gp_Bar_2.setValue(rx_msg.air_temp);
-                break;
-            case gauge_type::OIL_PRESSURE:
-                gp_Bar_2.setValue(rx_msg.oil_pressure);
-                break;
-            case gauge_type::FUEL_PRESSURE:
-                gp_Bar_2.setValue(rx_msg.fuel_pressure);
-                break;
-            case gauge_type::BATTERY_VOLTAGE:
-                gp_Bar_2.setValue(rx_msg.battery_voltage);
-                break;
-            case gauge_type::FUEL_LEVEL:
-                gp_Bar_2.setValue(rx_msg.fuel_level);
-                break;
-            case gauge_type::INJ_DUTY:
-                gp_Bar_2.setValue(rx_msg.inj_duty);
-                break;
-            case gauge_type::MANIFOLD_PRESSURE:
-                gp_Bar_2.setValue(rx_msg.map);
-                break;
-            }
-                
+                }
             }
         }
     }
+}
