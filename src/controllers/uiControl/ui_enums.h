@@ -48,4 +48,16 @@ typedef enum bar_number
     BAR_4      // Bottom Right bar
 } bar_number_t;
 
+/**
+ * @brief Arc widget number
+ */
+typedef enum arc_number
+{
+    ARC_1 = 1, // Left left arc
+    ARC_2,     // left right arc
+    ARC_3,     // Right left arc
+    ARC_4,      // Right Right arc
+    ARC_5,      // Bottom center arc
+} arc_number_t;
+
 #endif // _UI_ENUMS_H

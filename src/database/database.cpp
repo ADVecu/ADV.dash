@@ -231,3 +231,202 @@ uint16_t Database::getBarGaugeLowAlertValue(bar_number_t gaugeNumber)
 
     return alertValue;
 }
+
+/*******************************************************************************
+ * Arc Gauges Data
+ ********************************************************************************/
+
+void Database::saveArcGaugeType(arc_number_t gaugeNumber, gauge_type gaugeType)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUChar(String("arcGaugeType" + String(gaugeNumber)).c_str(), (uint8_t)gaugeType);
+
+    preferences.end();
+}
+
+gauge_type Database::getArcGaugeType(arc_number_t gaugeNumber)
+{
+    gauge_type gaugeType;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case ARC_1:
+        gaugeType = (gauge_type)preferences.getUChar("arcGaugeType1", (uint8_t)gauge_type::COOLANT_TEMP);
+        break;
+    case ARC_2:
+        gaugeType = (gauge_type)preferences.getUChar("arcGaugeType2", (uint8_t)gauge_type::OIL_PRESSURE);
+        break;
+    case ARC_3:
+        gaugeType = (gauge_type)preferences.getUChar("arcGaugeType3", (uint8_t)gauge_type::FUEL_PRESSURE);
+        break;
+    case ARC_4:
+        gaugeType = (gauge_type)preferences.getUChar("arcGaugeType4", (uint8_t)gauge_type::MANIFOLD_PRESSURE);
+        break;
+    case ARC_5:
+        gaugeType = (gauge_type)preferences.getUChar("arcGaugeType5", (uint8_t)gauge_type::AFR);
+        break;
+    }
+
+    preferences.end();
+
+    return gaugeType;
+}
+
+void Database::saveArcGaugeHighWarningValue(arc_number_t gaugeNumber, uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("arcGaugeHW" + String(gaugeNumber)).c_str(), warningValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getArcGaugeHighWarningValue(arc_number_t gaugeNumber)
+{
+    uint16_t warningValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case ARC_1:
+        warningValue = preferences.getUShort("arcGaugeHW1", COOLANT_TEMP_HIGH_WARNING_DEFAULT);
+        break;
+    case ARC_2:
+        warningValue = preferences.getUShort("arcGaugeHW2", OIL_PRESSURE_HIGH_WARNING_DEFAULT);
+        break;
+    case ARC_3:
+        warningValue = preferences.getUShort("arcGaugeHW3", FUEL_PRESSURE_HIGH_WARNING_DEFAULT);
+        break;
+    case ARC_4:
+        warningValue = preferences.getUShort("arcGaugeHW4", MANIFOLD_PRESSURE_HIGH_WARNING_DEFAULT);
+        break;
+    case ARC_5:
+        warningValue = preferences.getUShort("arcGaugeHW5", AFR_HIGH_WARNING_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveArcGaugeHighAlertValue(arc_number_t gaugeNumber, uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("arcGaugeHA" + String(gaugeNumber)).c_str(), alertValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getArcGaugeHighAlertValue(arc_number_t gaugeNumber)
+{
+    uint16_t alertValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case ARC_1:
+        alertValue = preferences.getUShort("arcGaugeHA1", COOLANT_TEMP_HIGH_ALERT_DEFAULT);
+        break;
+    case ARC_2:
+        alertValue = preferences.getUShort("arcGaugeHA2", OIL_PRESSURE_HIGH_ALERT_DEFAULT);
+        break;
+    case ARC_3:
+        alertValue = preferences.getUShort("arcGaugeHA3", FUEL_PRESSURE_HIGH_ALERT_DEFAULT);
+        break;
+    case ARC_4:
+        alertValue = preferences.getUShort("arcGaugeHA4", MANIFOLD_PRESSURE_HIGH_ALERT_DEFAULT);
+        break;
+    case ARC_5:
+        alertValue = preferences.getUShort("arcGaugeHA5", AFR_HIGH_ALERT_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveArcGaugeLowWarningValue(arc_number_t gaugeNumber, uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("arcGaugeLW" + String(gaugeNumber)).c_str(), warningValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getArcGaugeLowWarningValue(arc_number_t gaugeNumber)
+{
+    uint16_t warningValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case ARC_1:
+        warningValue = preferences.getUShort("arcGaugeLW1", COOLANT_TEMP_LOW_WARNING_DEFAULT);
+        break;
+    case ARC_2:
+        warningValue = preferences.getUShort("arcGaugeLW2", OIL_PRESSURE_LOW_WARNING_DEFAULT);
+        break;
+    case ARC_3:
+        warningValue = preferences.getUShort("arcGaugeLW3", FUEL_PRESSURE_LOW_WARNING_DEFAULT);
+        break;
+    case ARC_4:
+        warningValue = preferences.getUShort("arcGaugeLW4", 0);
+        break;
+    case ARC_5:
+        warningValue = preferences.getUShort("arcGaugeLW5", AFR_LOW_WARNING_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveArcGaugeLowAlertValue(arc_number_t gaugeNumber, uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("arcGaugeLA" + String(gaugeNumber)).c_str(), alertValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getArcGaugeLowAlertValue(arc_number_t gaugeNumber)
+{
+    uint16_t alertValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case ARC_1:
+        alertValue = preferences.getUShort("arcGaugeLA1", COOLANT_TEMP_LOW_ALERT_DEFAULT);
+        break;
+    case ARC_2:
+        alertValue = preferences.getUShort("arcGaugeLA2", OIL_PRESSURE_LOW_ALERT_DEFAULT);
+        break;
+    case ARC_3:
+        alertValue = preferences.getUShort("arcGaugeLA3", FUEL_PRESSURE_LOW_ALERT_DEFAULT);
+        break;
+    case ARC_4:
+        alertValue = preferences.getUShort("arcGaugeLA4", 0);
+        break;
+    case ARC_5:
+        alertValue = preferences.getUShort("arcGaugeLA5", AFR_LOW_ALERT_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return alertValue;
+}

@@ -3611,7 +3611,7 @@
               {
                 "nid": -2043517989,
                 "strtype": "OBJECT/Name",
-                "strval": "MainArc",
+                "strval": "Arc5",
                 "InheritedType": 10
               },
               {
@@ -4002,7 +4002,7 @@
               {
                 "nid": -645845290,
                 "strtype": "OBJECT/Name",
-                "strval": "MainArcValue",
+                "strval": "ArcValue5",
                 "InheritedType": 10
               },
               {
@@ -4303,7 +4303,7 @@
               {
                 "nid": 1282244501,
                 "strtype": "OBJECT/Name",
-                "strval": "MainArcUnit",
+                "strval": "ArcUnit5",
                 "InheritedType": 10
               },
               {
@@ -4615,7 +4615,7 @@
               {
                 "nid": 202236757,
                 "strtype": "OBJECT/Name",
-                "strval": "MainArcName",
+                "strval": "ArcName5",
                 "InheritedType": 10
               },
               {
@@ -4916,7 +4916,7 @@
               {
                 "nid": 779223850,
                 "strtype": "OBJECT/Name",
-                "strval": "mainArcBG",
+                "strval": "ArcBG5",
                 "InheritedType": 10
               },
               {

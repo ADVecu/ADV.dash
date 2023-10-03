@@ -8,6 +8,7 @@
 // Widgets
 #include "widgets/rpms_bar.h"
 #include "widgets/gp_bar.h"
+#include "widgets/gp_arc.h"
 
 // Database instance
 Database db;
@@ -41,6 +42,7 @@ void ui_task(void *pvParameters)
     // Initialize the CAN message struct
     canbus_data_t rx_msg;
     uint8_t i = 0;
+    uint8_t j = 0;
 
     // Initialize all the widgets and set the initial values
     rpmsBar rpmsBar(db.getRpmsRedline(), db.getRpmsWarning());
@@ -74,6 +76,43 @@ void ui_task(void *pvParameters)
                     bar_number_t::BAR_4);
 
     gp_bar gp_bar_array[4] = {gp_Bar_1, gp_Bar_2, gp_Bar_3, gp_Bar_4};
+
+    gp_arc gp_Arc_1(db.getArcGaugeHighWarningValue(arc_number_t::ARC_1),
+                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_1),
+                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_1),
+                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_1),
+                    db.getArcGaugeType(arc_number_t::ARC_1),
+                    arc_number_t::ARC_1);
+    
+    gp_arc gp_Arc_2(db.getArcGaugeHighWarningValue(arc_number_t::ARC_2),
+                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_2),
+                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_2),
+                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_2),
+                    db.getArcGaugeType(arc_number_t::ARC_2),
+                    arc_number_t::ARC_2);
+
+    gp_arc gp_Arc_3(db.getArcGaugeHighWarningValue(arc_number_t::ARC_3),
+                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_3),
+                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_3),
+                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_3),
+                    db.getArcGaugeType(arc_number_t::ARC_3),
+                    arc_number_t::ARC_3);
+
+    gp_arc gp_Arc_4(db.getArcGaugeHighWarningValue(arc_number_t::ARC_4),
+                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_4),
+                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_4),
+                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_4),
+                    db.getArcGaugeType(arc_number_t::ARC_4),
+                    arc_number_t::ARC_4);
+
+    gp_arc gp_Arc_5(db.getArcGaugeHighWarningValue(arc_number_t::ARC_5),
+                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_5),
+                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_5),
+                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_5),
+                    db.getArcGaugeType(arc_number_t::ARC_5),
+                    arc_number_t::ARC_5);
+            
+    gp_arc gp_arc_array[5] = {gp_Arc_1, gp_Arc_2, gp_Arc_3, gp_Arc_4, gp_Arc_5};
 
     // Infinite loop
     while (1)
@@ -115,6 +154,43 @@ void ui_task(void *pvParameters)
                     break;
                 case gauge_type::MANIFOLD_PRESSURE:
                     gp_bar_array[i].setValue(rx_msg.map);
+                    break;
+                }
+            }
+
+            // iterate through the arc gauges and update the values
+            for (j = 0; j < 5; j++){
+                switch (gp_arc_array[j].getGaugeType())
+                {
+                case gauge_type::COOLANT_TEMP:
+                    gp_arc_array[j].setValue(rx_msg.coolant_temp);
+                    break;
+                case gauge_type::OIL_TEMP:
+                    gp_arc_array[j].setValue(rx_msg.aux1_temp);
+                    break;
+                case gauge_type::AIR_TEMP:
+                    gp_arc_array[j].setValue(rx_msg.air_temp);
+                    break;
+                case gauge_type::OIL_PRESSURE:
+                    gp_arc_array[j].setValue(rx_msg.oil_pressure);
+                    break;
+                case gauge_type::FUEL_PRESSURE:
+                    gp_arc_array[j].setValue(rx_msg.fuel_pressure);
+                    break;
+                case gauge_type::BATTERY_VOLTAGE:
+                    gp_arc_array[j].setValue(rx_msg.battery_voltage);
+                    break;
+                case gauge_type::FUEL_LEVEL:
+                    gp_arc_array[j].setValue(rx_msg.fuel_level);
+                    break;
+                case gauge_type::INJ_DUTY:
+                    gp_arc_array[j].setValue(rx_msg.inj_duty);
+                    break;
+                case gauge_type::MANIFOLD_PRESSURE:
+                    gp_arc_array[j].setValue(rx_msg.map);
+                    break;
+                case gauge_type::AFR:
+                    gp_arc_array[j].setValue(rx_msg.o2_sensor);
                     break;
                 }
             }

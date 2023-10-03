@@ -156,6 +156,80 @@ public:
      * @return Low alert value of the bar gauge to be retrieved
      */
     uint16_t getBarGaugeLowAlertValue(bar_number_t gaugeNumber);
+
+    /*******************************************************************************
+     * Arc Gauges Data
+     *******************************************************************************/
+
+    /**
+     * @brief Saves the arc gauge type
+     * @param arcNumber Number of the arc gauge to be saved
+     * @param gaugeType Type of gauge to be saved
+     */
+    void saveArcGaugeType(arc_number_t arcNumber, gauge_type gaugeType);
+
+    /**
+     * @brief Gets the arc gauge type
+     * @param arcNumber Number of the arc gauge to be retrieved
+     * @return gauge_type Type of gauge to be retrieved
+     */
+    gauge_type getArcGaugeType(arc_number_t arcNumber);
+
+    /**
+     * @brief Saves the arc gauge high warning value
+     * @param arcNumber Number of the arc gauge to be saved
+     * @param warningValue High Warning value of the arc gauge to be saved
+     */
+    void saveArcGaugeHighWarningValue(arc_number_t arcNumber, uint16_t warningValue);
+
+    /**
+     * @brief Gets the arc gauge high warning value
+     * @param arcNumber Number of the arc gauge to be retrieved
+     * @return High Warning value of the arc gauge to be retrieved
+     */
+    uint16_t getArcGaugeHighWarningValue(arc_number_t arcNumber);
+
+    /**
+     * @brief Saves the arc gauge high alert value
+     * @param arcNumber Number of the arc gauge to be saved
+     * @param alertValue High alert value of the arc gauge to be saved
+     */
+    void saveArcGaugeHighAlertValue(arc_number_t arcNumber, uint16_t alertValue);
+
+    /**
+     * @brief Gets the arc gauge high alert value
+     * @param arcNumber Number of the arc gauge to be retrieved
+     * @return High alert value of the arc gauge to be retrieved
+     */
+    uint16_t getArcGaugeHighAlertValue(arc_number_t arcNumber);
+
+    /**
+     * @brief Saves the arc gauge low warning value
+     * @param arcNumber Number of the arc gauge to be saved
+     * @param warningValue Low warning value of the arc gauge to be saved
+     */
+    void saveArcGaugeLowWarningValue(arc_number_t arcNumber, uint16_t warningValue);
+
+    /**
+     * @brief Gets the arc gauge low warning value
+     * @param arcNumber Number of the arc gauge to be retrieved
+     * @return Low warning value of the arc gauge to be retrieved
+     */
+    uint16_t getArcGaugeLowWarningValue(arc_number_t arcNumber);
+
+    /**
+     * @brief Saves the arc gauge low alert value
+     * @param arcNumber Number of the arc gauge to be saved
+     * @param alertValue Low alert value of the arc gauge to be saved
+     */
+    void saveArcGaugeLowAlertValue(arc_number_t arcNumber, uint16_t alertValue);
+
+    /**
+     * @brief Gets the arc gauge low alert value
+     * @param arcNumber Number of the arc gauge to be retrieved
+     * @return Low alert value of the arc gauge to be retrieved
+     */
+    uint16_t getArcGaugeLowAlertValue(arc_number_t arcNumber);
 };
 
 #endif // __DATABASE__
