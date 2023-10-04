@@ -20,7 +20,7 @@ void rpmsBar::setRPMs(uint16_t rpm)
     {
         _previousRpm = rpm;
         // Map the rpm value to the bar length
-        _ui_bar_set_property(ui_RpmsBar, _UI_BAR_PROPERTY_VALUE, map(rpm, 0, 10000, 0, 100));
+        _ui_bar_set_property(ui_RpmsBar, _UI_BAR_PROPERTY_VALUE, map(rpm, 0, 10000, 0, 1000));
         _ui_label_set_property(ui_RpmsValue, _UI_LABEL_PROPERTY_TEXT, String(rpm).c_str());
 
         if (rpm >= _rpmsRedline)

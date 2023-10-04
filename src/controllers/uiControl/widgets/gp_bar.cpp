@@ -153,19 +153,27 @@ void gp_bar::setValue(uint16_t value)
 {
     if (_previousValue != value)
     {
-        _previousValue = value;    
-        
+        _previousValue = value;
+
         // Set the value label
         switch (_gaugeType)
         {
         case gauge_type::BATTERY_VOLTAGE:
-             
-             if(batteryTimer.cycleTrigger(1000)){
+
+            if (batteryTimer.cycleTrigger(1000))
+            {
                 _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
                 _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String((float)value / 1000.0, 1).c_str());
-             }
+            }
             break;
-        
+
+        case gauge_type::MANIFOLD_PRESSURE:
+        case gauge_type::OIL_PRESSURE:
+        case gauge_type::FUEL_FLOW:
+            _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
+            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String((float)value * 0.0333, 1).c_str());
+            break;
+
         default:
             _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
             _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(value).c_str());

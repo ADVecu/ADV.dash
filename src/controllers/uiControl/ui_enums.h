@@ -33,7 +33,13 @@ enum gauge_type
     BATTERY_VOLTAGE,
     FUEL_LEVEL,
     INJ_DUTY,
-    AFR
+    AFR,
+    WARNING_COUNT,
+    ING_TIMING,
+    INJ_PWM,
+    FUEL_TRIM,
+    FUEL_FLOW,
+    FUEL_USED
 
 };
 
@@ -56,8 +62,21 @@ typedef enum arc_number
     ARC_1 = 1, // Left left arc
     ARC_2,     // left right arc
     ARC_3,     // Right left arc
-    ARC_4,      // Right Right arc
-    ARC_5,      // Bottom center arc
+    ARC_4,     // Right Right arc
+    ARC_5,     // Bottom center arc
 } arc_number_t;
+
+/**
+ * @brief Panel widget number
+ */
+typedef enum panel_number
+{
+    PANEL_1 = 1, // Left 1 panel
+    PANEL_2,     // left 2 panel
+    PANEL_3,     // Left 3 panel
+    PANEL_4,     // Right 1 panel
+    PANEL_5,     // Right 2 panel
+    PANEL_6,     // Right 3 panel
+} panel_number_t;
 
 #endif // _UI_ENUMS_H

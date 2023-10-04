@@ -50,6 +50,13 @@
 #define AFR_LOW_WARNING_DEFAULT 100
 #define AFR_LOW_ALERT_DEFAULT 90
 
+#define WARNING_COUNT_ALERT_DEFAULT 5
+#define INJ_PWM_ALERT_DEFAULT 15
+#define ING_TIMING_ALERT_DEFAULT 30
+#define FUEL_FLOW_ALERT_DEFAULT 100
+#define FUEL_TRIM_ALERT_DEFAULT 150
+#define FUEL_USED_ALERT_DEFAULT 100
+
 /**
  * @brief Database class
  * Is used to store user settings in the flash memory
@@ -230,6 +237,38 @@ public:
      * @return Low alert value of the arc gauge to be retrieved
      */
     uint16_t getArcGaugeLowAlertValue(arc_number_t arcNumber);
+
+    /*******************************************************************************
+     * Panel Data
+     *******************************************************************************/
+
+    /**
+     * @brief Saves the panel gauge type
+     * @param panelNumber Number of the panel gauge to be saved
+     * @param gaugeType Type of gauge to be saved
+     */
+    void savePanelGaugeType(panel_number_t panelNumber, gauge_type gaugeType);
+
+    /**
+     * @brief Gets the panel gauge type
+     * @param panelNumber Number of the panel gauge to be retrieved
+     * @return gauge_type Type of gauge to be retrieved
+     */
+    gauge_type getPanelGaugeType(panel_number_t panelNumber);
+
+    /**
+     * @brief Saves the panel gauge alert value
+     * @param panelNumber Number of the panel gauge to be saved
+     * @param alertValue Alert value of the panel gauge to be saved
+     */
+    void savePanelGaugeAlertValue(panel_number_t panelNumber, uint16_t alertValue);
+
+    /**
+     * @brief Gets the panel gauge alert value
+     * @param panelNumber Number of the panel gauge to be retrieved
+     * @return Alert value of the panel gauge to be retrieved
+     */
+    uint16_t getPanelGaugeAlertValue(panel_number_t panelNumber);
 };
 
 #endif // __DATABASE__

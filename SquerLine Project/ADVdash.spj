@@ -1052,7 +1052,7 @@
                 "strtype": "BAR/Range",
                 "intarray": [
                   0,
-                  100
+                  1000
                 ],
                 "InheritedType": 7
               },
@@ -1759,6 +1759,12 @@
                     "strtype": "_style/StyleState",
                     "strval": "DEFAULT",
                     "childs": [
+                      {
+                        "nid": 1581788352,
+                        "strtype": "_style/Text_Align",
+                        "strval": "RIGHT",
+                        "InheritedType": 3
+                      },
                       {
                         "nid": 901470124,
                         "strtype": "_style/Text_Font",
@@ -13650,7 +13656,7 @@
               {
                 "nid": 46421122,
                 "strtype": "LABEL/Text",
-                "strval": "C",
+                "strval": "°C",
                 "InheritedType": 10
               },
               {
@@ -31588,7 +31594,7 @@
     "theme_color2": 0,
     "exportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\src\\UI",
     "projectExportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\SquerLine Project",
-    "backup_cnt": 662,
+    "backup_cnt": 664,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "CPP_FILE",

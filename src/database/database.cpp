@@ -430,3 +430,91 @@ uint16_t Database::getArcGaugeLowAlertValue(arc_number_t gaugeNumber)
 
     return alertValue;
 }
+
+/*******************************************************************************
+ * Panel Gauges Data
+ ********************************************************************************/
+
+void Database::savePanelGaugeType(panel_number_t gaugeNumber, gauge_type gaugeType)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUChar(String("panelNumber" + String(gaugeNumber)).c_str(), (uint8_t)gaugeType);
+
+    preferences.end();
+}
+
+gauge_type Database::getPanelGaugeType(panel_number_t gaugeNumber)
+{
+    gauge_type gaugeType;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case PANEL_1:
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber1", (uint8_t)gauge_type::WARNING_COUNT);
+        break;
+    case PANEL_2:
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber2", (uint8_t)gauge_type::INJ_PWM);
+        break;
+    case PANEL_3:
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber3", (uint8_t)gauge_type::ING_TIMING);
+        break;
+    case PANEL_4:
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber4", (uint8_t)gauge_type::FUEL_FLOW);
+        break;
+    case PANEL_5:
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber5", (uint8_t)gauge_type::FUEL_USED);
+        break;
+    case PANEL_6:
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber6", (uint8_t)gauge_type::FUEL_TRIM);
+        break;
+    }
+
+    preferences.end();
+
+    return gaugeType;
+}
+
+void Database::savePanelGaugeAlertValue(panel_number_t gaugeNumber, uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+
+    preferences.putUShort(String("panelNumberA" + String(gaugeNumber)).c_str(), alertValue);
+
+    preferences.end();
+}
+
+uint16_t Database::getPanelGaugeAlertValue(panel_number_t gaugeNumber)
+{
+    uint16_t alertValue;
+
+    preferences.begin(DATABASE_NAME, true);
+
+    switch (gaugeNumber)
+    {
+    case PANEL_1:
+        alertValue = preferences.getUShort("panelNumberA1", WARNING_COUNT_ALERT_DEFAULT);
+        break;
+    case PANEL_2:
+        alertValue = preferences.getUShort("panelNumberA2", INJ_PWM_ALERT_DEFAULT);
+        break;
+    case PANEL_3:
+        alertValue = preferences.getUShort("panelNumberA1", ING_TIMING_ALERT_DEFAULT);
+        break;
+    case PANEL_4:
+        alertValue = preferences.getUShort("panelNumberA4", FUEL_FLOW_ALERT_DEFAULT);
+        break;
+    case PANEL_5:
+        alertValue = preferences.getUShort("panelNumberA5", FUEL_USED_ALERT_DEFAULT);
+        break;
+    case PANEL_6:
+        alertValue = preferences.getUShort("panelNumberA6", FUEL_TRIM_ALERT_DEFAULT);
+        break;
+    }
+
+    preferences.end();
+
+    return alertValue;
+}

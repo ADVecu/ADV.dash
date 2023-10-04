@@ -4,12 +4,16 @@
         "barscale",
         "barscalered",
         "canbus",
+        "FUELP",
         "gpio",
         "KBITS",
+        "OILP",
+        "OILT",
         "rpms",
         "Squareline",
         "twai",
-        "TWAI"
+        "TWAI",
+        "WTEMP"
     ],
     "cmake.configureOnOpen": false
 }
