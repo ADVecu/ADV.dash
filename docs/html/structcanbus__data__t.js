@@ -1,0 +1,28 @@
+var structcanbus__data__t =
+[
+    [ "air_temp", "structcanbus__data__t.html#a0744f228224ccbf2d307cc6e909a7e56", null ],
+    [ "aux1_temp", "structcanbus__data__t.html#adf045a6d9ef7b531355db986d9711af2", null ],
+    [ "aux2_temp", "structcanbus__data__t.html#a9ca930cb2020d8550a74098c51ee8e08", null ],
+    [ "battery_voltage", "structcanbus__data__t.html#aff4cd44deb76c47e3c69c4e0e177aa44", null ],
+    [ "check_engine_act", "structcanbus__data__t.html#a90ed5f58160f4202eb1e9bab7fb2ffae", null ],
+    [ "coolant_temp", "structcanbus__data__t.html#a543ac0a4301d9b959c130b5916368357", null ],
+    [ "current_gear", "structcanbus__data__t.html#a28b69d57d429d024b9ae78402b0ba4f7", null ],
+    [ "fuel_flow", "structcanbus__data__t.html#a0240abefe08a247bd1b379fab5e120ab", null ],
+    [ "fuel_level", "structcanbus__data__t.html#a5e9a4f318fe4bc84b00c8cdedf57f52f", null ],
+    [ "fuel_pressure", "structcanbus__data__t.html#ad7eb044f13cde24de657e6a112b2b8fc", null ],
+    [ "fuel_pump_act", "structcanbus__data__t.html#a71bed63942f30504e6aa9b2a298af478", null ],
+    [ "fuel_trim", "structcanbus__data__t.html#a2b8703f2764db5d6241ac9869b85c341", null ],
+    [ "fuel_used", "structcanbus__data__t.html#af7c6d9255bf15d06a34801f50ac5a0eb", null ],
+    [ "ignition_timing", "structcanbus__data__t.html#a4d99217cfaa108756692d661fa154d11", null ],
+    [ "inj_duty", "structcanbus__data__t.html#a1054f7626f76ceaa467c7776db4d3ae7", null ],
+    [ "inj_pwm", "structcanbus__data__t.html#ad9e26b094e62bcd5ddd1a8d8446b620c", null ],
+    [ "last_error", "structcanbus__data__t.html#a768de039aa20c86d6e328bc545dc5a4e", null ],
+    [ "main_relay_act", "structcanbus__data__t.html#a43a2b4a4723017d7305d5d0a4cda54cb", null ],
+    [ "map", "structcanbus__data__t.html#a8c415c39f9e7fda9331894c7b4c91bd6", null ],
+    [ "o2_sensor", "structcanbus__data__t.html#a28db02c437c9118e1ab89109dbe28d60", null ],
+    [ "oil_pressure", "structcanbus__data__t.html#a30e9a93ef3feb59031a402f8cb8be3d1", null ],
+    [ "rpms", "structcanbus__data__t.html#ae02fd5c2352682364fa102c3a9339b5c", null ],
+    [ "speed", "structcanbus__data__t.html#a8f1587f627a52a37f04d7c02b4b8aaf2", null ],
+    [ "tps", "structcanbus__data__t.html#aabe66a3de7c2c82d5ada00b9b3b3f30f", null ],
+    [ "warning_counter", "structcanbus__data__t.html#af150e362669ae2454a41f0fc3459ffc1", null ]
+];
