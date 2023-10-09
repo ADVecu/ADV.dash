@@ -115,19 +115,57 @@ lv_obj_t *ui_CriticalAlertPanel;
 lv_obj_t *ui_CriticalAlertText;
 
 
-// SCREEN: ui_Screen2
-void ui_Screen2_screen_init(void);
-void ui_event_Screen2( lv_event_t * e);
-lv_obj_t *ui_Screen2;
-lv_obj_t *ui_Chart1;
+// SCREEN: ui_GraphScreen
+void ui_GraphScreen_screen_init(void);
+void ui_event_GraphScreen( lv_event_t * e);
+lv_obj_t *ui_GraphScreen;
 lv_obj_t *ui_Chart2;
 
 
-// SCREEN: ui_Screen3
-void ui_Screen3_screen_init(void);
-lv_obj_t *ui_Screen3;
+// SCREEN: ui_SettingsScreen
+void ui_SettingsScreen_screen_init(void);
+lv_obj_t *ui_SettingsScreen;
+lv_obj_t *ui_Roller;
+lv_obj_t *ui_SetingsPanel;
+lv_obj_t *ui_SelectPanel;
+lv_obj_t *ui_GaugeNumberD;
+lv_obj_t *ui_GaugeTypeD;
+lv_obj_t *ui_UnitD;
+lv_obj_t *ui_HighAlertPanel;
+lv_obj_t *ui_HWAPanel;
+lv_obj_t *ui_HWATittle;
+lv_obj_t *ui_HWALabel;
+void ui_event_HWASlider( lv_event_t * e);
+lv_obj_t *ui_HWASlider;
+lv_obj_t *ui_HDAPanel;
+lv_obj_t *ui_HDATittle;
+lv_obj_t *ui_HDALabel;
+void ui_event_HDASlider( lv_event_t * e);
+lv_obj_t *ui_HDASlider;
+lv_obj_t *ui_LowAlertPanel;
+lv_obj_t *ui_LWAPanel;
+lv_obj_t *ui_LWATittle;
+lv_obj_t *ui_LWALabel;
+void ui_event_LWASlider( lv_event_t * e);
+lv_obj_t *ui_LWASlider;
+lv_obj_t *ui_LDAPanel;
+lv_obj_t *ui_LDATittle;
+lv_obj_t *ui_LDALabel;
+void ui_event_LDASlider( lv_event_t * e);
+lv_obj_t *ui_LDASlider;
+lv_obj_t *ui_Panel7;
+void ui_event_SaveBTN( lv_event_t * e);
+lv_obj_t *ui_SaveBTN;
+lv_obj_t *ui_Label3;
+void ui_event_ResetBTN( lv_event_t * e);
+lv_obj_t *ui_ResetBTN;
+lv_obj_t *ui_Label1;
+void ui_event_ExitBtn( lv_event_t * e);
+lv_obj_t *ui_ExitBtn;
+lv_obj_t *ui_Label4;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_advecu[1] = {&ui_img_advecu200_png};
+const lv_img_dsc_t *ui_imgset_usersett[1] = {&ui_img_usersett50_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -144,7 +182,11 @@ void ui_event_MainScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT  ) {
 lv_indev_wait_release(lv_indev_get_act());
-      _ui_screen_change( &ui_Screen2, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen2_screen_init);
+      _ui_screen_change( &ui_GraphScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_GraphScreen_screen_init);
+      _ui_screen_delete( &ui_MainScreen);
+}
+if ( event_code == LV_EVENT_LONG_PRESSED) {
+      _ui_screen_change( &ui_SettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_SettingsScreen_screen_init);
       _ui_screen_delete( &ui_MainScreen);
 }
 }
@@ -154,12 +196,55 @@ if ( event_code == LV_EVENT_RELEASED) {
       _ui_flag_modify( ui_CriticalAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
 }
 }
-void ui_event_Screen2( lv_event_t * e) {
+void ui_event_GraphScreen( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT  ) {
 lv_indev_wait_release(lv_indev_get_act());
       _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
-      _ui_screen_delete( &ui_Screen2);
+      _ui_screen_delete( &ui_GraphScreen);
+}
+}
+void ui_event_HWASlider( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      _ui_slider_set_text_value( ui_HWALabel, target, "", "");
+}
+}
+void ui_event_HDASlider( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      _ui_slider_set_text_value( ui_HDALabel, target, "", "");
+}
+}
+void ui_event_LWASlider( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      _ui_slider_set_text_value( ui_LWALabel, target, "", "");
+}
+}
+void ui_event_LDASlider( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_VALUE_CHANGED) {
+      _ui_slider_set_text_value( ui_LDALabel, target, "", "");
+}
+}
+void ui_event_SaveBTN( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      saveSettings( e );
+}
+}
+void ui_event_ResetBTN( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_CLICKED) {
+      ResetAction( e );
+}
+}
+void ui_event_ExitBtn( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_RELEASED) {
+      _ui_screen_change( &ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
+      _ui_screen_delete( &ui_SettingsScreen);
 }
 }
 
@@ -172,8 +257,8 @@ lv_theme_t *theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE
 lv_disp_set_theme(dispp, theme);
 ui_WelcomeScreen_screen_init();
 ui_MainScreen_screen_init();
-ui_Screen2_screen_init();
-ui_Screen3_screen_init();
+ui_GraphScreen_screen_init();
+ui_SettingsScreen_screen_init();
 ui____initial_actions0 = lv_obj_create(NULL);
 lv_disp_load_scr( ui_WelcomeScreen);
 }

@@ -17,6 +17,8 @@
 #define AFR_MIN_VALUE 100
 #define MANIFOLD_MAX_VALUE 250
 #define MANIFOLD_MIN_VALUE 0
+#define LEVEL_MAX_VALUE 100
+#define LEVEL_MIN_VALUE 0
 
 /**
  * @brief Define the type of gauge to display
@@ -46,13 +48,13 @@ enum gauge_type
 /**
  * @brief Bar widget number
  */
-typedef enum bar_number
+enum bar_number_t
 {
     BAR_1 = 1, // Top Left bar
     BAR_2,     // Top Right bar
     BAR_3,     // Bottom Left bar
     BAR_4      // Bottom Right bar
-} bar_number_t;
+};
 
 /**
  * @brief Arc widget number

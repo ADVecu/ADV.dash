@@ -116,15 +116,52 @@ extern lv_obj_t *ui_Button1;
 extern lv_obj_t *ui_ButtonLabel1;
 extern lv_obj_t *ui_CriticalAlertPanel;
 extern lv_obj_t *ui_CriticalAlertText;
-// SCREEN: ui_Screen2
-void ui_Screen2_screen_init(void);
-void ui_event_Screen2( lv_event_t * e);
-extern lv_obj_t *ui_Screen2;
-extern lv_obj_t *ui_Chart1;
+// SCREEN: ui_GraphScreen
+void ui_GraphScreen_screen_init(void);
+void ui_event_GraphScreen( lv_event_t * e);
+extern lv_obj_t *ui_GraphScreen;
 extern lv_obj_t *ui_Chart2;
-// SCREEN: ui_Screen3
-void ui_Screen3_screen_init(void);
-extern lv_obj_t *ui_Screen3;
+// SCREEN: ui_SettingsScreen
+void ui_SettingsScreen_screen_init(void);
+extern lv_obj_t *ui_SettingsScreen;
+extern lv_obj_t *ui_Roller;
+extern lv_obj_t *ui_SetingsPanel;
+extern lv_obj_t *ui_SelectPanel;
+extern lv_obj_t *ui_GaugeNumberD;
+extern lv_obj_t *ui_GaugeTypeD;
+extern lv_obj_t *ui_UnitD;
+extern lv_obj_t *ui_HighAlertPanel;
+extern lv_obj_t *ui_HWAPanel;
+extern lv_obj_t *ui_HWATittle;
+extern lv_obj_t *ui_HWALabel;
+void ui_event_HWASlider( lv_event_t * e);
+extern lv_obj_t *ui_HWASlider;
+extern lv_obj_t *ui_HDAPanel;
+extern lv_obj_t *ui_HDATittle;
+extern lv_obj_t *ui_HDALabel;
+void ui_event_HDASlider( lv_event_t * e);
+extern lv_obj_t *ui_HDASlider;
+extern lv_obj_t *ui_LowAlertPanel;
+extern lv_obj_t *ui_LWAPanel;
+extern lv_obj_t *ui_LWATittle;
+extern lv_obj_t *ui_LWALabel;
+void ui_event_LWASlider( lv_event_t * e);
+extern lv_obj_t *ui_LWASlider;
+extern lv_obj_t *ui_LDAPanel;
+extern lv_obj_t *ui_LDATittle;
+extern lv_obj_t *ui_LDALabel;
+void ui_event_LDASlider( lv_event_t * e);
+extern lv_obj_t *ui_LDASlider;
+extern lv_obj_t *ui_Panel7;
+void ui_event_SaveBTN( lv_event_t * e);
+extern lv_obj_t *ui_SaveBTN;
+extern lv_obj_t *ui_Label3;
+void ui_event_ResetBTN( lv_event_t * e);
+extern lv_obj_t *ui_ResetBTN;
+extern lv_obj_t *ui_Label1;
+void ui_event_ExitBtn( lv_event_t * e);
+extern lv_obj_t *ui_ExitBtn;
+extern lv_obj_t *ui_Label4;
 extern lv_obj_t *ui____initial_actions0;
 
 LV_IMG_DECLARE( ui_img_advecu200_png);   // assets\Advecu200.png
@@ -133,6 +170,7 @@ LV_IMG_DECLARE( ui_img_arcscalenored_png);   // assets\arcScaleNoRed.png
 LV_IMG_DECLARE( ui_img_barscale_png);   // assets\barScale.png
 LV_IMG_DECLARE( ui_img_arcscale_png);   // assets\arcScale.png
 LV_IMG_DECLARE( ui_img_barscalered_png);   // assets\barScaleRed.png
+LV_IMG_DECLARE( ui_img_usersett50_png);   // assets\userSett50.png
 
 LV_FONT_DECLARE( ui_font_ArameBold100);
 LV_FONT_DECLARE( ui_font_ArameBold14);

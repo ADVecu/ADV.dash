@@ -4,6 +4,8 @@
 #include "database/database.h"
 #include <Arduino.h>
 
+extern Database db;
+
 // UI task
 void ui_task(void *pvParameters);
 

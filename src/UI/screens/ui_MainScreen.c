@@ -39,7 +39,6 @@ lv_obj_set_style_bg_opa(ui_RedLineBar, 255, LV_PART_INDICATOR| LV_STATE_DEFAULT)
 lv_obj_set_style_blend_mode(ui_RedLineBar, LV_BLEND_MODE_MULTIPLY, LV_PART_INDICATOR| LV_STATE_DEFAULT);
 
 ui_RpmsBar = lv_bar_create(ui_MainScreen);
-lv_bar_set_range(ui_RpmsBar, 0,1000);
 lv_obj_set_width( ui_RpmsBar, 597);
 lv_obj_set_height( ui_RpmsBar, 30);
 lv_obj_set_x( ui_RpmsBar, -88 );
@@ -512,7 +511,7 @@ lv_obj_set_style_text_font(ui_ArcName3, &ui_font_ArameBold14, LV_PART_MAIN| LV_S
 
 ui_ArcBG3 = lv_img_create(ui_MainScreen);
 lv_img_set_src(ui_ArcBG3, &ui_img_arcscale_png);
-lv_obj_set_width( ui_ArcBG3, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_width( ui_ArcBG3, LV_SIZE_CONTENT);  /// -26
 lv_obj_set_height( ui_ArcBG3, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_ArcBG3, 150 );
 lv_obj_set_y( ui_ArcBG3, -26 );

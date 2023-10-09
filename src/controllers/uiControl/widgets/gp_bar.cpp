@@ -25,28 +25,28 @@ gp_bar::gp_bar(uint16_t highWarningValue,
     // Assign the bar widget, bar name and bar unit
     switch (bar)
     {
-    case bar_number::BAR_1:
+    case bar_number_t::BAR_1:
         _bar = ui_Bar1;
         _barUnit = ui_BarUnit1;
         _barName = ui_BarName1;
         _barBgImg = ui_BarBG1;
         _barValue = ui_BarValue1;
         break;
-    case bar_number::BAR_2:
+    case bar_number_t::BAR_2:
         _bar = ui_Bar2;
         _barUnit = ui_BarUnit2;
         _barName = ui_BarName2;
         _barBgImg = ui_BarBG2;
         _barValue = ui_BarValue2;
         break;
-    case bar_number::BAR_3:
+    case bar_number_t::BAR_3:
         _bar = ui_Bar3;
         _barUnit = ui_BarUnit3;
         _barName = ui_BarName3;
         _barBgImg = ui_BarBG3;
         _barValue = ui_BarValue3;
         break;
-    case bar_number::BAR_4:
+    case bar_number_t::BAR_4:
         _bar = ui_Bar4;
         _barUnit = ui_BarUnit4;
         _barName = ui_BarName4;

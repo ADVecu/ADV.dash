@@ -171,6 +171,12 @@ void gp_arc::setValue(uint16_t value)
                 _ui_label_set_property(_arcValue, _UI_LABEL_PROPERTY_TEXT, String((float)value / 1000.0, 1).c_str());
             }
             break;
+        case gauge_type::MANIFOLD_PRESSURE:
+        case gauge_type::OIL_PRESSURE:
+        case gauge_type::FUEL_FLOW:
+            lv_arc_set_value(_arc, map(value, _minValue, _maxValue, 0, 100));
+            _ui_label_set_property(_arcValue, _UI_LABEL_PROPERTY_TEXT, String((float)value * 0.0333, 1).c_str());
+            break;
 
         default:
             lv_arc_set_value(_arc, map(value, _minValue, _maxValue, 0, 100));
