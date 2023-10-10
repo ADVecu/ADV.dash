@@ -5,6 +5,7 @@
 #include "../canBus/can_bus.h"
 #include "ui_enums.h"
 #include "ui_strings.h"
+#include "unit_manager.h"
 
 // Widgets
 #include "widgets/rpms_bar.h"
@@ -54,8 +55,12 @@ void ui_task(void *pvParameters)
     bool firstTimePanels = true;
     bool barChanged = true;
     bool barTypeChanged = true;
+    bool arcChanged = true;
+    bool arcTypeChanged = true;
     uint8_t previousBarNumber = 20;
     uint8_t previousBarType = 20;
+    uint8_t previousArcNumber = 20;
+    uint8_t previousArcType = 20;
     settings_strings settings_strings;
 
     // Initialize all the widgets and set the initial values
@@ -315,6 +320,7 @@ void ui_task(void *pvParameters)
                 {
                     _ui_flag_modify(ui_SelectPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
                     _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+                    _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
                     _ui_label_set_property(ui_HWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.RpmsWAText.c_str());
                     _ui_label_set_property(ui_HDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.RpmsDAText.c_str());
                     lv_slider_set_range(ui_HWASlider, 0, 10000);
@@ -329,7 +335,7 @@ void ui_task(void *pvParameters)
                     firstTimePanels = true;
                 }
                 break;
-            case 1: // Bars
+            case 1:{ // Bars
 
                 if (firstTimeBars)
                 {
@@ -366,9 +372,6 @@ void ui_task(void *pvParameters)
                 // Set the options for each gauge type possible for BAR 1
                 if (barChanged || barTypeChanged)
                 {
-                    Serial.println("selectedGaugeNum: " + String(selectedGaugeNum));
-                    Serial.println("selectedGaugeType: " + String(selectedGaugeType));
-                    Serial.println("rawBarNumber: " + String(rawBarNumber));
                     switch (selectedGaugeType)
                     {
                     case gauge_type::COOLANT_TEMP:
@@ -388,23 +391,24 @@ void ui_task(void *pvParameters)
 
                         // Change the color of the Low Warning Alerts in this case to blue
                         lv_obj_set_style_bg_color(ui_LWAPanel, lv_color_hex(0x050154), LV_PART_MAIN | LV_STATE_DEFAULT);
+
                         lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0x0000FF), LV_PART_INDICATOR | LV_STATE_DEFAULT);
                         lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0x0000FF), LV_PART_KNOB | LV_STATE_DEFAULT);
 
                         // Set the range for the sliders
-                        lv_slider_set_range(ui_HWASlider, TEMP_MIN_VALUE, TEMP_MAX_VALUE);
-                        lv_slider_set_range(ui_HDASlider, TEMP_MIN_VALUE, TEMP_MAX_VALUE);
-                        lv_slider_set_range(ui_LWASlider, TEMP_MIN_VALUE, TEMP_MAX_VALUE);
+                        lv_slider_set_range(ui_HWASlider, getTemp_Number(TEMP_MIN_VALUE), getTemp_Number(TEMP_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getTemp_Number(TEMP_MIN_VALUE), getTemp_Number(TEMP_MAX_VALUE));
+                        lv_slider_set_range(ui_LWASlider, getTemp_Number(TEMP_MIN_VALUE), getTemp_Number(TEMP_MAX_VALUE));
 
                         // Set the values for the sliders from the database
-                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighWarningValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighAlertValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeLowWarningValue(selectedGaugeNum));
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getTemp_Number(db.getBarGaugeHighWarningValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getTemp_Number(db.getBarGaugeHighAlertValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, getTemp_Number(db.getBarGaugeLowWarningValue(selectedGaugeNum)));
 
                         // Set the labels for the sliders
-                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeLowWarningValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getTemp_String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getTemp_String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, getTemp_String(db.getBarGaugeLowWarningValue(selectedGaugeNum)).c_str());
 
                         break;
 
@@ -429,22 +433,22 @@ void ui_task(void *pvParameters)
                         lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_KNOB | LV_STATE_DEFAULT);
 
                         // Set the range for the sliders
-                        lv_slider_set_range(ui_HWASlider, PRESSURE_MIN_VALUE, PRESSURE_MAX_VALUE);
-                        lv_slider_set_range(ui_HDASlider, PRESSURE_MIN_VALUE, PRESSURE_MAX_VALUE);
-                        lv_slider_set_range(ui_LWASlider, PRESSURE_MIN_VALUE, PRESSURE_MAX_VALUE);
-                        lv_slider_set_range(ui_LDASlider, PRESSURE_MIN_VALUE, PRESSURE_MAX_VALUE);
+                        lv_slider_set_range(ui_HWASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
+                        lv_slider_set_range(ui_LWASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
+                        lv_slider_set_range(ui_LDASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
 
                         // Set the values for the sliders from the database
-                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighWarningValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighAlertValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeLowWarningValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_LDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeLowAlertValue(selectedGaugeNum));
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getBarGaugeHighWarningValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getBarGaugeHighAlertValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getBarGaugeLowWarningValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_LDASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getBarGaugeLowAlertValue(selectedGaugeNum)));
 
                         // Set the labels for the sliders
-                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeLowWarningValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_LDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeLowAlertValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getBarGaugeLowWarningValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_LDALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getBarGaugeLowAlertValue(selectedGaugeNum)).c_str());
 
                         break;
 
@@ -466,20 +470,22 @@ void ui_task(void *pvParameters)
                         lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_KNOB | LV_STATE_DEFAULT);
 
                         // Set the range for the sliders
-                        lv_slider_set_range(ui_HWASlider, MANIFOLD_MIN_VALUE, MANIFOLD_MAX_VALUE);
-                        lv_slider_set_range(ui_HDASlider, MANIFOLD_MIN_VALUE, MANIFOLD_MAX_VALUE);
+                        lv_slider_set_range(ui_HWASlider, getPressure_Number(MANIFOLD_MIN_VALUE), getPressure_Number(MANIFOLD_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getPressure_Number(MANIFOLD_MIN_VALUE), getPressure_Number(MANIFOLD_MAX_VALUE));
 
                         // Set the values for the sliders from the database
-                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighWarningValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighAlertValue(selectedGaugeNum));
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getBarGaugeHighWarningValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getBarGaugeHighAlertValue(selectedGaugeNum)));
 
                         // Set the labels for the sliders
-                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
 
                         break;
 
                     case gauge_type::BATTERY_VOLTAGE:
+
+                        // TODO: add different callback fuctions to set the values for the sliders as voltage whit decimals
 
                         // Set the flags
                         _ui_flag_modify(ui_LDAPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
@@ -499,22 +505,22 @@ void ui_task(void *pvParameters)
                         lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_KNOB | LV_STATE_DEFAULT);
 
                         // Set the range for the sliders
-                        lv_slider_set_range(ui_HWASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
-                        lv_slider_set_range(ui_HDASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
-                        lv_slider_set_range(ui_LWASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
-                        lv_slider_set_range(ui_LDASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
+                        lv_slider_set_range(ui_HWASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
+                        lv_slider_set_range(ui_LWASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
+                        lv_slider_set_range(ui_LDASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
 
                         // Set the values for the sliders from the database
-                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighWarningValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeHighAlertValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeLowWarningValue(selectedGaugeNum));
-                        _ui_slider_set_property(ui_LDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getBarGaugeLowAlertValue(selectedGaugeNum));
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getBarGaugeHighWarningValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getBarGaugeHighAlertValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getBarGaugeLowWarningValue(selectedGaugeNum)));
+                        _ui_slider_set_property(ui_LDASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getBarGaugeLowAlertValue(selectedGaugeNum)));
 
                         // Set the labels for the sliders
-                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeLowWarningValue(selectedGaugeNum)).c_str());
-                        _ui_label_set_property(ui_LDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getBarGaugeLowAlertValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getBarGaugeHighWarningValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getBarGaugeHighAlertValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getBarGaugeLowWarningValue(selectedGaugeNum)).c_str());
+                        _ui_label_set_property(ui_LDALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getBarGaugeLowAlertValue(selectedGaugeNum)).c_str());
 
                         break;
 
@@ -585,7 +591,273 @@ void ui_task(void *pvParameters)
                 firstTimePanels = true;
                 barChanged = false;
                 barTypeChanged = false;
+                arcChanged = true;
+                arcTypeChanged = true;
+            }
                 break;
+
+            
+
+            case 2: {// Arcs
+
+                if (firstTimeArcs)
+                {
+                    // Show the select panel
+                    _ui_flag_modify(ui_SelectPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+                    // Setup the dropdowns
+                    lv_dropdown_clear_options(ui_GaugeNumberD);
+                    lv_dropdown_set_options(ui_GaugeNumberD, arc_number_options.c_str());
+                    lv_dropdown_set_selected(ui_GaugeNumberD, 0);
+                    lv_dropdown_clear_options(ui_GaugeTypeD);
+                    lv_dropdown_set_options(ui_GaugeTypeD, arc_options.c_str());
+                    lv_dropdown_set_selected(ui_GaugeTypeD, (int)(db.getArcGaugeType(arc_number::ARC_1)));
+                }
+
+                uint8_t rawArcNumber = (uint8_t)(lv_dropdown_get_selected(ui_GaugeNumberD) + 1);
+                arc_number selectedGaugeNumArc = (arc_number)rawArcNumber;
+                gauge_type selectedGaugeTypeArc = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
+
+                if (previousArcNumber != lv_dropdown_get_selected(ui_GaugeNumberD))
+                {
+                    arcChanged = true;
+                    previousArcNumber = lv_dropdown_get_selected(ui_GaugeNumberD);
+                    lv_dropdown_set_selected(ui_GaugeTypeD, (int)(db.getArcGaugeType(selectedGaugeNumArc)));
+                }
+
+                if (previousArcType != lv_dropdown_get_selected(ui_GaugeTypeD) || arcChanged)
+                {
+                    arcTypeChanged = true;
+                    previousArcType = lv_dropdown_get_selected(ui_GaugeTypeD);
+                    selectedGaugeTypeArc = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
+                }
+
+                // Set the options for each gauge type possible for BAR 1
+                if (arcChanged || arcTypeChanged)
+                {
+                    switch (selectedGaugeTypeArc)
+                    {
+                    case gauge_type::COOLANT_TEMP:
+                    case gauge_type::OIL_TEMP:
+                    case gauge_type::AIR_TEMP:
+
+                        // Set the flags
+                        _ui_flag_modify(ui_LDAPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+                        _ui_flag_modify(ui_LDASlider, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+                        _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+                        // Set the titles for the alerts and warnings
+                        _ui_label_set_property(ui_HWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.HWAText.c_str());
+                        _ui_label_set_property(ui_HDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.HAText.c_str());
+                        _ui_label_set_property(ui_LWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.TempLWAText.c_str());
+
+                        // Change the color of the Low Warning Alerts in this case to blue
+                        lv_obj_set_style_bg_color(ui_LWAPanel, lv_color_hex(0x050154), LV_PART_MAIN | LV_STATE_DEFAULT);
+
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0x0000FF), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0x0000FF), LV_PART_KNOB | LV_STATE_DEFAULT);
+
+                        // Set the range for the sliders
+                        lv_slider_set_range(ui_HWASlider, getTemp_Number(TEMP_MIN_VALUE), getTemp_Number(TEMP_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getTemp_Number(TEMP_MIN_VALUE), getTemp_Number(TEMP_MAX_VALUE));
+                        lv_slider_set_range(ui_LWASlider, getTemp_Number(TEMP_MIN_VALUE), getTemp_Number(TEMP_MAX_VALUE));
+
+                        // Set the values for the sliders from the database
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getTemp_Number(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getTemp_Number(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, getTemp_Number(db.getArcGaugeLowWarningValue(selectedGaugeNumArc)));
+
+                        // Set the labels for the sliders
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getTemp_String(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getTemp_String(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, getTemp_String(db.getArcGaugeLowWarningValue(selectedGaugeNumArc)).c_str());
+
+                        break;
+
+                    case gauge_type::OIL_PRESSURE:
+                    case gauge_type::FUEL_PRESSURE:
+
+                        // Set the flags
+                        _ui_flag_modify(ui_LDAPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LDASlider, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+                        // Set the titles for the alerts and warnings
+                        _ui_label_set_property(ui_HWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.HWAText.c_str());
+                        _ui_label_set_property(ui_HDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.HAText.c_str());
+                        _ui_label_set_property(ui_LWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.LWAText.c_str());
+                        _ui_label_set_property(ui_LDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.LDAText.c_str());
+
+                        // Change the color of the Low Warning Alerts in this case to blue
+                        lv_obj_set_style_bg_color(ui_LWAPanel, lv_color_hex(0x262700), LV_PART_MAIN | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_KNOB | LV_STATE_DEFAULT);
+
+                        // Set the range for the sliders
+                        lv_slider_set_range(ui_HWASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
+                        lv_slider_set_range(ui_LWASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
+                        lv_slider_set_range(ui_LDASlider, getPressure_Number(PRESSURE_MIN_VALUE), getPressure_Number(PRESSURE_MAX_VALUE));
+
+                        // Set the values for the sliders from the database
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getArcGaugeLowWarningValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_LDASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getArcGaugeLowAlertValue(selectedGaugeNumArc)));
+
+                        // Set the labels for the sliders
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getArcGaugeLowWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_LDALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getArcGaugeLowAlertValue(selectedGaugeNumArc)).c_str());
+
+                        break;
+
+                    case gauge_type::MANIFOLD_PRESSURE:
+
+                        // Set the flags
+                        _ui_flag_modify(ui_LDAPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LDASlider, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+                        _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+                        // Set the titles for the alerts and warnings
+                        _ui_label_set_property(ui_HWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.WAText.c_str());
+                        _ui_label_set_property(ui_HDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.DAText.c_str());
+
+                        // Change the color of the Low Warning Alerts in this case to blue
+                        lv_obj_set_style_bg_color(ui_LWAPanel, lv_color_hex(0x262700), LV_PART_MAIN | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_KNOB | LV_STATE_DEFAULT);
+
+                        // Set the range for the sliders
+                        lv_slider_set_range(ui_HWASlider, getPressure_Number(MANIFOLD_MIN_VALUE), getPressure_Number(MANIFOLD_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getPressure_Number(MANIFOLD_MIN_VALUE), getPressure_Number(MANIFOLD_MAX_VALUE));
+
+                        // Set the values for the sliders from the database
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getPressure_Number(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)));
+
+                        // Set the labels for the sliders
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getPressure_String(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)).c_str());
+
+                        break;
+
+                    case gauge_type::BATTERY_VOLTAGE:
+
+                        // TODO: add different callback fuctions to set the values for the sliders as voltage whit decimals
+
+                        // Set the flags
+                        _ui_flag_modify(ui_LDAPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LDASlider, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+                        // Set the titles for the alerts and warnings
+                        _ui_label_set_property(ui_HWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.HWAText.c_str());
+                        _ui_label_set_property(ui_HDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.HAText.c_str());
+                        _ui_label_set_property(ui_LWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.LWAText.c_str());
+                        _ui_label_set_property(ui_LDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.LDAText.c_str());
+
+                        // Change the color of the Low Warning Alerts in this case to blue
+                        lv_obj_set_style_bg_color(ui_LWAPanel, lv_color_hex(0x262700), LV_PART_MAIN | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_KNOB | LV_STATE_DEFAULT);
+
+                        // Set the range for the sliders
+                        lv_slider_set_range(ui_HWASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
+                        lv_slider_set_range(ui_HDASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
+                        lv_slider_set_range(ui_LWASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
+                        lv_slider_set_range(ui_LDASlider, getBatteryVoltage_Number(VOLTAGE_MIN_VALUE), getBatteryVoltage_Number(VOLTAGE_MAX_VALUE));
+
+                        // Set the values for the sliders from the database
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getArcGaugeLowWarningValue(selectedGaugeNumArc)));
+                        _ui_slider_set_property(ui_LDASlider, _UI_SLIDER_PROPERTY_VALUE, getBatteryVoltage_Number(db.getArcGaugeLowAlertValue(selectedGaugeNumArc)));
+
+                        // Set the labels for the sliders
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getArcGaugeLowWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_LDALabel, _UI_LABEL_PROPERTY_TEXT, getBatteryVoltage_String(db.getArcGaugeLowAlertValue(selectedGaugeNumArc)).c_str());
+
+                        break;
+
+                    case gauge_type::FUEL_LEVEL:
+
+                        // Set the flags
+                        _ui_flag_modify(ui_LDAPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LDASlider, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+
+                        // Set the titles for the alerts and warnings
+                        _ui_label_set_property(ui_LWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.WALevelText.c_str());
+                        _ui_label_set_property(ui_LDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.DALevelText.c_str());
+
+                        // Change the color of the Low Warning Alerts in this case to blue
+                        lv_obj_set_style_bg_color(ui_LWAPanel, lv_color_hex(0x262700), LV_PART_MAIN | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(ui_LWASlider, lv_color_hex(0xFFFF00), LV_PART_KNOB | LV_STATE_DEFAULT);
+
+                        // Set the range for the sliders
+                        lv_slider_set_range(ui_LWASlider, LEVEL_MIN_VALUE, LEVEL_MAX_VALUE);
+                        lv_slider_set_range(ui_LDASlider, LEVEL_MIN_VALUE, LEVEL_MAX_VALUE);
+
+                        // Set the values for the sliders from the database
+                        _ui_slider_set_property(ui_LWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getArcGaugeLowWarningValue(selectedGaugeNumArc));
+                        _ui_slider_set_property(ui_LDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getArcGaugeLowAlertValue(selectedGaugeNumArc));
+
+                        // Set the labels for the sliders
+                        _ui_label_set_property(ui_LWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getArcGaugeLowWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_LDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getArcGaugeLowAlertValue(selectedGaugeNumArc)).c_str());
+
+                        break;
+
+                    case gauge_type::INJ_DUTY:
+
+                        // Set the flags
+                        _ui_flag_modify(ui_LDAPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LDASlider, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                        _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+                        _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+                        // Set the titles for the alerts and warnings
+                        _ui_label_set_property(ui_HWATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.WAText.c_str());
+                        _ui_label_set_property(ui_HDATittle, _UI_LABEL_PROPERTY_TEXT, settings_strings.DAText.c_str());
+
+                        // Change the color of the Low Warning Alerts in this case to blue
+
+                        // Set the range for the sliders
+                        lv_slider_set_range(ui_HWASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
+                        lv_slider_set_range(ui_HDASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
+
+                        // Set the values for the sliders from the database
+                        _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getArcGaugeHighWarningValue(selectedGaugeNumArc));
+                        _ui_slider_set_property(ui_HDASlider, _UI_SLIDER_PROPERTY_VALUE, db.getArcGaugeHighAlertValue(selectedGaugeNumArc));
+
+                        // Set the labels for the sliders
+                        _ui_label_set_property(ui_HWALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getArcGaugeHighWarningValue(selectedGaugeNumArc)).c_str());
+                        _ui_label_set_property(ui_HDALabel, _UI_LABEL_PROPERTY_TEXT, String(db.getArcGaugeHighAlertValue(selectedGaugeNumArc)).c_str());
+
+                        break;
+                    }
+                }
+                firstTimeBars = true;
+                firstTimeArcs = false;
+                firstTimeRpms = true;
+                firstTimePanels = true;
+                barChanged = true;
+                barTypeChanged = true;
+                arcChanged = false;
+                arcTypeChanged = false;
+            }
+                break;
+            
             }
         }
     }

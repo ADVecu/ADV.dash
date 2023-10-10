@@ -24,15 +24,15 @@
 #define AIR_TEMP_LOW_WARNING_DEFAULT 0
 #define AIR_TEMP_LOW_ALERT_DEFAULT 0
 
-#define OIL_PRESSURE_HIGH_WARNING_DEFAULT 90
-#define OIL_PRESSURE_HIGH_ALERT_DEFAULT 100
-#define OIL_PRESSURE_LOW_WARNING_DEFAULT 15
-#define OIL_PRESSURE_LOW_ALERT_DEFAULT 10
+#define OIL_PRESSURE_HIGH_WARNING_DEFAULT 620
+#define OIL_PRESSURE_HIGH_ALERT_DEFAULT 680
+#define OIL_PRESSURE_LOW_WARNING_DEFAULT 103
+#define OIL_PRESSURE_LOW_ALERT_DEFAULT 68
 
-#define FUEL_PRESSURE_HIGH_WARNING_DEFAULT 60
-#define FUEL_PRESSURE_HIGH_ALERT_DEFAULT 70
-#define FUEL_PRESSURE_LOW_WARNING_DEFAULT 35
-#define FUEL_PRESSURE_LOW_ALERT_DEFAULT 25
+#define FUEL_PRESSURE_HIGH_WARNING_DEFAULT 413
+#define FUEL_PRESSURE_HIGH_ALERT_DEFAULT 482
+#define FUEL_PRESSURE_LOW_WARNING_DEFAULT 240
+#define FUEL_PRESSURE_LOW_ALERT_DEFAULT 172
 
 #define MANIFOLD_PRESSURE_HIGH_WARNING_DEFAULT 180
 #define MANIFOLD_PRESSURE_HIGH_ALERT_DEFAULT 210
@@ -64,6 +64,46 @@
 class Database
 {
 public:
+    /*******************************************************************************
+     * General Data
+     *******************************************************************************/
+
+    /**
+     * @brief Save the user settings for temperature unit in the flash memory
+     * @param unit Celsius or Fahrenheit
+     */
+    void saveTempUnit(temp_unit unit);
+
+    /**
+     * @brief Get the user settings for temperature unit from the flash memory
+     * @return temp_unit Celsius or Fahrenheit
+     */
+    temp_unit getTempUnit();
+
+    /**
+     * @brief Save the user settings for pressure unit in the flash memory
+     * @param unit PSI, KPA or BAR
+     */
+    void savePressureUnit(pressure_unit unit);
+
+    /**
+     * @brief Get the user settings for pressure unit from the flash memory
+     * @return pressure_unit PSI, KPA or BAR
+     */
+    pressure_unit getPressureUnit();
+
+    /**
+     * @brief Save the user settings for Speed unit in the flash memory
+     * @param unit km/h or mph
+     */
+    void saveSpeedUnit(speed_unit unit);
+
+    /**
+     * @brief Get the user settings for Speed unit from the flash memory
+     * @return speed_unit km/h or mph
+     */
+    speed_unit getSpeedUnit();
+
     /*******************************************************************************
      * RPMS Data
      *******************************************************************************/

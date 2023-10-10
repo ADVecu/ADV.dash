@@ -5,7 +5,7 @@
 
 #define TEMP_MAX_VALUE 120
 #define TEMP_MIN_VALUE 0
-#define PRESSURE_MAX_VALUE 100
+#define PRESSURE_MAX_VALUE 700
 #define PRESSURE_MIN_VALUE 0
 #define VOLTAGE_MAX_VALUE 16000
 #define VOLTAGE_MIN_VALUE 8000
@@ -80,5 +80,33 @@ typedef enum panel_number
     PANEL_5,     // Right 2 panel
     PANEL_6,     // Right 3 panel
 } panel_number_t;
+
+/**
+ * @brief Define temperature unit of measure
+ */
+enum temp_unit
+{
+    CELSIUS,
+    FAHRENHEIT
+};
+
+/**
+ * @brief Define pressure unit of measure
+ */
+enum pressure_unit
+{
+    KPA,
+    PSI,
+    BAR
+};
+
+/**
+ * @brief Define speed unit of measure
+ */
+enum speed_unit
+{
+    KPH,
+    MPH
+};
 
 #endif // _UI_ENUMS_H

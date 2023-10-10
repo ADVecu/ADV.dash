@@ -8,6 +8,57 @@
 Preferences preferences;
 
 /*******************************************************************************
+ * General Data
+ *******************************************************************************/
+void Database::saveTempUnit(temp_unit tempUnit)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUChar("tempUnit", (uint8_t)tempUnit);
+    preferences.end();
+}
+
+temp_unit Database::getTempUnit()
+{
+    preferences.begin(DATABASE_NAME, true);
+    temp_unit tempUnit = (temp_unit)preferences.getUChar("tempUnit", (uint8_t)temp_unit::CELSIUS);
+    preferences.end();
+
+    return tempUnit;
+}
+
+void Database::savePressureUnit(pressure_unit pressureUnit)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUChar("pressureUnit", (uint8_t)pressureUnit);
+    preferences.end();
+}
+
+pressure_unit Database::getPressureUnit()
+{
+    preferences.begin(DATABASE_NAME, true);
+    pressure_unit pressureUnit = (pressure_unit)preferences.getUChar("pressureUnit", (uint8_t)pressure_unit::PSI);
+    preferences.end();
+
+    return pressureUnit;
+}
+
+void Database::saveSpeedUnit(speed_unit speedUnit)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUChar("speedUnit", (uint8_t)speedUnit);
+    preferences.end();
+}
+
+speed_unit Database::getSpeedUnit()
+{
+    preferences.begin(DATABASE_NAME, true);
+    speed_unit speedUnit = (speed_unit)preferences.getUChar("speedUnit", (uint8_t)speed_unit::KPH);
+    preferences.end();
+
+    return speedUnit;
+}
+
+/*******************************************************************************
  * RPMs Data
  *******************************************************************************/
 void Database::saveRpmsRedline(uint16_t redline)
