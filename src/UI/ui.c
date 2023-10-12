@@ -166,6 +166,9 @@ lv_obj_t *ui_Panel7;
 void ui_event_SaveBTN( lv_event_t * e);
 lv_obj_t *ui_SaveBTN;
 lv_obj_t *ui_Label3;
+void ui_event_DefaultBTN( lv_event_t * e);
+lv_obj_t *ui_DefaultBTN;
+lv_obj_t *ui_Label2;
 void ui_event_ResetBTN( lv_event_t * e);
 lv_obj_t *ui_ResetBTN;
 lv_obj_t *ui_Label1;
@@ -174,6 +177,7 @@ lv_obj_t *ui_ExitBtn;
 lv_obj_t *ui_Label4;
 lv_obj_t *ui____initial_actions0;
 const lv_img_dsc_t *ui_imgset_advecu[1] = {&ui_img_advecu200_png};
+const lv_img_dsc_t *ui_imgset_rpmscalev[1] = {&ui_img_rpmscalev2_png};
 const lv_img_dsc_t *ui_imgset_usersett[1] = {&ui_img_usersett50_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
@@ -243,9 +247,15 @@ if ( event_code == LV_EVENT_CLICKED) {
       saveSettings( e );
 }
 }
+void ui_event_DefaultBTN( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_LONG_PRESSED) {
+      DefaultSettingsAction( e );
+}
+}
 void ui_event_ResetBTN( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
-if ( event_code == LV_EVENT_CLICKED) {
+if ( event_code == LV_EVENT_LONG_PRESSED) {
       ResetAction( e );
 }
 }

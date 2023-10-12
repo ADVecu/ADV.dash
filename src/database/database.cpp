@@ -58,6 +58,13 @@ speed_unit Database::getSpeedUnit()
     return speedUnit;
 }
 
+void Database::resetToDefault()
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.clear();
+    preferences.end();
+}
+
 /*******************************************************************************
  * RPMs Data
  *******************************************************************************/

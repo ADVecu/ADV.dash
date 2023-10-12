@@ -335,7 +335,8 @@ void ui_task(void *pvParameters)
                     firstTimePanels = true;
                 }
                 break;
-            case 1:{ // Bars
+            case 1:
+            { // Bars
 
                 if (firstTimeBars)
                 {
@@ -594,11 +595,10 @@ void ui_task(void *pvParameters)
                 arcChanged = true;
                 arcTypeChanged = true;
             }
-                break;
+            break;
 
-            
-
-            case 2: {// Arcs
+            case 2:
+            { // Arcs
 
                 if (firstTimeArcs)
                 {
@@ -833,8 +833,8 @@ void ui_task(void *pvParameters)
                         // Change the color of the Low Warning Alerts in this case to blue
 
                         // Set the range for the sliders
-                        lv_slider_set_range(ui_HWASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
-                        lv_slider_set_range(ui_HDASlider, VOLTAGE_MIN_VALUE, VOLTAGE_MAX_VALUE);
+                        lv_slider_set_range(ui_HWASlider, DUTY_MIN_VALUE, DUTY_MAX_VALUE);
+                        lv_slider_set_range(ui_HDASlider, DUTY_MIN_VALUE, DUTY_MAX_VALUE);
 
                         // Set the values for the sliders from the database
                         _ui_slider_set_property(ui_HWASlider, _UI_SLIDER_PROPERTY_VALUE, db.getArcGaugeHighWarningValue(selectedGaugeNumArc));
@@ -856,8 +856,7 @@ void ui_task(void *pvParameters)
                 arcChanged = false;
                 arcTypeChanged = false;
             }
-                break;
-            
+            break;
             }
         }
     }

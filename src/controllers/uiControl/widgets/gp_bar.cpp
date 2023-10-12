@@ -63,7 +63,7 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _unit = gauge_unit_strings.coolant_Temp;
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
-        _bgImg = ui_img_barscalered_png;
+        _bgImg = ui_img_barscalerb_png;
         break;
 
     case gauge_type::OIL_TEMP:
@@ -71,7 +71,7 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _unit = gauge_unit_strings.oil_Temp;
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
-        _bgImg = ui_img_barscalered_png;
+        _bgImg = ui_img_barscalerb_png;
         break;
 
     case gauge_type::AIR_TEMP:
@@ -79,7 +79,7 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _unit = gauge_unit_strings.air_Temp;
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
-        _bgImg = ui_img_barscalered_png;
+        _bgImg = ui_img_barscalerb_png;
         break;
 
     case gauge_type::OIL_PRESSURE:

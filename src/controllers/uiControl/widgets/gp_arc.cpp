@@ -70,7 +70,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.coolant_Temp;
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscalerb_png;
         break;
 
     case gauge_type::OIL_TEMP:
@@ -78,7 +78,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.oil_Temp;
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscalerb_png;
         break;
 
     case gauge_type::AIR_TEMP:
@@ -86,7 +86,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.air_Temp;
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscalerb_png;
         break;
 
     case gauge_type::OIL_PRESSURE:
@@ -94,7 +94,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.oil_Pressure;
         _maxValue = PRESSURE_MAX_VALUE;
         _minValue = PRESSURE_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscalerr_png;
         break;
 
     case gauge_type::FUEL_PRESSURE:
@@ -102,7 +102,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.fuel_Pressure;
         _maxValue = PRESSURE_MAX_VALUE;
         _minValue = PRESSURE_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscalerr_png;
         break;
 
     case gauge_type::MANIFOLD_PRESSURE:
@@ -110,7 +110,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.manifold_Pressure;
         _maxValue = MANIFOLD_MAX_VALUE;
         _minValue = MANIFOLD_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscale_png;
         break;
 
     case gauge_type::BATTERY_VOLTAGE:
@@ -118,7 +118,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.battery_Voltage;
         _maxValue = VOLTAGE_MAX_VALUE;
         _minValue = VOLTAGE_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscalerr_png;
         break;
 
     case gauge_type::FUEL_LEVEL:
@@ -134,7 +134,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _name = gauge_name_strings.inj_Duty;
         _maxValue = DUTY_MAX_VALUE;
         _minValue = DUTY_MIN_VALUE;
-        _bgImg = ui_img_arcscalenored_png;
+        _bgImg = ui_img_arcscale_png;
         break;
 
     case gauge_type::AFR:

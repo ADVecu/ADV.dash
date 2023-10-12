@@ -11,6 +11,7 @@ extern "C" {
 #endif
 
 void saveSettings(lv_event_t * e);
+void DefaultSettingsAction(lv_event_t * e);
 void ResetAction(lv_event_t * e);
 
 #ifdef __cplusplus
