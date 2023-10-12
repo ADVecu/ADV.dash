@@ -9,6 +9,9 @@
    id="svg18"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="desingFile.svg"
+   inkscape:export-filename="RPMscalev3T.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -27,14 +30,20 @@
      showgrid="false"
      showguides="true"
      inkscape:zoom="1.4142136"
-     inkscape:cx="379.71634"
-     inkscape:cy="52.325902"
+     inkscape:cx="241.47697"
+     inkscape:cy="123.03658"
      inkscape:window-width="2560"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="361"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer1">
+    <sodipodi:guide
+       position="161.27043,125.87747"
+       orientation="1,0"
+       id="guide145"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <defs
      id="defs15" />
   <g
@@ -42,7 +51,14 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:none;stroke-width:0.240767"
+       style="display:none;fill:#000000;stroke-width:0.0927607"
+       id="rect196"
+       width="167.48125"
+       height="19.84375"
+       x="-0.79374999"
+       y="-0.26458332" />
+    <rect
+       style="display:inline;fill:none;stroke-width:0.240767"
        id="rect126"
        width="163.47316"
        height="17.468546"
@@ -52,7 +68,7 @@
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
     <rect
-       style="fill:#666666;stroke-width:0.222139"
+       style="display:inline;fill:#666666;stroke-width:0.222139"
        id="rect236"
        width="0.68066293"
        height="4.2368894"
@@ -70,69 +86,72 @@
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       id="use607" />
+       id="use607"
+       style="display:inline" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
        id="use607-7"
-       transform="translate(31.577948,-0.02227862)" />
+       transform="translate(32.278429,-0.02227862)" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(15.618808)"
+       transform="translate(16.318429)"
        id="use609" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(47.537087)"
+       transform="translate(48.237429)"
        id="use611" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(63.496226)"
+       transform="translate(64.196429)"
        id="use613" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(79.455365)"
-       id="use615" />
+       transform="translate(80.255429)"
+       id="use615"
+       style="display:inline" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(95.414504)"
+       transform="translate(96.114429)"
        id="use617" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(111.37365)"
+       transform="translate(112.07343)"
        id="use619" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(127.33278)"
-       id="use621" />
+       transform="translate(128.13243)"
+       id="use621"
+       style="display:inline" />
     <use
        x="0"
        y="0"
        inkscape:tiled-clone-of="#rect236"
        xlink:href="#rect236"
-       transform="translate(143.29193)"
+       transform="translate(143.99243)"
        id="use623" />
     <use
        x="0"
@@ -142,7 +161,7 @@
        transform="translate(159.25106,-1.7991638e-4)"
        id="use625" />
     <rect
-       style="fill:#ffffff;stroke-width:0.230832"
+       style="display:inline;fill:#ffffff;stroke-width:0.230832"
        id="rect180"
        width="159.93285"
        height="0.89565742"
@@ -152,112 +171,112 @@
     <text
        xml:space="preserve"
        style="font-size:3.175px;fill:#ffffff;stroke-width:0.264583"
-       x="16.606955"
+       x="17.707001"
        y="16.170847"
        id="text1480"><tspan
          sodipodi:role="line"
          id="tspan1478"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Russo One';-inkscape-font-specification:'Russo One';stroke-width:0.264583"
-         x="16.606955"
+         x="17.707001"
          y="16.170847">1</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="32.473579"
+       x="33.573502"
        y="16.124073"
        id="text1534"><tspan
          sodipodi:role="line"
          id="tspan1532"
          style="stroke-width:0.264583"
-         x="32.473579"
+         x="33.573502"
          y="16.124073">2</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="48.351074"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';display:inline;fill:#ffffff;stroke-width:0.264583"
+       x="49.551498"
        y="16.121725"
        id="text1538"><tspan
          sodipodi:role="line"
          id="tspan1536"
          style="stroke-width:0.264583"
-         x="48.351074"
+         x="49.551498"
          y="16.121725">3</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="64.114952"
+       x="65.514503"
        y="16.077303"
        id="text1542"><tspan
          sodipodi:role="line"
          id="tspan1540"
          style="stroke-width:0.264583"
-         x="64.114952"
+         x="65.514503"
          y="16.077303">4</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="80.251358"
+       x="81.551498"
        y="16.100687"
        id="text1546"><tspan
          sodipodi:role="line"
          id="tspan1544"
          style="stroke-width:0.264583"
-         x="80.251358"
+         x="81.551498"
          y="16.100687">5</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="96.130508"
+       x="97.431"
        y="16.124075"
        id="text1550"><tspan
          sodipodi:role="line"
          id="tspan1548"
          style="stroke-width:0.264583"
-         x="96.130508"
+         x="97.431"
          y="16.124075">6</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="112.17336"
+       x="113.47325"
        y="16.077303"
        id="text1554"><tspan
          sodipodi:role="line"
          id="tspan1552"
          style="stroke-width:0.264583"
-         x="112.17336"
+         x="113.47325"
          y="16.077303">7</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="128.00407"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';display:inline;fill:#ffffff;stroke-width:0.264583"
+       x="129.40375"
        y="16.149609"
        id="text1558"><tspan
          sodipodi:role="line"
          id="tspan1556"
          style="stroke-width:0.264583"
-         x="128.00407"
+         x="129.40375"
          y="16.149609">8</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="144.02699"
+       x="145.32651"
        y="16.118971"
        id="text1562"><tspan
          sodipodi:role="line"
          id="tspan1560"
          style="stroke-width:0.264583"
-         x="144.02699"
+         x="145.32651"
          y="16.118971">9</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';fill:#ffffff;stroke-width:0.264583"
-       x="158.9393"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Russo One';-inkscape-font-specification:'Russo One';display:inline;fill:#ffffff;stroke-width:0.264583"
+       x="157.939"
        y="16.145395"
        id="text1566"><tspan
          sodipodi:role="line"
          id="tspan1564"
          style="stroke-width:0.264583"
-         x="158.9393"
+         x="157.939"
          y="16.145395">10</tspan></text>
   </g>
 </svg>
