@@ -14,3 +14,7 @@ def ApplySettings(event_struct):
 def ResetAction(event_struct):
     return
 
+
+def DefaultSettingsAction(event_struct):
+    return
+
