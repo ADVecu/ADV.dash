@@ -5,7 +5,7 @@ SET(SOURCES screens/ui_WelcomeScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c
-    images/ui_img_advecu200_png.c
+    images/ui_img_proadvv1amarillo_png.c
     images/ui_img_rpmscalev3t_png.c
     images/ui_img_arcscalenored_png.c
     images/ui_img_barscale_png.c
@@ -14,6 +14,7 @@ SET(SOURCES screens/ui_WelcomeScreen.c
     images/ui_img_arcscale_png.c
     images/ui_img_barscalerb_png.c
     images/ui_img_barscalered_png.c
+    images/ui_img_advecu200_png.c
     images/ui_img_rpmscalev2_png.c
     images/ui_img_usersett50_png.c
     fonts/ui_font_ArameBold100.c

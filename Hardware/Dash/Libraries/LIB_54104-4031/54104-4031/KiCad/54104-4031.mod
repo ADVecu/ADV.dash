@@ -1,0 +1,279 @@
+PCBNEW-LibModule-V1  2023-10-14 06:44:28
+# encoding utf-8
+Units mm
+$INDEX
+54104-4031
+$EndINDEX
+$MODULE 54104-4031
+Po 0 0 0 15 652a2abc 00000000 ~~
+Li 54104-4031
+Cd 54104-4031
+Kw Connector
+Sc 0
+At SMD
+AR 
+Op 0 0 0
+T0 -0.979 3.957 1.27 1.27 0 0.254 N V 21 N "J**"
+T1 -0.979 3.957 1.27 1.27 0 0.254 N I 21 N "54104-4031"
+DS -12.15 0 12.15 0 0.2 24
+DS 12.15 0 12.15 6.55 0.2 24
+DS 12.15 6.55 -12.15 6.55 0.2 24
+DS -12.15 6.55 -12.15 0 0.2 24
+DS -12.15 6.55 12.15 6.55 0.2 21
+DS -12.15 6.55 -12.15 3.814 0.2 21
+DS 12.15 6.55 12.15 3.814 0.2 21
+DC -9.768 -1.437 -9.795 -1.437 0.254 21
+$PAD
+Po -9.75 -0.382
+Sh "1" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -9.25 -0.382
+Sh "2" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -8.75 -0.382
+Sh "3" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -8.25 -0.382
+Sh "4" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -7.75 -0.382
+Sh "5" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -7.25 -0.382
+Sh "6" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -6.75 -0.382
+Sh "7" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -6.25 -0.382
+Sh "8" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -5.75 -0.382
+Sh "9" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -5.25 -0.382
+Sh "10" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -4.75 -0.382
+Sh "11" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -4.25 -0.382
+Sh "12" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -3.75 -0.382
+Sh "13" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -3.25 -0.382
+Sh "14" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -2.75 -0.382
+Sh "15" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -2.25 -0.382
+Sh "16" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -1.75 -0.382
+Sh "17" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -1.25 -0.382
+Sh "18" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -0.75 -0.382
+Sh "19" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -0.25 -0.382
+Sh "20" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 0.25 -0.382
+Sh "21" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 0.75 -0.382
+Sh "22" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 1.25 -0.382
+Sh "23" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 1.75 -0.382
+Sh "24" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 2.25 -0.382
+Sh "25" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 2.75 -0.382
+Sh "26" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 3.25 -0.382
+Sh "27" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 3.75 -0.382
+Sh "28" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 4.25 -0.382
+Sh "29" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 4.75 -0.382
+Sh "30" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 5.25 -0.382
+Sh "31" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 5.75 -0.382
+Sh "32" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 6.25 -0.382
+Sh "33" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 6.75 -0.382
+Sh "34" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 7.25 -0.382
+Sh "35" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 7.75 -0.382
+Sh "36" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 8.25 -0.382
+Sh "37" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 8.75 -0.382
+Sh "38" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 9.25 -0.382
+Sh "39" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 9.75 -0.382
+Sh "40" R 0.3 1.2 0 0 0
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po -11.85 2.318
+Sh "41" R 2.4 2.4 0 0 900
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$PAD
+Po 11.85 2.318
+Sh "42" R 2.4 2.4 0 0 900
+At SMD N 00888000
+Ne 0 ""
+$EndPAD
+$EndMODULE 54104-4031
+$EndLIBRARY

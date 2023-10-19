@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP 54104-4031
+D Connector 0.5mm, FFC/FPC, SMT,r/a,40w,Au Molex FFC/FPC SMT Series 0.5mm Pitch 40 Way Right Angle SMT Female FPC Connector, ZIF Top Contact
+K
+F http://www.molex.com/webdocs/datasheets/pdf/en-us//0541044031_FFC_FPC_CONNECTORS.pdf
+$ENDCMP
+#
+#End Doc Library

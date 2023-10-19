@@ -176,7 +176,7 @@ extern lv_obj_t *ui_ExitBtn;
 extern lv_obj_t *ui_Label4;
 extern lv_obj_t *ui____initial_actions0;
 
-LV_IMG_DECLARE( ui_img_advecu200_png);   // assets\Advecu200.png
+LV_IMG_DECLARE( ui_img_proadvv1amarillo_png);   // assets\ProAdvV1Amarillo.png
 LV_IMG_DECLARE( ui_img_rpmscalev3t_png);   // assets\RPMscalev3T.png
 LV_IMG_DECLARE( ui_img_arcscalenored_png);   // assets\arcScaleNoRed.png
 LV_IMG_DECLARE( ui_img_barscale_png);   // assets\barScale.png
@@ -185,6 +185,7 @@ LV_IMG_DECLARE( ui_img_arcscalerb_png);   // assets\arcScaleRB.png
 LV_IMG_DECLARE( ui_img_arcscale_png);   // assets\arcScale.png
 LV_IMG_DECLARE( ui_img_barscalerb_png);   // assets\barScaleRB.png
 LV_IMG_DECLARE( ui_img_barscalered_png);   // assets\barScaleRed.png
+LV_IMG_DECLARE( ui_img_advecu200_png);   // assets\Advecu200.png
 LV_IMG_DECLARE( ui_img_rpmscalev2_png);   // assets\RPMscalev2.png
 LV_IMG_DECLARE( ui_img_usersett50_png);   // assets\userSett50.png
 

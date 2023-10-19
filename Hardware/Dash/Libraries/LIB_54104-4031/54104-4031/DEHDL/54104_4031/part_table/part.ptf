@@ -1,0 +1,11 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART '54104_4031'
+CLASS = IO
+{========================================================================================}
+:"MANUFACTURER_NAME", "MANUFACTURER_PART_NUMBER"= "PART_NUMBER", "JEDEC_TYPE", "PACK_TYPE", "MOUSER_PART_NUMBER", "MOUSER_PRICE/STOCK", "DESCRIPTION", "DATASHEET";
+{========================================================================================}
+ "Molex", "54104-4031" (!) = "", "54104-4031", "Other", "538-54104-4031", "https://www.mouser.co.uk/ProductDetail/Molex/54104-4031?qs=OdNwOVlk5%2FgBUEuya%2FAfOQ%3D%3D", "Connector 0.5mm, FFC/FPC, SMT,r/a,40w,Au Molex FFC/FPC SMT Series 0.5mm Pitch 40 Way Right Angle SMT Female FPC Connector, ZIF Top Contact", "http://www.molex.com/webdocs/datasheets/pdf/en-us//0541044031_FFC_FPC_CONNECTORS.pdf"
+END_PART
+
+END.

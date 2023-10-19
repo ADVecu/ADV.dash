@@ -13,7 +13,7 @@ lv_obj_set_style_bg_color(ui_WelcomeScreen, lv_color_hex(0x000000), LV_PART_MAIN
 lv_obj_set_style_bg_opa(ui_WelcomeScreen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Image1 = lv_img_create(ui_WelcomeScreen);
-lv_img_set_src(ui_Image1, &ui_img_advecu200_png);
+lv_img_set_src(ui_Image1, &ui_img_proadvv1amarillo_png);
 lv_obj_set_width( ui_Image1, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Image1, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Image1, 10 );

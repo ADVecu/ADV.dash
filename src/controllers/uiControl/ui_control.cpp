@@ -857,6 +857,10 @@ void ui_task(void *pvParameters)
                 arcTypeChanged = false;
             }
             break;
+
+            case 3:{
+                
+            }
             }
         }
     }

@@ -267,7 +267,7 @@
               {
                 "nid": -314229385,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\Advecu200.png",
+                "strval": "assets\\ProAdvV1Amarillo.png",
                 "InheritedType": 5
               },
               {
@@ -45321,7 +45321,7 @@
     "theme_color2": 0,
     "exportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\src\\UI",
     "projectExportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\SquerLine Project",
-    "backup_cnt": 1584,
+    "backup_cnt": 2077,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "CPP_FILE",
