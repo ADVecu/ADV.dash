@@ -1,0 +1,11 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART '1_1734839_0'
+CLASS = IO
+{========================================================================================}
+:"MANUFACTURER_NAME", "MANUFACTURER_PART_NUMBER"= "PART_NUMBER", "JEDEC_TYPE", "PACK_TYPE", "MOUSER_PART_NUMBER", "MOUSER_PRICE/STOCK", "DESCRIPTION", "DATASHEET", "HEIGHT";
+{========================================================================================}
+ "TE Connectivity", "1-1734839-0" (!) = "", "117348390", "Other", "571-1-1734839-0", "https://www.mouser.co.uk/ProductDetail/TE-Connectivity/1-1734839-0?qs=sXy4Dx%2FMQpP10O8tS9a6RA%3D%3D", "FFC & FPC Connectors 0.5mm PITCH T/C 10P FPC", "", "2 mm"
+END_PART
+
+END.
