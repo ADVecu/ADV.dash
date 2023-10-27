@@ -1,0 +1,16 @@
+.RV-8803-C7-32.768k-3PPM-TA-QA :1 ;RV-8803-C7 8-Terminal Ceramic Leadless Chip Carrier [LCC8]
+RV8803C7
+*STM IC
+*NGS
+*PLB 1="SDA" 2="CLKOUT" 3="VDD" 4="CLKOE" 5="VSS" 6="~INT" 7="EVI" 8="SCL"
+*MXP 8
+*DFN RV-8803-C7-32.768k-3PPM-TA-QA
+~!Mouser Part Number (428-203035-MG01)
+~!Link Mouser Price/Stock (https://www.mouser.co.uk/ProductDetail/Micro-Crystal/RV-8803-C7-32.768k-3PPM-TA-QA?qs=7bTaA%2FLYtSb5zZOilbtzxw%3D%3D)
+~!Manufacturer_Name (Micro Crystal AG)
+~!Manufacturer_Part_Number (RV-8803-C7-32.768k-3PPM-TA-QA)
+~!Link Datasheet (https://www.mouser.de/datasheet/2/530/RV_8803_C7-2308195.pdf)
+~!Height (0.8mm)
+~!3D_Model (RV-8803-C7-32.768k-3PPM-TA-QA)
+RV-8803-C7-32.768k-3PPM-TA-QA
+1.1!U 2.1!U 3.1!U 4.1!U 5.1!U 6.1!U 7.1!U 8.1!U 

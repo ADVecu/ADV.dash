@@ -1,0 +1,15 @@
+.TCK-145 :1 ;Fixed Inductors Inductor 6.8uH 1A 300mOhm
+TCK145
+*STM L
+*NGS
+*PLB 1="1" 2="2"
+*MXP 2
+*DFN TCK-145
+~!Mouser Part Number (495-TCK-145)
+~!Link Mouser Price/Stock (https://www.mouser.co.uk/ProductDetail/TRACO-Power/TCK-145?qs=w%2Fv1CP2dgqoHn653AYaOSg%3D%3D)
+~!Manufacturer_Name (Traco Power)
+~!Manufacturer_Part_Number (TCK-145)
+~!Link Datasheet (https://tracopower.com/tck-145-datasheet/)
+~!Height (2.6mm)
+TCK-145
+1.1!U 2.1!U 

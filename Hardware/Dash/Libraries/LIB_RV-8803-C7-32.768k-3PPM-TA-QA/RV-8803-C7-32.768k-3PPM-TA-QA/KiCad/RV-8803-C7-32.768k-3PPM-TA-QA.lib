@@ -1,0 +1,29 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#SamacSys ECAD Model RV-8803-C7-32.768k-3PPM-TA-QA
+#/927780/281228/2.50/8/2/Integrated Circuit
+DEF RV-8803-C7-32.768k-3PPM-TA-QA IC 0 30 Y Y 1 F N
+F0 "IC" 1050 300 50 H V L CNN
+F1 "RV-8803-C7-32.768k-3PPM-TA-QA" 1050 200 50 H V L CNN
+F2 "RV8803C7" 1050 100 50 H I L CNN
+F3 "https://www.mouser.de/datasheet/2/530/RV_8803_C7-2308195.pdf" 1050 0 50 H I L CNN
+F4 "RV-8803-C7 8-Terminal Ceramic Leadless Chip Carrier [LCC8]" 1050 -100 50 H I L CNN "Description"
+F5 "0.8" 1050 -200 50 H I L CNN "Height"
+F6 "428-203035-MG01" 1050 -300 50 H I L CNN "Mouser Part Number"
+F7 "https://www.mouser.co.uk/ProductDetail/Micro-Crystal/RV-8803-C7-32.768k-3PPM-TA-QA?qs=7bTaA%2FLYtSb5zZOilbtzxw%3D%3D" 1050 -400 50 H I L CNN "Mouser Price/Stock"
+F8 "Micro Crystal AG" 1050 -500 50 H I L CNN "Manufacturer_Name"
+F9 "RV-8803-C7-32.768k-3PPM-TA-QA" 1050 -600 50 H I L CNN "Manufacturer_Part_Number"
+DRAW
+X SDA 1 0 0 200 R 50 50 0 0 P
+X CLKOUT 2 0 -100 200 R 50 50 0 0 P
+X VDD 3 0 -200 200 R 50 50 0 0 P
+X CLKOE 4 0 -300 200 R 50 50 0 0 P
+X VSS 5 1200 -300 200 L 50 50 0 0 P
+X ~INT 6 1200 -200 200 L 50 50 0 0 P
+X EVI 7 1200 -100 200 L 50 50 0 0 P
+X SCL 8 1200 0 200 L 50 50 0 0 P
+P 5 0 1 6 200 100 1000 100 1000 -400 200 -400 200 100 N
+ENDDRAW
+ENDDEF
+#
+#End Library

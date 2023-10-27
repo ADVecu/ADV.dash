@@ -1,0 +1,9 @@
+Manufacturer=TE Connectivity
+PartNumber=776276-1
+PartCategory=Connector
+PackageCategory=Other
+PinCount=12
+Version=2.3
+Released=2021-10-05 12:04:37
+Downloaded=2023-10-22 16:15:30
+3D=Y

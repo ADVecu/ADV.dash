@@ -48,7 +48,18 @@
           "min_clearance": 0.5
         }
       },
-      "diff_pair_dimensions": [],
+      "diff_pair_dimensions": [
+        {
+          "gap": 0.0,
+          "via_gap": 0.0,
+          "width": 0.0
+        },
+        {
+          "gap": 0.2,
+          "via_gap": 0.254,
+          "width": 0.1
+        }
+      ],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -105,21 +116,21 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.0,
+        "min_clearance": 0.09999999999999999,
         "min_connection": 0.0,
-        "min_copper_edge_clearance": 0.0,
+        "min_copper_edge_clearance": 0.0635,
         "min_hole_clearance": 0.25,
-        "min_hole_to_hole": 0.25,
+        "min_hole_to_hole": 0.5,
         "min_microvia_diameter": 0.19999999999999998,
         "min_microvia_drill": 0.09999999999999999,
         "min_resolved_spokes": 2,
-        "min_silk_clearance": 0.0,
-        "min_text_height": 0.7999999999999999,
-        "min_text_thickness": 0.08,
-        "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.0,
+        "min_silk_clearance": 0.09999999999999999,
+        "min_text_height": 1.0,
+        "min_text_thickness": 0.16,
+        "min_through_hole_diameter": 0.19999999999999998,
+        "min_track_width": 0.09999999999999999,
         "min_via_annular_width": 0.09999999999999999,
-        "min_via_diameter": 0.5,
+        "min_via_diameter": 0.25,
         "solder_mask_clearance": 0.0,
         "solder_mask_min_width": 0.0,
         "solder_mask_to_copper_clearance": 0.0,
@@ -165,8 +176,40 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [],
-      "via_dimensions": [],
+      "track_widths": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.5,
+        1.5
+      ],
+      "via_dimensions": [
+        {
+          "diameter": 0.0,
+          "drill": 0.0
+        },
+        {
+          "diameter": 0.45,
+          "drill": 0.2
+        },
+        {
+          "diameter": 0.55,
+          "drill": 0.3
+        },
+        {
+          "diameter": 0.75,
+          "drill": 0.5
+        },
+        {
+          "diameter": 0.85,
+          "drill": 0.6
+        },
+        {
+          "diameter": 1.0,
+          "drill": 0.75
+        }
+      ],
       "zones_allow_external_fillets": false
     },
     "layer_presets": [],
@@ -361,7 +404,7 @@
       "different_unit_net": "error",
       "duplicate_reference": "error",
       "duplicate_sheet_names": "error",
-      "endpoint_off_grid": "warning",
+      "endpoint_off_grid": "ignore",
       "extra_units": "error",
       "global_label_dangling": "warning",
       "hier_label_mismatch": "error",
@@ -377,10 +420,10 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "similar_labels": "warning",
-      "simulation_model_issue": "error",
+      "simulation_model_issue": "ignore",
       "unannotated": "error",
       "unit_value_mismatch": "error",
       "unresolved_variable": "error",
@@ -457,6 +500,14 @@
       "version": 1
     },
     "net_format_name": "",
+    "ngspice": {
+      "fix_include_paths": true,
+      "meta": {
+        "version": 0
+      },
+      "model_mode": 0,
+      "workbook_filename": ""
+    },
     "page_layout_descr_file": "",
     "plot_directory": "",
     "spice_current_sheet_as_root": false,
@@ -471,6 +522,46 @@
     [
       "dc9c4178-e1bb-4529-992c-1528c3a3fad9",
       ""
+    ],
+    [
+      "194a57e8-5d7d-4fec-9e8a-841ca2e34ec8",
+      "MCU"
+    ],
+    [
+      "e0d1b0d5-ac5d-4cb2-adbd-1bf1d724da78",
+      "Display"
+    ],
+    [
+      "00fdacaf-c2dc-4e8f-a335-06c76fa61174",
+      "Power Supply"
+    ],
+    [
+      "6b977209-c4dc-4bc2-ab56-ec285661793a",
+      "Can Bus"
+    ],
+    [
+      "75796fc8-a47f-4132-8e5e-d495285c7113",
+      "RTC"
+    ],
+    [
+      "7003a437-13dd-447e-957a-0cb923a1a7bd",
+      "EPROM"
+    ],
+    [
+      "205f0af1-5b3f-49e5-a2d2-403a2a9270ac",
+      "BMP280"
+    ],
+    [
+      "4c41a061-c055-4e35-b468-913f9d34c8a5",
+      "USBC"
+    ],
+    [
+      "c357509a-1f50-481f-b4d4-0dc16a48e000",
+      "Connector"
+    ],
+    [
+      "c6e2e8f0-5657-4490-bbc4-9646016227db",
+      "LEDs"
     ]
   ],
   "text_variables": {}

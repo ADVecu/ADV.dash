@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "RV-8803-C7-32_768k-3PPM-TA-QA"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2020-12-02-15:50:34)
+    (mountForm default
+        (footprintRef "RV8803C7")
+        (spec "System")
+    )
+)

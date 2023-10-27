@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "74HCT1G126GW_125"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2019-05-21-16:16:08)
+    (mountForm default
+        (footprintRef "SOT65P212X110-5N")
+        (spec "System")
+    )
+)

@@ -1,0 +1,13 @@
+(unit MM)
+
+(package "USB4110-GF-A"
+    (type UNDEF)
+    (uver 2)
+    (cuser "SamacSys")
+    (uuser "SamacSys")
+    (utime 2019-10-08-10:32:17)
+    (mountForm default
+        (footprintRef "USB4110GFA")
+        (spec "System")
+    )
+)

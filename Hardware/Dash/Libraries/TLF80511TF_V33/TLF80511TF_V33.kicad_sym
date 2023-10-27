@@ -1,0 +1,43 @@
+
+(kicad_symbol_lib (version 20211014) (generator kicad_symbol_editor)
+  (symbol "TLF80511TF_V33" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+    (property "Reference" "G?" (id 0) (at 0.0 0.0 0.0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
+    )
+    (property "Value" "TLF80511TF_V33" (id 1) (at 0.2 -22.2 0.0)
+      (effects (font (size 1.27 1.27)) (justify bottom left))
+    )
+    (property "Footprint" "TLF80511TF_V33:INF-PG-TO252-3-11_N" (id 2) (at 0 0 0)
+      (effects (font (size 1.27 1.27)) (justify bottom) hide)
+    )
+    (symbol "TLF80511TF_V33_0_0"
+      (rectangle (start 0.0 -10.16) (end 15.24 -8.881784197e-16)
+        (stroke (width 0.254)) (fill (type background))
+      )
+      (pin power_in line (at 7.62 -15.24 90.0) (length 5.08)
+        (name "GND"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "2"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at -5.08 -2.54 0) (length 5.08)
+        (name "I"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "1"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+      (pin power_in line (at 20.32 -2.54 180.0) (length 5.08)
+        (name "Q"
+          (effects (font (size 1.016 1.016)))
+        )
+        (number "3"
+          (effects (font (size 1.016 1.016)))
+        )
+      )
+    )
+  )
+)

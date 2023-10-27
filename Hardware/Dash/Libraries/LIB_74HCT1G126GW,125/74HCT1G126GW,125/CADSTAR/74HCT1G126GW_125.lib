@@ -1,0 +1,16 @@
+.74HCT1G126GW_125 :1 ;74HC(T)1G126 - Bus buffer/line driver; 3-state@en-us
+SOT65P212X110-5N
+*STM IC
+*NGS
+*PLB 1="OE" 2="A" 3="GND" 4="Y" 5="VCC"
+*MXP 5
+*DFN 74HCT1G126GW_125
+~!Mouser Part Number (771-HCT1G126GW125)
+~!Link Mouser Price/Stock (https://www.mouser.co.uk/ProductDetail/Nexperia/74HCT1G126GW125?qs=P62ublwmbi%2Fp3e%252BSdwAWWQ%3D%3D)
+~!Manufacturer_Name (Nexperia)
+~!Manufacturer_Part_Number (74HCT1G126GW,125)
+~!Link Datasheet (https://assets.nexperia.com/documents/data-sheet/74HC_HCT1G126.pdf)
+~!Height (1.1mm)
+~!3D_Model (74HCT1G126GW,125)
+"74HCT1G126GW_125"
+1.1!U 2.1!U 3.1!U 4.1!U 5.1!U 

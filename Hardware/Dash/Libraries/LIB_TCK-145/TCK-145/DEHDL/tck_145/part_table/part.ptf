@@ -1,0 +1,11 @@
+FILE_TYPE = MULTI_PHYS_TABLE;
+
+PART 'TCK_145'
+CLASS = DISCRETE
+{========================================================================================}
+:"MANUFACTURER_NAME", "MANUFACTURER_PART_NUMBER"= "PART_NUMBER", "JEDEC_TYPE", "PACK_TYPE", "MOUSER_PART_NUMBER", "MOUSER_PRICE/STOCK", "DESCRIPTION", "DATASHEET", "HEIGHT";
+{========================================================================================}
+ "Traco Power", "TCK-145" (!) = "", "TCK145", "Other", "495-TCK-145", "https://www.mouser.co.uk/ProductDetail/TRACO-Power/TCK-145?qs=w%2Fv1CP2dgqoHn653AYaOSg%3D%3D", "Fixed Inductors Inductor 6.8uH 1A 300mOhm", "https://tracopower.com/tck-145-datasheet/", "2.6 mm"
+END_PART
+
+END.

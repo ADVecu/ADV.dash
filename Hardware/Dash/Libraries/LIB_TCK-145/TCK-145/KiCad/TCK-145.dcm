@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP TCK-145
+D Fixed Inductors Inductor 6.8uH 1A 300mOhm
+K
+F https://tracopower.com/tck-145-datasheet/
+$ENDCMP
+#
+#End Doc Library

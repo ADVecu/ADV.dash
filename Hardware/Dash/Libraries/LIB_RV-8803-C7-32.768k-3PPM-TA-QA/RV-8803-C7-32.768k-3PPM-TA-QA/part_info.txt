@@ -1,0 +1,9 @@
+Manufacturer=Micro Crystal AG
+PartNumber=RV-8803-C7-32.768k-3PPM-TA-QA
+PartCategory=Integrated Circuit
+PackageCategory=Other
+PinCount=8
+Version=2.3
+Released=2019-02-19 00:33:28
+Downloaded=2023-10-23 06:25:46
+3D=Y
