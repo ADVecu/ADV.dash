@@ -4,6 +4,12 @@
 
   (paper "A4")
 
+  (title_block
+    (date "2023-10-27")
+    (rev "0.1.0")
+    (company "ADV.ECU - GNVPerformance")
+  )
+
   (lib_symbols
     (symbol "Connector:TestPoint" (pin_numbers hide) (pin_names (offset 0.762) hide) (in_bom yes) (on_board yes)
       (property "Reference" "TP" (at 0 6.858 0)
@@ -1428,6 +1434,14 @@
     (stroke (width 0) (type default))
     (fill (type none))
     (uuid fd984f32-b846-4e87-907f-ecf83f65dd73)
+  )
+
+  (text_box "R35 and R36 are pull-up resistors in case the mcu in deep sleep does not have pull-ups"
+    (at 93.345 139.065 0) (size 27.305 10.795)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid 7f1c1211-54e1-40b8-bcf9-6955a0faa9b8)
   )
 
   (text "Free GPIO" (at 238.76 163.195 0)
