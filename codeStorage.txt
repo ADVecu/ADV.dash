@@ -138,3 +138,8 @@
        lv_label_set_text_fmt(ui_mData, "Data: 0x%02X", message.data);
        }*/
   }
+
+
+
+board_build.arduino.memory_type
+-DBOARD_HAS_PSRAM 

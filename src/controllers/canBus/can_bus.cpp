@@ -4,8 +4,8 @@
 #include "can_bus.h"
 
 // Can Bus Transceiver Pins
-#define CAN_TX_PIN GPIO_NUM_18
-#define CAN_RX_PIN GPIO_NUM_17
+#define CAN_TX_PIN GPIO_NUM_13
+#define CAN_RX_PIN GPIO_NUM_12
 
 void canbus_init()
 {

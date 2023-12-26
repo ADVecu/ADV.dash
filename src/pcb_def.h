@@ -1,0 +1,44 @@
+#ifndef PCB_DEF_H
+#define PCB_DEF_H
+
+// Pinout for U1 (ESP32-S3-WROOM-1) PCB R 0.1.0
+#define PIN_DISPLAY_TP_RST 3
+#define PIN_DISPLAY_G7 4
+#define PIN_DISPLAY_G2 5
+#define PIN_DISPLAY_G3 6
+#define PIN_DISPLAY_G4 7
+#define PIN_DISPLAY_G5 15
+#define PIN_DISPLAY_G6 16
+#define PIN_MCU_GPIO17 17
+#define PIN_MCU_GPIO18 18
+#define PIN_DISPLAY_B3 8
+#define PIN_USBC_DN 19
+#define PIN_USBC_DP 20
+#define PIN_DISPLAY_B4 3
+#define PIN_DISPLAY_B5 46
+#define PIN_DISPLAY_B6 9
+#define PIN_MCU_SW_12V 10
+#define PIN_MCU_WAKE_UP 11
+#define PIN_CAN_BUS_CRX 12
+#define PIN_CAN_BUS_CTX 13
+#define PIN_DISPLAY_R7 14
+#define PIN_DISPLAY_R6 21
+#define PIN_DISPLAY_R5 47
+#define PIN_DISPLAY_R4 48
+#define PIN_DISPLAY_R3 45
+#define PIN_DISPLAY_DCLK 0
+#define PIN_SDA 35
+#define PIN_SCL 36
+#define PIN_MCU_5V_EN 37
+#define PIN_LEDS_WLED_CRT 38
+#define PIN_DISPLAY_HSYNC 39
+#define PIN_DISPLAY_DE 40
+#define PIN_DISPLAY_VSYNC 41
+#define PIN_MCU_GPIO42 42
+#define PIN_MCU_U0RXD 44
+#define PIN_MCU_U0TXD 43
+#define PIN_DISPLAY_LCD_BL_CTR 2
+#define PIN_DISPLAY_B7 1
+#define PIN_GND 40
+
+#endif // PCB_DEF_H

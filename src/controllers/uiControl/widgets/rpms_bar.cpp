@@ -54,3 +54,5 @@ void rpmsBar::setWarning(uint16_t warning)
         _rpmsWarning = warning;
     }
 }
+
+
