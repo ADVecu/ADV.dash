@@ -16,7 +16,7 @@
 // #define TOUCH_MAP_Y1 0
 // #define TOUCH_MAP_Y2 480
 
-/* uncomment for GT911 
+/* uncomment for GT911
 #define TOUCH_GT911
 #define TOUCH_GT911_SCL 20 // 20
 #define TOUCH_GT911_SDA 19 // 19
@@ -29,7 +29,7 @@
 #define TOUCH_MAP_Y2 0
 */
 
-/* uncomment for GT911 Custom */
+/* uncomment for GT911 ADVdash5inch */
 #define TOUCH_GT911
 #define TOUCH_GT911_SCL 18 // 20
 #define TOUCH_GT911_SDA 42 // 19

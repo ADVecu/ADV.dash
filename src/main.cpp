@@ -7,107 +7,48 @@
 #include "muTimer.h"
 #include "controllers/canBus/can_bus.h"
 #include "controllers/uiControl/ui_control.h"
-#include "pcb_def.h"
+#include "pcb_definitions.h"
 #include <Adafruit_NeoPixel.h>
 /*
 #include <SparkFun_RV8803.h>
 #include <Adafruit_BMP280.h>
-#include "SparkFun_External_EEPROM.h" 
+#include "SparkFun_External_EEPROM.h"
 */
 
 #define TFT_BL 2
 #define GFX_BL DF_GFX_BL // default backlight pin
 
-muTimer testTimer;
-muTimer testTimer2;
-muTimer testTimer3;
+pcb_def pcb; // pcb definitions struct
+
 muTimer testTimer4;
-muTimer testTimer5;
 
 bool pse;
-
 bool entry = true;
 int count = 0;
 bool initScreen = true;
 
-// How many NeoPixels are attached to the Arduino?
-#define LED_COUNT 18
-
 // Declare our NeoPixel strip object:
-Adafruit_NeoPixel strip(LED_COUNT, PIN_LEDS_WLED_CRT, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(pcb.led_count, pcb.led_pin, NEO_GRB + NEO_KHZ800);
 
-//create a task handeler for the leds
+// create a task handler for the leds
 TaskHandle_t test_leds_task;
-
-
-/*******************************************************************************
- * Display Selection
- *******************************************************************************/
-
-// #define Display_43   // 4.3 inch 480x272
-// #define Display_50 // 5.0 inch 800x480
-#define Display_50_Custom // 5.0 inch 800x480 Custom Board PCB R 0.1.0
-// #define Display_70   // 7.0 inch 800x480
 
 /*******************************************************************************
  * Screen Driver Configuration
  *******************************************************************************/
-#if defined(Display_43) // 4.3INCH 480x272
-Arduino_ESP32RGBPanel *bus = new Arduino_ESP32RGBPanel(
-    GFX_NOT_DEFINED /* CS */, GFX_NOT_DEFINED /* SCK */, GFX_NOT_DEFINED /* SDA */,
-    40 /* DE */, 41 /* VSYNC */, 39 /* HSYNC */, 42 /* PCLK */,
-    45 /* R0 */, 48 /* R1 */, 47 /* R2 */, 21 /* R3 */, 14 /* R4 */,
-    5 /* G0 */, 6 /* G1 */, 7 /* G2 */, 15 /* G3 */, 16 /* G4 */, 4 /* G5 */,
-    8 /* B0 */, 3 /* B1 */, 46 /* B2 */, 9 /* B3 */, 1 /* B4 */
-);
-Arduino_RPi_DPI_RGBPanel *lcd = new Arduino_RPi_DPI_RGBPanel(
-    bus,
-    480 /* width */, 0 /* hsync_polarity */, 8 /* hsync_front_porch */, 4 /* hsync_pulse_width */, 43 /* hsync_back_porch */,
-    272 /* height */, 0 /* vsync_polarity */, 8 /* vsync_front_porch */, 4 /* vsync_pulse_width */, 12 /* vsync_back_porch */,
-    1 /* pclk_active_neg */, 7000000 /* prefer_speed */, true /* auto_flush */);
 
-#elif defined(Display_50) // 5.0INCH 800x480
 Arduino_ESP32RGBPanel *bus = new Arduino_ESP32RGBPanel(
-    GFX_NOT_DEFINED /* CS */, GFX_NOT_DEFINED /* SCK */, GFX_NOT_DEFINED /* SDA */,
-    40 /* DE */, 41 /* VSYNC */, 39 /* HSYNC */, 0 /* PCLK */,
-    45 /* R0 */, 48 /* R1 */, 47 /* R2 */, 21 /* R3 */, 14 /* R4 */,
-    5 /* G0 */, 6 /* G1 */, 7 /* G2 */, 15 /* G3 */, 16 /* G4 */, 4 /* G5 */,
-    8 /* B0 */, 3 /* B1 */, 46 /* B2 */, 9 /* B3 */, 1 /* B4 */
+    pcb.cs /* CS */, pcb.sck /* SCK */, pcb.sda_display /* SDA */,
+    pcb.de /* DE */, pcb.vsync /* VSYNC */, pcb.hsync /* HSYNC */, pcb.pclk /* PCLK */,
+    pcb.r0 /* R0 */, pcb.r1 /* R1 */, pcb.r2 /* R2 */, pcb.r3 /* R3 */, pcb.r4 /* R4 */,
+    pcb.g0 /* G0 */, pcb.g1 /* G1 */, pcb.g2 /* G2 */, pcb.g3 /* G3 */, pcb.g4 /* G4 */, pcb.g5 /* G5 */,
+    pcb.b0 /* B0 */, pcb.b1 /* B1 */, pcb.b2 /* B2 */, pcb.b3 /* B3 */, pcb.b4 /* B4 */
 );
 Arduino_RPi_DPI_RGBPanel *lcd = new Arduino_RPi_DPI_RGBPanel(
     bus,
-    800 /* width */, 0 /* hsync_polarity */, 210 /* hsync_front_porch */, 4 /* hsync_pulse_width */, 43 /* hsync_back_porch */,
-    480 /* height */, 0 /* vsync_polarity */, 22 /* vsync_front_porch */, 4 /* vsync_pulse_width */, 12 /* vsync_back_porch */,
-    1 /* pclk_active_neg */, 16000000 /* prefer_speed */, true /* auto_flush */);
-
-#elif defined(Display_70) // 7.0INCH 800x480
-Arduino_ESP32RGBPanel *bus = new Arduino_ESP32RGBPanel(
-    GFX_NOT_DEFINED /* CS */, GFX_NOT_DEFINED /* SCK */, GFX_NOT_DEFINED /* SDA */,
-    41 /* DE */, 40 /* VSYNC */, 39 /* HSYNC */, 0 /* PCLK */,
-    14 /* R0 */, 21 /* R1 */, 47 /* R2 */, 48 /* R3 */, 45 /* R4 */,
-    9 /* G0 */, 46 /* G1 */, 3 /* G2 */, 8 /* G3 */, 16 /* G4 */, 1 /* G5 */,
-    15 /* B0 */, 7 /* B1 */, 6 /* B2 */, 5 /* B3 */, 4 /* B4 */
-);
-Arduino_RPi_DPI_RGBPanel *lcd = new Arduino_RPi_DPI_RGBPanel(
-    bus,
-    800 /* width */, 0 /* hsync_polarity */, 210 /* hsync_front_porch */, 1 /* hsync_pulse_width */, 46 /* hsync_back_porch */,
-    480 /* height */, 0 /* vsync_polarity */, 22 /* vsync_front_porch */, 1 /* vsync_pulse_width */, 23 /* vsync_back_porch */,
-    0 /* pclk_active_neg */, 16000000 /* prefer_speed */, true /* auto_flush */);
-
-#elif defined(Display_50_Custom) // 5.0INCH 800x480 Custom Board PCB R 0.1.0
-Arduino_ESP32RGBPanel *bus = new Arduino_ESP32RGBPanel(
-    GFX_NOT_DEFINED /* CS */, GFX_NOT_DEFINED /* SCK */, GFX_NOT_DEFINED /* SDA */,
-    PIN_DISPLAY_DE /* DE */, PIN_DISPLAY_VSYNC /* VSYNC */, PIN_DISPLAY_HSYNC /* HSYNC */, PIN_DISPLAY_DCLK /* PCLK */,
-    PIN_DISPLAY_R3 /* R0 */, PIN_DISPLAY_R4 /* R1 */, PIN_DISPLAY_R5 /* R2 */, PIN_DISPLAY_R6 /* R3 */, PIN_DISPLAY_R7 /* R4 */,
-    PIN_DISPLAY_G2 /* G0 */, PIN_DISPLAY_G3 /* G1 */, PIN_DISPLAY_G4 /* G2 */, PIN_DISPLAY_G5 /* G3 */, PIN_DISPLAY_G6 /* G4 */, PIN_DISPLAY_G7 /* G5 */,
-    PIN_DISPLAY_B3 /* B0 */, PIN_DISPLAY_B4 /* B1 */, PIN_DISPLAY_B5 /* B2 */, PIN_DISPLAY_B6 /* B3 */, PIN_DISPLAY_B7 /* B4 */
-);
-Arduino_RPi_DPI_RGBPanel *lcd = new Arduino_RPi_DPI_RGBPanel(
-    bus,
-    800 /* width */, 0 /* hsync_polarity */, 210 /* hsync_front_porch */, 4 /* hsync_pulse_width */, 43 /* hsync_back_porch */,
-    480 /* height */, 0 /* vsync_polarity */, 22 /* vsync_front_porch */, 4 /* vsync_pulse_width */, 12 /* vsync_back_porch */,
-    1 /* pclk_active_neg */, 16000000 /* prefer_speed */, true /* auto_flush */);
-#endif
+    pcb.width /* width */, pcb.hsync_polarity /* hsync_polarity */, pcb.hsync_front_porch /* hsync_front_porch */, pcb.hsync_pulse /* hsync_pulse_width */, pcb.hsync_back_porch /* hsync_back_porch */,
+    pcb.height /* height */, pcb.vsync_polarity /* vsync_polarity */, pcb.vsync_front_porch /* vsync_front_porch */, pcb.vsync_pulse /* vsync_pulse_width */, pcb.vsync_back_porch /* vsync_back_porch */,
+    pcb.pclk /* pclk_active_neg */, pcb.prefer_speed /* prefer_speed */, pcb.auto_flush /* auto_flush */);
 
 /*******************************************************************************
  * Display Driver Configuration
@@ -117,8 +58,7 @@ Arduino_RPi_DPI_RGBPanel *lcd = new Arduino_RPi_DPI_RGBPanel(
 static uint32_t screenWidth;
 static uint32_t screenHeight;
 static lv_disp_draw_buf_t draw_buf;
-static lv_color_t disp_draw_buf[800 * 480 / 10]; // 5,7inch: lv_color_t disp_draw_buf[800*480/10]            4.3inch: lv_color_t disp_draw_buf[480*272/10]
-// static lv_color_t disp_draw_buf;
+static lv_color_t disp_draw_buf[DISPLAY_DRAW_BUF];
 static lv_disp_drv_t disp_drv;
 
 /* Display flushing */
@@ -164,8 +104,6 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
   }
 }
 
-
-
 // create a task to test the neo-pixel leds
 void test_leds(void *pvParameters)
 {
@@ -192,45 +130,56 @@ void test_leds(void *pvParameters)
   }
 }
 
-void print_wakeup_reason(){
+void print_wakeup_reason()
+{
   esp_sleep_wakeup_cause_t wakeup_reason;
 
   wakeup_reason = esp_sleep_get_wakeup_cause();
 
-  switch(wakeup_reason)
+  switch (wakeup_reason)
   {
-    case ESP_SLEEP_WAKEUP_EXT0 : Serial.println("Wakeup caused by external signal using RTC_IO"); break;
-    case ESP_SLEEP_WAKEUP_EXT1 : Serial.println("Wakeup caused by external signal using RTC_CNTL"); break;
-    case ESP_SLEEP_WAKEUP_TIMER : Serial.println("Wakeup caused by timer"); break;
-    case ESP_SLEEP_WAKEUP_TOUCHPAD : Serial.println("Wakeup caused by touchpad"); break;
-    case ESP_SLEEP_WAKEUP_ULP : Serial.println("Wakeup caused by ULP program"); break;
-    default : Serial.printf("Wakeup was not caused by deep sleep: %d\n",wakeup_reason); break;
+  case ESP_SLEEP_WAKEUP_EXT0:
+    Serial.println("Wakeup caused by external signal using RTC_IO");
+    break;
+  case ESP_SLEEP_WAKEUP_EXT1:
+    Serial.println("Wakeup caused by external signal using RTC_CNTL");
+    break;
+  case ESP_SLEEP_WAKEUP_TIMER:
+    Serial.println("Wakeup caused by timer");
+    break;
+  case ESP_SLEEP_WAKEUP_TOUCHPAD:
+    Serial.println("Wakeup caused by touchpad");
+    break;
+  case ESP_SLEEP_WAKEUP_ULP:
+    Serial.println("Wakeup caused by ULP program");
+    break;
+  default:
+    Serial.printf("Wakeup was not caused by deep sleep: %d\n", wakeup_reason);
+    break;
   }
 }
 
-//crea una tarea que ponga en light sleep al microcontrolador
+// crea una tarea que ponga en light sleep al microcontrolador
 void light_sleep(void *pvParameters)
 {
   while (1)
   {
     delay(5000);
     Serial.println("Going to sleep now");
-    //pausa la tarea que controla los leds
+    // pausa la tarea que controla los leds
     vTaskSuspend(test_leds_task);
-    //apaga los leds
+    // apaga los leds
     for (int i = 0; i < strip.numPixels(); i++)
     {
       strip.setPixelColor(i, strip.Color(0, 0, 0));
       strip.show();
     }
-    digitalWrite(PIN_MCU_GPIO17, LOW); // Disable 5V
-    gpio_hold_en(GPIO_NUM_17);
+    digitalWrite(pcb.v5Enable, LOW); // Disable 5V
+    gpio_hold_en(pcb.v5Enable);
     esp_deep_sleep_start();
     Serial.println("This will never be printed");
-    
   }
 }
-
 
 /*******************************************************************************
  * Setup Function
@@ -245,8 +194,8 @@ void setup()
   lcd->setTextSize(2);
   delay(200);
 #ifdef TFT_BL
-  pinMode((gpio_num_t)TFT_BL, OUTPUT);
-  analogWrite(TFT_BL, 255);
+  pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
+  analogWrite(pcb.tft_bl, 255);
 #endif
   lv_init();
   touch_init();
@@ -274,13 +223,12 @@ void setup()
   lv_indev_drv_register(&indev_drv);
 
   strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.setBrightness(10); // Set BRIGHTNESS to about 1/5 (max = 255)
   strip.show();            // Turn OFF all pixels ASAP
-  strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
 
-  gpio_hold_dis(GPIO_NUM_17);
-  pinMode(PIN_MCU_GPIO17, OUTPUT); // Enable 5V
-  digitalWrite(PIN_MCU_GPIO17, HIGH); // Enable 5V
-  
+  gpio_hold_dis(pcb.v5Enable);
+  pinMode(pcb.v5Enable, OUTPUT);    // Enable 5V
+  digitalWrite(pcb.v5Enable, HIGH); // Enable 5V
 
   /* LVGL Demos*/
   // lv_demo_widgets();
@@ -294,18 +242,13 @@ void setup()
   // UI Initial Configurations
   ui_init_config();
 
-  
-   
-  //registra el taskHandler para la tarea que controla los leds
+  // registra el taskHandler para la tarea que controla los leds
   xTaskCreatePinnedToCore(test_leds, "test_leds", 10000, NULL, 1, &test_leds_task, APP_CPU_NUM);
-  
 
-  esp_sleep_enable_ext0_wakeup(GPIO_NUM_10, 0); //1 = High, 0 = Low
-  xTaskCreatePinnedToCore(light_sleep, "light_sleep", 10000, NULL, 1, NULL, APP_CPU_NUM);
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_10, 0); // 1 = High, 0 = Low
+  // xTaskCreatePinnedToCore(light_sleep, "light_sleep", 10000, NULL, 1, NULL, APP_CPU_NUM);
 
   print_wakeup_reason();
-
-
 }
 
 /*******************************************************************************
@@ -326,14 +269,6 @@ void loop()
       _ui_screen_delete(&ui_WelcomeScreen);
     }
   }
-
-  if (testTimer.delayOn(entry, 1000))
-  {
-    Serial.println("Entry");
-    entry = false;
-  }
-
-  
 
   delay(5);
 }

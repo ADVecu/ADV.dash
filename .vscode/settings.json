@@ -13,6 +13,7 @@
         "EEPROM",
         "FUELP",
         "gpio",
+        "hsync",
         "HSYNC",
         "KBITS",
         "leds",
@@ -21,15 +22,23 @@
         "msgbox",
         "OILP",
         "OILT",
+        "PCBR",
         "pclk",
         "PCLK",
+        "pinout",
+        "RGBPANEL",
         "rpms",
         "Squareline",
         "twai",
         "TWAI",
+        "vsync",
         "VSYNC",
         "WLED",
         "WTEMP"
     ],
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "files.associations": {
+        "functional": "cpp",
+        "tuple": "cpp"
+    }
 }
