@@ -9,6 +9,7 @@
         "barscalered",
         "btns",
         "canbus",
+        "CRGB",
         "DCLK",
         "EEPROM",
         "FUELP",

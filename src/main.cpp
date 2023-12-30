@@ -8,7 +8,8 @@
 #include "controllers/canBus/can_bus.h"
 #include "controllers/uiControl/ui_control.h"
 #include "pcb_definitions.h"
-#include <Adafruit_NeoPixel.h>
+#include "controllers/wLed/led_control.h"
+
 /*
 #include <SparkFun_RV8803.h>
 #include <Adafruit_BMP280.h>
@@ -26,9 +27,6 @@ bool pse;
 bool entry = true;
 int count = 0;
 bool initScreen = true;
-
-// Declare our NeoPixel strip object:
-Adafruit_NeoPixel strip(pcb.led_count, pcb.led_pin, NEO_GRB + NEO_KHZ800);
 
 // create a task handler for the leds
 TaskHandle_t test_leds_task;
@@ -104,82 +102,7 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
   }
 }
 
-// create a task to test the neo-pixel leds
-void test_leds(void *pvParameters)
-{
-  while (1)
-  {
-    for (int i = 0; i < strip.numPixels(); i++)
-    {
-      strip.setPixelColor(i, strip.Color(0, 0, 255));
-      strip.show();
-      delay(100);
-    }
-    for (int i = 0; i < strip.numPixels(); i++)
-    {
-      strip.setPixelColor(i, strip.Color(0, 255, 0));
-      strip.show();
-      delay(100);
-    }
-    for (int i = 0; i < strip.numPixels(); i++)
-    {
-      strip.setPixelColor(i, strip.Color(255, 0, 0));
-      strip.show();
-      delay(100);
-    }
-  }
-}
-
-void print_wakeup_reason()
-{
-  esp_sleep_wakeup_cause_t wakeup_reason;
-
-  wakeup_reason = esp_sleep_get_wakeup_cause();
-
-  switch (wakeup_reason)
-  {
-  case ESP_SLEEP_WAKEUP_EXT0:
-    Serial.println("Wakeup caused by external signal using RTC_IO");
-    break;
-  case ESP_SLEEP_WAKEUP_EXT1:
-    Serial.println("Wakeup caused by external signal using RTC_CNTL");
-    break;
-  case ESP_SLEEP_WAKEUP_TIMER:
-    Serial.println("Wakeup caused by timer");
-    break;
-  case ESP_SLEEP_WAKEUP_TOUCHPAD:
-    Serial.println("Wakeup caused by touchpad");
-    break;
-  case ESP_SLEEP_WAKEUP_ULP:
-    Serial.println("Wakeup caused by ULP program");
-    break;
-  default:
-    Serial.printf("Wakeup was not caused by deep sleep: %d\n", wakeup_reason);
-    break;
-  }
-}
-
-// crea una tarea que ponga en light sleep al microcontrolador
-void light_sleep(void *pvParameters)
-{
-  while (1)
-  {
-    delay(5000);
-    Serial.println("Going to sleep now");
-    // pausa la tarea que controla los leds
-    vTaskSuspend(test_leds_task);
-    // apaga los leds
-    for (int i = 0; i < strip.numPixels(); i++)
-    {
-      strip.setPixelColor(i, strip.Color(0, 0, 0));
-      strip.show();
-    }
-    digitalWrite(pcb.v5Enable, LOW); // Disable 5V
-    gpio_hold_en(pcb.v5Enable);
-    esp_deep_sleep_start();
-    Serial.println("This will never be printed");
-  }
-}
+led_control leds; // led control class
 
 /*******************************************************************************
  * Setup Function
@@ -222,16 +145,9 @@ void setup()
   indev_drv.read_cb = my_touchpad_read;
   lv_indev_drv_register(&indev_drv);
 
-  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
-  strip.setBrightness(10); // Set BRIGHTNESS to about 1/5 (max = 255)
-  strip.show();            // Turn OFF all pixels ASAP
-
   gpio_hold_dis(pcb.v5Enable);
   pinMode(pcb.v5Enable, OUTPUT);    // Enable 5V
   digitalWrite(pcb.v5Enable, HIGH); // Enable 5V
-
-  /* LVGL Demos*/
-  // lv_demo_widgets();
 
   /* Main UI init Function*/
   ui_init(); // ui from Squareline or GUI Guider
@@ -242,13 +158,10 @@ void setup()
   // UI Initial Configurations
   ui_init_config();
 
-  // registra el taskHandler para la tarea que controla los leds
-  xTaskCreatePinnedToCore(test_leds, "test_leds", 10000, NULL, 1, &test_leds_task, APP_CPU_NUM);
-
   esp_sleep_enable_ext0_wakeup(GPIO_NUM_10, 0); // 1 = High, 0 = Low
   // xTaskCreatePinnedToCore(light_sleep, "light_sleep", 10000, NULL, 1, NULL, APP_CPU_NUM);
 
-  print_wakeup_reason();
+  leds.init_leds();
 }
 
 /*******************************************************************************

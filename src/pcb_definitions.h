@@ -33,6 +33,8 @@
 #ifdef ADVdash5inch
 
 #define DISPLAY_DRAW_BUF 800 * 480 / 10
+#define LEDS_NUM 18
+#define LEDS_PIN 38
 
 struct pcb_def
 {
@@ -75,10 +77,6 @@ struct pcb_def
     uint16_t pclk_active_neg = 1;
     int32_t prefer_speed = 16000000;
     bool auto_flush = true;
-
-    // RGB LEDS
-    uint16_t led_count = 18;
-    uint16_t led_pin = 38;
 
     // GPIO
     gpio_num_t v5Enable = GPIO_NUM_17;
