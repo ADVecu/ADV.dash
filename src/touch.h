@@ -4,7 +4,7 @@
  * GT911: https://github.com/TAMCTec/gt911-arduino.git
  * XPT2046: https://github.com/PaulStoffregen/XPT2046_Touchscreen.git
  ******************************************************************************/
-
+#include "pcb_definitions.h"
 /* uncomment for FT6X36 */
 // #define TOUCH_FT6X36
 // #define TOUCH_FT6X36_SCL 38//19
@@ -30,6 +30,7 @@
 */
 
 /* uncomment for GT911 ADVdash5inch */
+#if defined(ADVdash5inch)
 #define TOUCH_GT911
 #define TOUCH_GT911_SCL 18 // 20
 #define TOUCH_GT911_SDA 42 // 19
@@ -40,6 +41,21 @@
 #define TOUCH_MAP_X2 0
 #define TOUCH_MAP_Y1 480 // 272
 #define TOUCH_MAP_Y2 0
+#endif
+
+/* uncomment for GT911 ADVdash7inch */
+#if defined(ADVdash7inch)
+#define TOUCH_GT911
+#define TOUCH_GT911_SCL 20
+#define TOUCH_GT911_SDA 19
+#define TOUCH_GT911_INT -1
+#define TOUCH_GT911_RST 38
+#define TOUCH_GT911_ROTATION ROTATION_NORMAL
+#define TOUCH_MAP_X1 800
+#define TOUCH_MAP_X2 0
+#define TOUCH_MAP_Y1 480
+#define TOUCH_MAP_Y2 0
+#endif
 
 /* uncomment for XPT2046 */
 // #define TOUCH_XPT2046
@@ -54,7 +70,8 @@
 // #define TOUCH_MAP_Y1 100
 // #define TOUCH_MAP_Y2 4000
 
-int touch_last_x = 0, touch_last_y = 0;
+int touch_last_x = 0,
+    touch_last_y = 0;
 
 #if defined(TOUCH_FT6X36)
 #include <Wire.h>

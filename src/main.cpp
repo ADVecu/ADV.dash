@@ -22,6 +22,7 @@
 pcb_def pcb; // pcb definitions struct
 
 muTimer testTimer4;
+muTimer testTimer5;
 
 bool pse;
 bool entry = true;
@@ -181,6 +182,11 @@ void loop()
       initScreen = false;
       _ui_screen_delete(&ui_WelcomeScreen);
     }
+  }
+
+  if(testTimer5.delayOn(true, 10000))
+  {
+   leds.triggerWelcomeAnimation();
   }
 
   delay(5);
