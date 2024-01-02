@@ -2,10 +2,7 @@
 #include <driver/gpio.h>
 #include "rus_efi_can_verbose.h"
 #include "can_bus.h"
-
-// Can Bus Transceiver Pins
-#define CAN_TX_PIN GPIO_NUM_13
-#define CAN_RX_PIN GPIO_NUM_12
+#include "pcb_definitions.h"
 
 void canbus_init()
 {
@@ -15,6 +12,8 @@ void canbus_init()
     twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
 
     // Install TWAI driver
+    //gpio_reset_pin(CAN_TX_PIN);
+    //gpio_reset_pin(CAN_RX_PIN);
     if (twai_driver_install(&g_config, &t_config, &f_config) == ESP_OK)
     {
         printf("Driver installed\n");
@@ -39,7 +38,7 @@ void canbus_init()
     // Create a queue to handle CAN messages traduced by the canbus_read task
 
     // Task to read the CAN bus
-    xTaskCreatePinnedToCore(canbus_read, "canbus_read", 10000, NULL, 1, NULL, APP_CPU_NUM);
+    xTaskCreatePinnedToCore(canbus_read, "canbus_read", 10000, NULL, 2, NULL, APP_CPU_NUM);
 }
 
 // read the CAN bus for messages
@@ -76,8 +75,22 @@ void canbus_read(void *pvParameters)
     while (1)
     {
         // Receive a CAN message
-        if (twai_receive(&rx_msg, pdMS_TO_TICKS(1000)) == ESP_OK)
+        //capture error and print it
+        int err = twai_receive(&rx_msg, pdMS_TO_TICKS(1000));
+        
+        if (err == ESP_OK)
         {
+            /*//PRINT CAN MESSAGE
+            printf("CAN Message Received\n");
+            printf("ID: %d\n", rx_msg.identifier);
+            printf("Data: ");
+            for (int i = 0; i < rx_msg.data_length_code; i++)
+            {
+                printf("%d ", rx_msg.data[i]);
+            }
+            printf("\n");
+
+            */
             // Parce the received CAN message into the correct struct
             switch (rx_msg.identifier)
             {
@@ -114,6 +127,21 @@ void canbus_read(void *pvParameters)
         {
             // TODO:  Handle this error, for example, send a message to the UI to display an error message on the screen, and set all the values to 0
             printf("Failed to receive message\n");
+            switch (err)
+            {
+            case ESP_ERR_TIMEOUT:
+                printf("Error: Timeout\n");
+                break;
+            case ESP_ERR_INVALID_ARG:
+                printf("Error: Invalid Argument\n");
+                break;
+            case ESP_FAIL:
+                printf("Error: Fail\n");
+                break;
+            case ESP_ERR_INVALID_STATE:
+                printf("Error: Invalid State\n");
+                break;   
+            }
         }
 
         // Parce the received can data into a struct for use in the UI
