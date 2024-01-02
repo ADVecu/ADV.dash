@@ -6,6 +6,7 @@
 #include "ui_enums.h"
 #include "ui_strings.h"
 #include "unit_manager.h"
+#include "../wLed/led_control.h"
 
 // Widgets
 #include "widgets/rpms_bar.h"
@@ -167,6 +168,9 @@ void ui_task(void *pvParameters)
 
     gp_panel gp_panel_array[6] = {gp_Panel_1, gp_Panel_2, gp_Panel_3, gp_Panel_4, gp_Panel_5, gp_Panel_6};
 
+    //Leds control
+    led_control leds;
+
     // Infinite loop
     while (1)
     {
@@ -175,6 +179,9 @@ void ui_task(void *pvParameters)
         {
             // Update the rpms bar
             rpmsBar.setRPMs(rx_msg.rpms);
+
+            //Set Rpms lEDs
+            leds.setRmpsLeds(rx_msg.rpms, 3000, 5000);
 
             // Update the tps bar
             tpsBar.setValue(rx_msg.tps);
