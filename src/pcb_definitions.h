@@ -27,8 +27,8 @@
  * Select the board you are using
  *******************************************************************************/
 
-#define ADVdash7inch
-//#define ADVdash5inch
+// #define ADVdash7inch
+#define ADVdash5inch
 
 /*******************************************************************************
  * PCB Definitions
@@ -39,6 +39,18 @@
 #define DISPLAY_DRAW_BUF 800 * 480 / 10
 #define LEDS_NUM 18
 #define LEDS_PIN 38
+#define LEDS_RPMS_START 4
+#define LEDS_RPMS_END 14
+#define LEDS_RPMS_LOW 7
+#define LEDS_RPMS_MID 10
+#define LEDS_RPMS_MAX 14
+
+// Can Bus Transceiver Pins
+//#define CAN_TX_PIN GPIO_NUM_13
+//#define CAN_RX_PIN GPIO_NUM_12
+
+#define CAN_TX_PIN GPIO_NUM_44
+#define CAN_RX_PIN GPIO_NUM_43
 
 struct pcb_def
 {
@@ -92,7 +104,16 @@ struct pcb_def
 
 #define DISPLAY_DRAW_BUF 800 * 480 / 10
 #define LEDS_NUM 18
-#define LEDS_PIN 18
+#define LEDS_PIN 11
+#define LEDS_RPMS_START 4
+#define LEDS_RPMS_END 14
+#define LEDS_RPMS_LOW 7
+#define LEDS_RPMS_HIGH 11
+#define LEDS_RPMS_MAX 14
+
+// Can Bus Transceiver Pins
+#define CAN_TX_PIN GPIO_NUM_18
+#define CAN_RX_PIN GPIO_NUM_17
 
 struct pcb_def
 {
