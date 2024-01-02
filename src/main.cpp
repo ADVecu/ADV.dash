@@ -9,6 +9,8 @@
 #include "controllers/uiControl/ui_control.h"
 #include "pcb_definitions.h"
 #include "controllers/wLed/led_control.h"
+#include "soc/gpio_periph.h"
+#include "hal/gpio_hal.h"
 
 /*
 #include <SparkFun_RV8803.h>
@@ -110,8 +112,11 @@ led_control leds; // led control class
  *******************************************************************************/
 void setup()
 {
+  gpio_hal_iomux_func_sel(GPIO_PIN_MUX_REG[CAN_TX_PIN], PIN_FUNC_GPIO);
+  gpio_hal_iomux_func_sel(GPIO_PIN_MUX_REG[CAN_RX_PIN], PIN_FUNC_GPIO);
+  
   // put your setup code here, to run once:
-  Serial.begin(9600); // Init Display
+  Serial.begin(115200); // Init Display
 
   lcd->begin();
   lcd->fillScreen(BLACK);
@@ -119,7 +124,7 @@ void setup()
   delay(200);
 #ifdef TFT_BL
   pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
-  analogWrite(pcb.tft_bl, 255);
+  analogWrite(pcb.tft_bl, 50);
 #endif
   lv_init();
   touch_init();
@@ -182,11 +187,6 @@ void loop()
       initScreen = false;
       _ui_screen_delete(&ui_WelcomeScreen);
     }
-  }
-
-  if(testTimer5.delayOn(true, 10000))
-  {
-   leds.triggerWelcomeAnimation();
   }
 
   delay(5);
