@@ -73,7 +73,11 @@ void led_control::triggerWelcomeAnimation()
 void led_control::setRmpsLeds(int rpms, int minRpms, int maxRpms)
 {
     int ledsOn = map(rpms, minRpms, maxRpms, LEDS_RPMS_START, LEDS_RPMS_END);
-    FastLED.clear();
+
+    for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
+    {
+        strip[i] = CRGB::Black;
+    }
 
     if (rpms < maxRpms)
     {
@@ -105,21 +109,54 @@ void led_control::setRmpsLeds(int rpms, int minRpms, int maxRpms)
             {
                 for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
                 {
-                   strip[i] = CRGB::Red;
+                    strip[i] = CRGB::Red;
                 }
             }
             else
             {
                 for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
                 {
-                   strip[i] = CRGB::Black;
+                    strip[i] = CRGB::Black;
                 }
             }
 
-        FastLED.show();
+            FastLED.show();
         } // reset
     }
+}
 
+void led_control::setIndicatorLeds(ledState state, ledPosition position, ledColor color)
+{
+    
 
+    if (state == LED_ON)
+    {
+        strip[position] = color;
+        FastLED.show();
+    }
+    else if (state == LED_OFF)
+    {
+        strip[position] = CRGB::Black;
+        FastLED.show();
+    }
+    else if (state == LED_BLINK)
+    {
+        EVERY_N_MILLISECONDS(250)
+        {
+            static boolean ps0; // stores the pixel state
+            ps0 = !ps0;         // toggle on/off state
+            if (ps0 == 1)
+            {
+                strip[position] = color;
+            }
+            else
+            {
+                strip[position] = CRGB::Black;
+            }
 
+            FastLED.show();
+        } // reset
+
+        
+    }
 }
