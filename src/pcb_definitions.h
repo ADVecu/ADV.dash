@@ -37,6 +37,9 @@
 #if defined(ADVdash5inch)
 
 #define DISPLAY_DRAW_BUF 800 * 480 / 10
+
+#define RMPS_LEDS true
+#define INDICATOR_LEDS true
 #define LEDS_NUM 18
 #define LEDS_PIN 38
 #define LEDS_RPMS_START 4
@@ -46,8 +49,8 @@
 #define LEDS_RPMS_MAX 14
 
 // Can Bus Transceiver Pins
-//#define CAN_TX_PIN GPIO_NUM_13
-//#define CAN_RX_PIN GPIO_NUM_12
+// #define CAN_TX_PIN GPIO_NUM_13
+// #define CAN_RX_PIN GPIO_NUM_12
 
 #define CAN_TX_PIN GPIO_NUM_44
 #define CAN_RX_PIN GPIO_NUM_43
@@ -98,11 +101,26 @@ struct pcb_def
     gpio_num_t v5Enable = GPIO_NUM_17;
 };
 
+enum ledPosition
+{
+    HIGH_BEAM,
+    BATTERY_LIGHT,
+    CHECK_ENGINE,
+    LEFT_DIR,
+    RIGHT_DIR = 14,
+    OIL_PRESSURE_LED,
+    PARKING_BRAKE,
+    FUEL_LED
+};
+
 #endif
 
 #if defined(ADVdash7inch)
 
 #define DISPLAY_DRAW_BUF 800 * 480 / 10
+
+#define RMPS_LEDS false
+#define INDICATOR_LEDS false
 #define LEDS_NUM 18
 #define LEDS_PIN 11
 #define LEDS_RPMS_START 4
@@ -159,6 +177,18 @@ struct pcb_def
 
     // GPIO
     gpio_num_t v5Enable = GPIO_NUM_17;
+};
+
+enum ledPosition
+{
+    HIGH_BEAM,
+    BATTERY_LIGHT,
+    CHECK_ENGINE,
+    LEFT_DIR,
+    RIGHT_DIR = 15,
+    OIL_PRESSURE_LED,
+    PARKING_BRAKE,
+    FUEL
 };
 
 #endif
