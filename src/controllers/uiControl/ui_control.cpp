@@ -7,6 +7,7 @@
 #include "ui_strings.h"
 #include "unit_manager.h"
 #include "../wLed/led_control.h"
+#include "pcb_definitions.h"
 
 // Widgets
 #include "widgets/rpms_bar.h"
@@ -171,12 +172,16 @@ void ui_task(void *pvParameters)
     //Leds control
     led_control leds;
 
+    bool canReady = false;
     // Infinite loop
     while (1)
     {
         // Read the CAN bus queue
         if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen)
         {
+            // Set the flag to true
+            canReady = true;
+            
             // Update the rpms bar
             rpmsBar.setRPMs(rx_msg.rpms);
 
@@ -314,6 +319,8 @@ void ui_task(void *pvParameters)
                     break;
                 }
             }
+        }else{
+            canReady = false;
         }
 
         // If the settins screen is active
@@ -870,5 +877,21 @@ void ui_task(void *pvParameters)
             }
             }
         }
+
+        // Update the LEDs indicators
+        if ( INDICATOR_LEDS  && canReady){
+
+            // Coolant led
+            if (rx_msg.fuel_level <= 20 && rx_msg.fuel_level >= 0){
+                leds.setIndicatorLeds(LED_ON, FUEL_LED, LED_YELLOW);
+            }else if (rx_msg.fuel_level <= 10 && rx_msg.fuel_level >= 0){
+                leds.setIndicatorLeds(LED_BLINK, FUEL_LED, LED_YELLOW);
+            }else{
+                leds.setIndicatorLeds(LED_OFF, FUEL_LED, LED_YELLOW);
+            }
+            
+        }
+        
+
     }
 }
