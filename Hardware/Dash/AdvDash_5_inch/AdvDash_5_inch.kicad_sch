@@ -304,6 +304,11 @@
     (stroke (width 0) (type default))
     (uuid 75b3d514-261c-4176-b3ba-fc0cc178fdff)
   )
+
+  (wire (pts (xy 132.08 180.34) (xy 149.225 180.34))
+    (stroke (width 0) (type default))
+    (uuid 75e35e17-2efb-4952-a5c4-abfb4e466d06)
+  )
   (bus (pts (xy 73.66 63.754) (xy 75.438 61.976))
     (stroke (width 0) (type default))
     (uuid 767e1ac0-3c57-4d6b-a876-9e105e7d431c)
@@ -426,6 +431,10 @@
     (uuid d1161041-3f1b-4286-ac21-a3ac4340bab8)
   )
 
+  (wire (pts (xy 132.08 88.265) (xy 149.225 88.265))
+    (stroke (width 0) (type default))
+    (uuid d1b118b3-c41d-4e0e-b1c9-4bf7a3e2f637)
+  )
   (wire (pts (xy 132.08 157.48) (xy 149.225 157.48))
     (stroke (width 0) (type default))
     (uuid d394fa3c-3fa8-4295-9937-cdb126e8e150)
@@ -1154,6 +1163,14 @@
       (effects (font (size 1.27 1.27)) (justify right))
       (uuid 95deca73-202a-47a0-8d53-536b99d040a0)
     )
+    (pin "TP_RST_2" input (at 132.08 88.265 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid 4ef1fa58-0675-4467-ab52-65f82360890e)
+    )
+    (pin "WLED_CLK" bidirectional (at 132.08 180.34 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid d3f3ad76-6ec0-4134-aabe-2ca1b2d2481b)
+    )
     (instances
       (project "AdvDash_5_inch"
         (path "/dc9c4178-e1bb-4529-992c-1528c3a3fad9" (page "2"))
@@ -1357,6 +1374,10 @@
       (effects (font (size 1.27 1.27)) (justify left))
       (uuid a782274c-4773-4e88-ae73-463718c10e5c)
     )
+    (pin "WLED_CLK" bidirectional (at 149.225 180.34 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid f8fd1768-c396-4b9f-87a9-1cb70be31ce3)
+    )
     (instances
       (project "AdvDash_5_inch"
         (path "/dc9c4178-e1bb-4529-992c-1528c3a3fad9" (page "11"))
@@ -1469,6 +1490,10 @@
     (pin "DCLK" input (at 149.225 157.48 180)
       (effects (font (size 1.27 1.27)) (justify left))
       (uuid bd058824-2969-40d1-a967-565fb6778392)
+    )
+    (pin "TP_RST_2" output (at 149.225 88.265 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid 00c09332-3c71-4bcd-bc38-18a0e122cbe4)
     )
     (instances
       (project "AdvDash_5_inch"

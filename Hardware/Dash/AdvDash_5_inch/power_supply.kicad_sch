@@ -2395,7 +2395,7 @@
     )
   )
 
-  (text_box "ChangeLog\n\nRev 0.2.0\n\n-The control of the EN pin can be done directly with the MCU, it has a function that hold the state of the pin in deep sleep"
+  (text_box "ChangeLog\n\nRev 0.2.0\n\n-The control of the EN pin can be done directly with the MCU, it has a function that hold the state of the pin in deep sleep\n\n-R3 Part number fix"
     (at 99.695 152.4 0) (size 76.835 45.085)
     (stroke (width 0) (type default))
     (fill (type none))
@@ -3738,11 +3738,14 @@
     (property "Datasheet" "~" (at 76.2 40.64 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "LCSC Part Number" "C17632" (at 76.2 40.64 0)
+    (property "LCSC Part Number" "C212383" (at 76.2 40.64 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "LCSC" "C17632" (at 76.2 40.64 0)
+    (property "LCSC" "C212383" (at 76.2 40.64 0)
       (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "MOUSER" "" (at 76.2 40.64 0)
+      (effects (font (size 1.27 1.27)))
     )
     (pin "1" (uuid eec86e0c-5e3e-4204-822d-70ef23739c2d))
     (pin "2" (uuid 6b4f7b38-b6b4-4c8e-a788-8511e31752a1))
