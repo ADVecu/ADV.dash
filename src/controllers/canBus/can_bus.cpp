@@ -12,8 +12,8 @@ void canbus_init()
     twai_filter_config_t f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
 
     // Install TWAI driver
-    //gpio_reset_pin(CAN_TX_PIN);
-    //gpio_reset_pin(CAN_RX_PIN);
+    // gpio_reset_pin(CAN_TX_PIN);
+    // gpio_reset_pin(CAN_RX_PIN);
     if (twai_driver_install(&g_config, &t_config, &f_config) == ESP_OK)
     {
         printf("Driver installed\n");
@@ -38,7 +38,7 @@ void canbus_init()
     // Create a queue to handle CAN messages traduced by the canbus_read task
 
     // Task to read the CAN bus
-    xTaskCreatePinnedToCore(canbus_read, "canbus_read", 10000, NULL, 2, NULL, APP_CPU_NUM);
+    xTaskCreatePinnedToCore(canbus_read, "canbus_read", 10000, NULL, 1, NULL, APP_CPU_NUM);
 }
 
 // read the CAN bus for messages
@@ -75,9 +75,9 @@ void canbus_read(void *pvParameters)
     while (1)
     {
         // Receive a CAN message
-        //capture error and print it
+        // capture error and print it
         int err = twai_receive(&rx_msg, pdMS_TO_TICKS(1000));
-        
+
         if (err == ESP_OK)
         {
             /*//PRINT CAN MESSAGE
@@ -140,7 +140,7 @@ void canbus_read(void *pvParameters)
                 break;
             case ESP_ERR_INVALID_STATE:
                 printf("Error: Invalid State\n");
-                break;   
+                break;
             }
         }
 

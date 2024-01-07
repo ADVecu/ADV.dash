@@ -169,7 +169,7 @@ void ui_task(void *pvParameters)
 
     gp_panel gp_panel_array[6] = {gp_Panel_1, gp_Panel_2, gp_Panel_3, gp_Panel_4, gp_Panel_5, gp_Panel_6};
 
-    //Leds control
+    // Leds control
     led_control leds;
 
     bool canReady = false;
@@ -181,12 +181,12 @@ void ui_task(void *pvParameters)
         {
             // Set the flag to true
             canReady = true;
-            
+
             // Update the rpms bar
             rpmsBar.setRPMs(rx_msg.rpms);
 
-            //Set Rpms lEDs
-            leds.setRmpsLeds(rx_msg.rpms, 3000, 5000);
+            // Set Rpms lEDs
+            // leds.setRmpsLeds(rx_msg.rpms, 3000, 5000);
 
             // Update the tps bar
             tpsBar.setValue(rx_msg.tps);
@@ -319,7 +319,9 @@ void ui_task(void *pvParameters)
                     break;
                 }
             }
-        }else{
+        }
+        else
+        {
             canReady = false;
         }
 
@@ -872,13 +874,14 @@ void ui_task(void *pvParameters)
             }
             break;
 
-            case 3:{
-                
+            case 3:
+            {
             }
             }
         }
 
         // Update the LEDs indicators
+        /*
         if ( INDICATOR_LEDS  && canReady){
 
             // Coolant led
@@ -889,9 +892,7 @@ void ui_task(void *pvParameters)
             }else{
                 leds.setIndicatorLeds(LED_OFF, FUEL_LED, LED_YELLOW);
             }
-            
-        }
-        
 
+        }*/
     }
 }

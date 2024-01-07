@@ -21,6 +21,36 @@ enum ledColor
     LED_WHITE = 0xffffff
 };
 
+struct indicatorLedState
+{
+    bool HighBeamST = false;
+    bool LeftTurnST = false;
+    bool RightTurnST = false;
+    bool ParkingST = false;
+    bool BatteryST = false;
+    bool OilPressureST = false;
+    bool CheckEngineST = false;
+    bool FuelST = false;
+
+};
+
+struct indicatorLedStatePrevious
+{
+    bool HighBeamST = true;
+    bool LeftTurnST = true;
+    bool RightTurnST = true;
+    bool ParkingST = true;
+    bool BatteryST = true;
+    bool OilPressureST = true;
+    bool CheckEngineST = true;
+    bool FuelST = true;
+
+};
+
+void ledControlTask(void *pvParameters);
+void commitTaskProcedure(void *arg);
+void commit();
+
 class led_control
 {
 
@@ -28,8 +58,8 @@ public:
     void init_leds();
     static void ledsWelcomeAnimation(void *pvParameters);
     void triggerWelcomeAnimation();
-    void setRmpsLeds(int rpms, int minRpms, int maxRpms);
-    void setIndicatorLeds(ledState state, ledPosition position ,ledColor color);
+    
+    // void setIndicatorLeds(ledState state, ledPosition position ,ledColor color);
 };
 
 #endif // LED_CONTROL_H

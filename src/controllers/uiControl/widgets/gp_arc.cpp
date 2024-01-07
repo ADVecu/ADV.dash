@@ -158,6 +158,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
 
 void gp_arc::setValue(uint16_t value)
 {
+     int arcValue;
 
     if (_previousValue != value)
     {
@@ -174,7 +175,8 @@ void gp_arc::setValue(uint16_t value)
         case gauge_type::MANIFOLD_PRESSURE:
         case gauge_type::OIL_PRESSURE:
         case gauge_type::FUEL_FLOW:
-            lv_arc_set_value(_arc, map(value, _minValue, _maxValue, 0, 100));
+            arcValue = map(value, _minValue, _maxValue, 0, 100);
+            lv_arc_set_value(_arc, arcValue);
             _ui_label_set_property(_arcValue, _UI_LABEL_PROPERTY_TEXT, String((float)value * 0.0333, 1).c_str());
             break;
 

@@ -1,20 +1,46 @@
-#include "FastLED.h"
+
+#include "NeoPixelBusLg.h"
 #include "Arduino.h"
 #include "pcb_definitions.h"
 #include "led_control.h"
+#include "../canBus/can_bus.h"
+#include "muTimer.h"
 
-CRGB strip[LEDS_NUM];
+xSemaphoreHandle semaphore = NULL;
+
+NeoPixelBusLg<NeoGrbFeature, NeoEsp32Rmt0Ws2812xMethod> strip(LEDS_NUM, LEDS_PIN);
 
 TaskHandle_t ledWelcomeAnimTask;
+TaskHandle_t commit_task;
+
+muTimer FlashTimer;
+
+indicatorLedState indicatorLedST;
+indicatorLedStatePrevious indicatorLedStateP;
+
+bool initAnimationComplete = false;
 
 void led_control::init_leds()
 {
 
-    FastLED.addLeds<WS2812B, LEDS_PIN, GRB>(strip, LEDS_NUM);
-    FastLED.setBrightness(100);
-    FastLED.show();
+    strip.Begin();
+    strip.SetLuminance(50);
+    strip.Show();
 
-    xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 1, &ledWelcomeAnimTask, APP_CPU_NUM);
+    xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 1, &ledWelcomeAnimTask, 1);
+    xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 10, NULL, 0);
+
+    commit_task = NULL;
+    semaphore = xSemaphoreCreateBinary();
+
+    xTaskCreatePinnedToCore(
+        commitTaskProcedure, /* Task function. */
+        "ShowRunnerTask",    /* name of task. */
+        10000,               /* Stack size of task */
+        NULL,                /* parameter of the task */
+        10,                  /* priority of the task */
+        &commit_task,        /* Task handle to keep track of created task */
+        0);
 }
 
 void led_control::ledsWelcomeAnimation(void *pvParameters)
@@ -27,16 +53,12 @@ void led_control::ledsWelcomeAnimation(void *pvParameters)
         for (int i = 0; i < LEDS_NUM; i++)
         {
             // Set the i'th led to red
-            strip[i] = CHSV(hue += 5, 255, 255);
+            strip.SetPixelColor(i, HsbColor(hue += 0.1f, 1.0f, 1.0f));
 
             // Show the leds
-            FastLED.show();
+            strip.Show();
             // now that we've shown the leds, reset the i'th led to black
             // strip[i] = CRGB::Black;
-            for (int i = 0; i < LEDS_NUM; i++)
-            {
-                strip[i].nscale8(250);
-            }
             // Wait a little bit before we loop around and do it again
             delay(50);
         }
@@ -46,117 +68,148 @@ void led_control::ledsWelcomeAnimation(void *pvParameters)
         for (int i = (LEDS_NUM)-1; i >= 0; i--)
         {
             // Set the i'th led to red
-            strip[i] = CHSV(hue += 5, 255, 255);
+            strip.SetPixelColor(i, HsbColor(hue += 0.1f, 1.0f, 1.0f));
             // Show the leds
-            FastLED.show();
+            strip.Show();
             // now that we've shown the leds, reset the i'th led to black
-            strip[i] = CRGB::Black;
-            for (int i = 0; i < LEDS_NUM; i++)
-            {
-                strip[i].nscale8(250);
-            }
+            strip.SetPixelColor(i, 0);
+
             // Wait a little bit before we loop around and do it again
             delay(25);
         }
 
-        FastLED.clear();
-        FastLED.show();
+        strip.ClearTo(0);
+        strip.Show();
+        initAnimationComplete = true;
         vTaskSuspend(NULL);
     }
 }
 
 void led_control::triggerWelcomeAnimation()
 {
+    initAnimationComplete = false;
     vTaskResume(ledWelcomeAnimTask);
 }
 
-void led_control::setRmpsLeds(int rpms, int minRpms, int maxRpms)
+
+void ledControlTask(void *pvParameters)
 {
-    int ledsOn = map(rpms, minRpms, maxRpms, LEDS_RPMS_START, LEDS_RPMS_END);
+    canbus_data_t canbus_data;
+    int ledsOn = 0;
+    int ledsOnPrev = 0;
 
-    for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
+    while (1)
     {
-        strip[i] = CRGB::Black;
-    }
-
-    if (rpms < maxRpms)
-    {
-
-        for (int i = LEDS_RPMS_START; i < ledsOn; i++)
+        if (xQueueReceive(canbus_queue, &canbus_data, portMAX_DELAY) == pdTRUE && initAnimationComplete)
         {
-            if (i >= LEDS_RPMS_LOW && i <= LEDS_RPMS_MID)
+            ledsOn = map(canbus_data.rpms, 3000, 6000, LEDS_RPMS_START, LEDS_RPMS_END);
+
+            if (ledsOn != ledsOnPrev && canbus_data.rpms < 6000)
             {
-                strip[i] = CRGB::Green;
+                for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
+                {
+                    strip.SetPixelColor(i, 0);
+                }
+
+                if (canbus_data.rpms < 6000)
+                {
+
+                    for (int i = LEDS_RPMS_START; i < ledsOn; i++)
+                    {
+                        if (i >= LEDS_RPMS_LOW && i <= LEDS_RPMS_MID)
+                        {
+                            strip.SetPixelColor(i, RgbColor(0, 255, 0));
+                        }
+                        else if (i >= LEDS_RPMS_MID && i <= LEDS_RPMS_MAX)
+                        {
+                            strip.SetPixelColor(i, RgbColor(255, 0, 0));
+                        }
+                        else
+                        {
+                            strip.SetPixelColor(i, RgbColor(0, 0, 255));
+                        }
+                    }
+                    commit();
+                }
             }
-            else if (i >= LEDS_RPMS_MID && i <= LEDS_RPMS_MAX)
+            else if (canbus_data.rpms >= 6000)
             {
-                strip[i] = CRGB::Red;
+                if (FlashTimer.cycleOnOff(100, 100))
+                {
+                    static boolean ps0; // stores the pixel state
+                    ps0 = !ps0;         // toggle on/off state
+                    if (ps0 == 1)
+                    {
+                        for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
+                        {
+                            strip.SetPixelColor(i, RgbColor(255, 0, 0));
+                        }
+                    }
+                    else
+                    {
+                        for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
+                        {
+                            strip.SetPixelColor(i, 0);
+                        }
+                    }
+
+                    commit();
+                } // reset
             }
-            else
+
+            if (canbus_data.fuel_level <= 20 && indicatorLedST.FuelST != indicatorLedStateP.FuelST)
             {
-                strip[i] = CRGB::Blue;
+                indicatorLedStateP.FuelST = indicatorLedST.FuelST;
+                indicatorLedST.FuelST = true;
+                strip.SetPixelColor(FUEL_LED, RgbColor(255, 255, 0));
+                commit();
             }
+            else if (canbus_data.fuel_level > 20 && indicatorLedST.FuelST != indicatorLedStateP.FuelST)
+            {
+                indicatorLedStateP.FuelST = indicatorLedST.FuelST;
+                indicatorLedST.FuelST = false;
+                strip.SetPixelColor(FUEL_LED, 0);
+                commit();
+            }
+
+            if (canbus_data.battery_voltage <= 1200 && indicatorLedST.BatteryST != indicatorLedStateP.BatteryST)
+            {
+                indicatorLedStateP.BatteryST = indicatorLedST.BatteryST;
+                indicatorLedST.BatteryST = true;
+                strip.SetPixelColor(BATTERY_LIGHT, RgbColor(255, 0, 0));
+                commit();
+            }
+            else if (canbus_data.battery_voltage > 1200 && indicatorLedST.BatteryST != indicatorLedStateP.BatteryST)
+            {
+                indicatorLedStateP.BatteryST = indicatorLedST.BatteryST;
+                indicatorLedST.BatteryST = false;
+                strip.SetPixelColor(BATTERY_LIGHT, 0);
+                commit();
+            }
+
+            ledsOnPrev = ledsOn;
+
+            delay(10);
         }
-        FastLED.show();
-    }
-    else
-    {
-        EVERY_N_MILLISECONDS(10)
-        {
-            static boolean ps0; // stores the pixel state
-            ps0 = !ps0;         // toggle on/off state
-            if (ps0 == 1)
-            {
-                for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
-                {
-                    strip[i] = CRGB::Red;
-                }
-            }
-            else
-            {
-                for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
-                {
-                    strip[i] = CRGB::Black;
-                }
-            }
-
-            FastLED.show();
-        } // reset
     }
 }
 
-void led_control::setIndicatorLeds(ledState state, ledPosition position, ledColor color)
+void commitTaskProcedure(void *arg)
 {
-    
-
-    if (state == LED_ON)
+    while (true)
     {
-        strip[position] = color;
-        FastLED.show();
+        while (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) != 1)
+            ;
+        strip.Show();
+        while (!strip.CanShow())
+            ;
+        xSemaphoreGive(semaphore);
     }
-    else if (state == LED_OFF)
-    {
-        strip[position] = CRGB::Black;
-        FastLED.show();
-    }
-    else if (state == LED_BLINK)
-    {
-        EVERY_N_MILLISECONDS(250)
-        {
-            static boolean ps0; // stores the pixel state
-            ps0 = !ps0;         // toggle on/off state
-            if (ps0 == 1)
-            {
-                strip[position] = color;
-            }
-            else
-            {
-                strip[position] = CRGB::Black;
-            }
+}
 
-            FastLED.show();
-        } // reset
-
-        
-    }
+void commit()
+{
+    xTaskNotifyGive(commit_task);
+    while (xSemaphoreTake(semaphore, portMAX_DELAY) != pdTRUE)
+        ;
 }
