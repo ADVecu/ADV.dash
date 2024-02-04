@@ -39,13 +39,13 @@ void canbus_init()
 
     canbus_encode.levels_duty = 0.5;
     canbus_encode.battery_voltage = 0.001;
-    canbus_encode.temps = -40;
+    canbus_encode.temps = 40;
     canbus_encode.pressures = 0.033;
-    canbus_encode.ign_advance = 0.02;
+    canbus_encode.ign_advance = 0.2;
     canbus_encode.pwm = 0.0033;
     canbus_encode.lambda = 0.0001;
     canbus_encode.afr = 14.7;
-    canbus_encode.tps = 0.01;
+    canbus_encode.tps = 0.1;
 
     // Create a queue to handle CAN messages traduced by the canbus_read task
 
