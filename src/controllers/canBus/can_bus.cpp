@@ -4,6 +4,8 @@
 #include "can_bus.h"
 #include "pcb_definitions.h"
 
+canbus_encode_msg canbus_encode;
+
 void canbus_init()
 {
     // CAN BUS Init
@@ -34,6 +36,16 @@ void canbus_init()
         printf("Failed to start driver\n");
         return;
     }
+
+    canbus_encode.levels_duty = 0.5;
+    canbus_encode.battery_voltage = 0.001;
+    canbus_encode.temps = -40;
+    canbus_encode.pressures = 0.033;
+    canbus_encode.ign_advance = 0.02;
+    canbus_encode.pwm = 0.0033;
+    canbus_encode.lambda = 0.0001;
+    canbus_encode.afr = 14.7;
+    canbus_encode.tps = 0.01;
 
     // Create a queue to handle CAN messages traduced by the canbus_read task
 
@@ -149,8 +161,6 @@ void canbus_read(void *pvParameters)
 
         canbus_data.warning_counter = rus_efi_can_verbose_base0.warning_counter;
         canbus_data.last_error = rus_efi_can_verbose_base0.last_error;
-        canbus_data.main_relay_act = rus_efi_can_verbose_base0.main_relay_act;
-        canbus_data.fuel_pump_act = rus_efi_can_verbose_base0.fuel_pump_act;
         canbus_data.check_engine_act = rus_efi_can_verbose_base0.cel_act;
         canbus_data.current_gear = rus_efi_can_verbose_base0.current_gear;
         canbus_data.rpms = rus_efi_can_verbose_base1.rpm;
@@ -167,9 +177,8 @@ void canbus_read(void *pvParameters)
         canbus_data.battery_voltage = rus_efi_can_verbose_base4.batt_volt;
         canbus_data.fuel_level = rus_efi_can_verbose_base3.fuel_level;
         canbus_data.inj_pwm = rus_efi_can_verbose_base5.inj_pw;
-        canbus_data.fuel_used = rus_efi_can_verbose_base6.fuel_used;
-        canbus_data.fuel_flow = rus_efi_can_verbose_base6.fuel_flow;
-        canbus_data.fuel_trim = rus_efi_can_verbose_base6.fuel_trim1;
+        canbus_data.ing_duty = rus_efi_can_verbose_base1.ign_duty;
+        canbus_data.mcu_temp = rus_efi_can_verbose_base3.mcu_temp;
         canbus_data.fuel_pressure = rus_efi_can_verbose_base7.fp_low;
         canbus_data.o2_sensor = rus_efi_can_verbose_base7.lam1;
 

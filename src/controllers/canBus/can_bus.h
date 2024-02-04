@@ -7,35 +7,50 @@
 
 extern QueueHandle_t canbus_queue;
 
-typedef struct{
+
+typedef struct
+{
 
     uint16_t warning_counter;
     uint16_t last_error;
-    uint8_t main_relay_act;
-    uint8_t fuel_pump_act;
-    uint8_t check_engine_act;
+    bool check_engine_act;
     uint8_t current_gear;
     uint16_t rpms;
-    uint16_t ignition_timing;
+    int8_t ignition_timing;
     uint8_t inj_duty;
     uint8_t speed;
-    int16_t tps;
+    uint8_t tps;
     uint16_t map;
-    uint8_t coolant_temp;
-    uint8_t air_temp;
-    uint8_t aux1_temp;
-    uint8_t aux2_temp;
+    int8_t coolant_temp;
+    int8_t air_temp;
+    int8_t aux1_temp;
+    int8_t aux2_temp;
     uint16_t oil_pressure;
     uint16_t battery_voltage;
     uint8_t fuel_level;
     uint16_t inj_pwm;
-    uint16_t fuel_used;
-    uint16_t fuel_flow;
-    uint16_t fuel_trim;
+    uint8_t ing_duty;
+    uint8_t mcu_temp;
     uint16_t fuel_pressure;
     uint16_t o2_sensor;
-     
+
 } canbus_data_t;
+
+struct canbus_encode_msg
+{
+    float levels_duty;
+    float battery_voltage;
+    int8_t temps;
+    float pressures;
+    float ign_advance;
+    float pwm;
+    float lambda;
+    float afr;
+    float tps;
+    
+};
+
+extern canbus_encode_msg canbus_encode;
 
 void canbus_init();
 void canbus_read(void *pvParameters);
