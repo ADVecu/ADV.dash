@@ -59,6 +59,17 @@ void saveSettings(lv_event_t *e)
 		db.saveArcGaugeType(arcNumber, arcType);
 	}
 	break;
+
+	case 3: // Panel Settings
+	{
+
+		uint8_t panelNumberRaw = lv_dropdown_get_selected(ui_GaugeNumberD) + 1;
+		panel_number_t panelNumber = (panel_number_t)(panelNumberRaw);
+		gauge_type panelType = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
+
+		db.savePanelGaugeType(panelNumber, panelType);
+	}
+	break;
 	}
 }
 

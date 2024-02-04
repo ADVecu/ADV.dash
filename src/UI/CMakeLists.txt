@@ -2,9 +2,14 @@ SET(SOURCES screens/ui_WelcomeScreen.c
     screens/ui_MainScreen.c
     screens/ui_GraphScreen.c
     screens/ui_SettingsScreen.c
+    screens/ui_FinalScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c
+    ui_events.cpp
+    images/ui_img_e30_png.c
+    images/ui_img_banner_png.c
+    images/ui_img_proup_png.c
     images/ui_img_proadvv1amarillo_png.c
     images/ui_img_rpmscalev3t_png.c
     images/ui_img_arcscalenored_png.c
@@ -22,6 +27,7 @@ SET(SOURCES screens/ui_WelcomeScreen.c
     fonts/ui_font_ArameBold150.c
     fonts/ui_font_ArameBold20.c
     fonts/ui_font_ArameBold30.c
+    fonts/ui_font_ArameBold30c.c
     fonts/ui_font_ArameBold40.c
     fonts/ui_font_ArameBold50.c)
 
