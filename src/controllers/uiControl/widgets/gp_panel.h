@@ -41,7 +41,7 @@ public:
      * This method also checks if the value is above the alert value and change the panel color accordingly
      * @param value value to display
      */
-    void setValue(uint16_t value);
+    void setValue(int16_t value);
 
     /**
      * @brief sets the alert value of the panel

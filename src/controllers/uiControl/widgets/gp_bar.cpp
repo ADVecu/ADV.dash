@@ -149,8 +149,9 @@ gp_bar::gp_bar(uint16_t highWarningValue,
     lv_img_set_src(_barBgImg, &_bgImg);
 }
 
-void gp_bar::setValue(uint16_t value)
+void gp_bar::setValue(int16_t value)
 {
+
     if (_previousValue != value)
     {
         _previousValue = value;
@@ -163,20 +164,20 @@ void gp_bar::setValue(uint16_t value)
             if (batteryTimer.cycleTrigger(1000))
             {
                 _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
-                _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String((float)value / 1000.0, 1).c_str());
+                _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(value, 1).c_str());
             }
             break;
 
         case gauge_type::MANIFOLD_PRESSURE:
         case gauge_type::OIL_PRESSURE:
-        case gauge_type::FUEL_FLOW:
+        case gauge_type::FUEL_PRESSURE:
             _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
-            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String((float)value * 0.0333, 1).c_str());
+            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(value, 0).c_str());
             break;
 
         default:
             _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
-            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(value).c_str());
+            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(value, 0).c_str());
             break;
         }
 

@@ -8,6 +8,11 @@
 #include "unit_manager.h"
 #include "../wLed/led_control.h"
 #include "pcb_definitions.h"
+#include "controllers/rtc/rtc_control.h"
+#include "controllers/sensors/bmp280.h"
+#include <muTimer.h>
+#include "controllers/canBus/rus_efi_can_verbose.h"
+
 
 // Widgets
 #include "widgets/rpms_bar.h"
@@ -21,6 +26,18 @@ Database db;
 
 // CAN bus data queue
 QueueSetHandle_t canbus_queue;
+
+muTimer welcomeInfoTimer;
+muTimer mainScreenClockTimer;
+muTimer canbusDataRate;
+
+rtc_date dateUI;
+rtc_time timeUI;
+
+rtc_control rtc_UI;
+
+bmp280 atmosphericSensor;
+atmospheric_data atmosphericData;
 
 /**
  * @brief Initialize the UI configuration
@@ -59,10 +76,14 @@ void ui_task(void *pvParameters)
     bool barTypeChanged = true;
     bool arcChanged = true;
     bool arcTypeChanged = true;
+    bool panelChanged = true;
+    bool panelTypeChanged = true;
     uint8_t previousBarNumber = 20;
     uint8_t previousBarType = 20;
     uint8_t previousArcNumber = 20;
     uint8_t previousArcType = 20;
+    uint8_t previousPanelNumber = 20;
+    uint8_t previousPanelType = 20;
     settings_strings settings_strings;
 
     // Initialize all the widgets and set the initial values
@@ -177,7 +198,7 @@ void ui_task(void *pvParameters)
     while (1)
     {
         // Read the CAN bus queue
-        if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen)
+        if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen && canbusDataRate.cycleTrigger(50))
         {
             // Set the flag to true
             canReady = true;
@@ -308,14 +329,11 @@ void ui_task(void *pvParameters)
                 case gauge_type::INJ_PWM:
                     gp_panel_array[k].setValue(rx_msg.inj_pwm);
                     break;
-                case gauge_type::FUEL_TRIM:
-                    gp_panel_array[k].setValue(rx_msg.fuel_trim);
+                case gauge_type::IGN_DUTY:
+                    gp_panel_array[k].setValue(rx_msg.ing_duty);
                     break;
-                case gauge_type::FUEL_FLOW:
-                    gp_panel_array[k].setValue(rx_msg.fuel_flow);
-                    break;
-                case gauge_type::FUEL_USED:
-                    gp_panel_array[k].setValue(rx_msg.fuel_used);
+                case gauge_type::MCU_TEMP:
+                    gp_panel_array[k].setValue(rx_msg.mcu_temp);
                     break;
                 }
             }
@@ -358,6 +376,8 @@ void ui_task(void *pvParameters)
                 {
                     // Show the select panel
                     _ui_flag_modify(ui_SelectPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                    _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                    _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
 
                     // Setup the dropdowns
                     lv_dropdown_clear_options(ui_GaugeNumberD);
@@ -610,6 +630,8 @@ void ui_task(void *pvParameters)
                 barTypeChanged = false;
                 arcChanged = true;
                 arcTypeChanged = true;
+                panelChanged = true;
+                panelTypeChanged = true;
             }
             break;
 
@@ -620,6 +642,8 @@ void ui_task(void *pvParameters)
                 {
                     // Show the select panel
                     _ui_flag_modify(ui_SelectPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                    _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                    _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
 
                     // Setup the dropdowns
                     lv_dropdown_clear_options(ui_GaugeNumberD);
@@ -871,28 +895,101 @@ void ui_task(void *pvParameters)
                 barTypeChanged = true;
                 arcChanged = false;
                 arcTypeChanged = false;
+                panelChanged = true;
+                panelTypeChanged = true;
             }
             break;
 
-            case 3:
+            case 3: // Panels
             {
+                if (firstTimePanels)
+                {
+                    // Show the select panel
+                    _ui_flag_modify(ui_SelectPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+                    _ui_flag_modify(ui_LowAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+                    _ui_flag_modify(ui_HighAlertPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+
+                    // Setup the dropdowns
+                    lv_dropdown_clear_options(ui_GaugeNumberD);
+                    lv_dropdown_set_options(ui_GaugeNumberD, panel_number_options.c_str());
+                    lv_dropdown_set_selected(ui_GaugeNumberD, 0);
+                    lv_dropdown_clear_options(ui_GaugeTypeD);
+                    lv_dropdown_set_options(ui_GaugeTypeD, panel_options.c_str());
+                    lv_dropdown_set_selected(ui_GaugeTypeD, (int)(db.getPanelGaugeType(panel_number::PANEL_1)));
+                }
+
+                uint8_t rawPanelNumber = (uint8_t)(lv_dropdown_get_selected(ui_GaugeNumberD) + 1);
+                panel_number selectedGaugeNumPanel = (panel_number)rawPanelNumber;
+                gauge_type selectedGaugeTypePanel = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
+
+                if (previousPanelNumber != lv_dropdown_get_selected(ui_GaugeNumberD))
+                {
+                    panelChanged = true;
+                    previousPanelNumber = lv_dropdown_get_selected(ui_GaugeNumberD);
+                    lv_dropdown_set_selected(ui_GaugeTypeD, (int)(db.getPanelGaugeType(selectedGaugeNumPanel)));
+                }
+
+                if (previousPanelType != lv_dropdown_get_selected(ui_GaugeTypeD) || panelChanged)
+                {
+                    panelTypeChanged = true;
+                    previousPanelType = lv_dropdown_get_selected(ui_GaugeTypeD);
+                    selectedGaugeTypePanel = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
+                }
+
+                firstTimeBars = true;
+                firstTimeArcs = true;
+                firstTimeRpms = true;
+                firstTimePanels = false;
+                barChanged = true;
+                barTypeChanged = true;
+                arcChanged = true;
+                arcTypeChanged = true;
+                panelChanged = false;
+                panelTypeChanged = false;
             }
+            break;
+            }
+        }
+        if (lv_scr_act() == ui_WelcomeScreen || lv_scr_act() == ui_FinalScreen)
+        {
+            if (welcomeInfoTimer.cycleTrigger(1000))
+            {
+                String welcomeInfo;
+
+                dateUI = rtc_UI.get_date();
+                timeUI = rtc_UI.get_time();
+                atmosphericData = atmosphericSensor.get_atmospheric_data();
+
+                welcomeInfo =
+                    String(atmosphericData.temperature, 1) + " °C" + " | " + String(atmosphericData.pressure, 1) + " kPa" + " | " + String(dateUI.day) + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(timeUI.hours) + ":" + String(timeUI.minutes) + " | " + String(atmosphericData.altitude, 0) + " MSNM";
+
+                if (lv_scr_act() == ui_WelcomeScreen)
+                {
+                    lv_textarea_set_text(ui_bannerTextA, welcomeInfo.c_str());
+                }
+                else
+                {
+                    lv_textarea_set_text(ui_bannerTextA2, welcomeInfo.c_str());
+                }
             }
         }
 
-        // Update the LEDs indicators
-        /*
-        if ( INDICATOR_LEDS  && canReady){
+        if (lv_scr_act() == ui_MainScreen)
+        {
+            if (mainScreenClockTimer.cycleTrigger(1000))
+            {
+                String clockInfo;
 
-            // Coolant led
-            if (rx_msg.fuel_level <= 20 && rx_msg.fuel_level >= 0){
-                leds.setIndicatorLeds(LED_ON, FUEL_LED, LED_YELLOW);
-            }else if (rx_msg.fuel_level <= 10 && rx_msg.fuel_level >= 0){
-                leds.setIndicatorLeds(LED_BLINK, FUEL_LED, LED_YELLOW);
-            }else{
-                leds.setIndicatorLeds(LED_OFF, FUEL_LED, LED_YELLOW);
+                // Get the data from the sensors
+                dateUI = rtc_UI.get_date();
+                timeUI = rtc_UI.get_time();
+                atmosphericData = atmosphericSensor.get_atmospheric_data();
+
+                // Set the clock info
+                clockInfo = String(timeUI.hours) + ":" + String(timeUI.minutes) +  " | " + String(dateUI.day) + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(atmosphericData.temperature, 1) + "°C";
+
+                _ui_label_set_property(ui_ClockLabel, _UI_LABEL_PROPERTY_TEXT, clockInfo.c_str());
             }
-
-        }*/
+        }
     }
 }

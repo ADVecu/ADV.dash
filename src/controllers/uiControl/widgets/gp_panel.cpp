@@ -92,23 +92,22 @@ gp_panel::gp_panel(uint16_t alertValue,
     case gauge_type::INJ_PWM:
         _name = panel_name_strings.inj_PWM;
         break;
-    case gauge_type::FUEL_TRIM:
-        _name = panel_name_strings.fuel_Trim;
+    case gauge_type::IGN_DUTY:
+        _name = panel_name_strings.ign_duty;
         break;
-    case gauge_type::FUEL_FLOW:
-        _name = panel_name_strings.fuel_Flow;
+    case gauge_type::MCU_TEMP:
+        _name = panel_name_strings.mcu_temp;
         break;
-    case gauge_type::FUEL_USED:
-        _name = panel_name_strings.fuel_Used;
-        break;
+   
     }
 
     // Set the panel name
     _ui_label_set_property(_panelName, _UI_LABEL_PROPERTY_TEXT, _name.c_str());
 }
 
-void gp_panel::setValue(uint16_t value)
+void gp_panel::setValue(int16_t value)
 {
+
     if (_previousValue != value)
     {
         _previousValue = value;
@@ -118,14 +117,19 @@ void gp_panel::setValue(uint16_t value)
         {
         case gauge_type::BATTERY_VOLTAGE:
 
+
             if (batteryTimerPanel.cycleTrigger(1000))
             {
-                _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value).c_str());
+                _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value, 1).c_str());
             }
+            break;
+        
+        case gauge_type::INJ_PWM:
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value, 1).c_str());
             break;
 
         default:
-            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value).c_str());
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value, 0).c_str());
             break;
         }
 

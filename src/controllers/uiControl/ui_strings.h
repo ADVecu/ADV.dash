@@ -46,9 +46,9 @@ struct panel_name_str
     const String warning_Count = "WARN";
     const String ing_Timing = "ADV";
     const String inj_PWM = "PWM";
-    const String fuel_Trim = "TRIM";
-    const String fuel_Flow = "FLOW";
-    const String fuel_Used = "USED";
+    const String ign_duty = "DUTY";
+    const String mcu_temp = "MCUT";
+    
 };
 
 struct gauge_unit_str
@@ -84,5 +84,7 @@ const String bar_number_options = "Bar 1\nBar 2\nBar 3\nBar 4";
 const String arc_number_options = "Arc 1\nArc 2\nArc 3\nArc 4\nArc 5";
 const String bar_options = "Coolant Temp\nOil Temp\nAir Temp\nOil Pressure\nFuel Pressure\nManifold Pressure\nBattery Voltage\nFuel Level\nInj Duty";
 const String arc_options = "Coolant Temp\nOil Temp\nAir Temp\nOil Pressure\nFuel Pressure\nManifold Pressure\nBattery Voltage\nFuel Level\nInj Duty\nAFR";
+const String panel_options = "Coolant Temp\nOil Temp\nAir Temp\nOil Pressure\nFuel Pressure\nManifold Pressure\nBattery Voltage\nFuel Level\nInj Duty\nAFR\nWarning Count\nIng Timing\nInj PWM\nFuel Trim\nFuel Flow\nFuel Used";
+const String panel_number_options = "Panel 1\nPanel 2\nPanel 3\nPanel 4\nPanel 5\nPanel 6";
 
 #endif

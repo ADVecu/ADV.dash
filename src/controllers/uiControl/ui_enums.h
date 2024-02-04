@@ -13,8 +13,8 @@
 #define FUEL_MIN_VALUE 0
 #define DUTY_MAX_VALUE 100
 #define DUTY_MIN_VALUE 0
-#define AFR_MAX_VALUE 200
-#define AFR_MIN_VALUE 100
+#define AFR_MAX_VALUE 136
+#define AFR_MIN_VALUE 68
 #define MANIFOLD_MAX_VALUE 250
 #define MANIFOLD_MIN_VALUE 0
 #define LEVEL_MAX_VALUE 100
@@ -39,9 +39,8 @@ enum gauge_type
     WARNING_COUNT,
     ING_TIMING,
     INJ_PWM,
-    FUEL_TRIM,
-    FUEL_FLOW,
-    FUEL_USED
+    IGN_DUTY,
+    MCU_TEMP
 
 };
 

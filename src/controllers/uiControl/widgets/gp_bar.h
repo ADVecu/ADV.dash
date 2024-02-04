@@ -64,7 +64,7 @@ public:
      *
      * @param value Value to display
      */
-    void setValue(uint16_t value);
+    void setValue(int16_t value);
 
     /**
      * @brief Set the warning value of the bar

@@ -62,7 +62,7 @@ public:
      *
      * @param value The value to set the arc to
      */
-    void setValue(uint16_t value);
+    void setValue(int16_t value);
 
     /**
      * @brief Set the warning value of the arc
