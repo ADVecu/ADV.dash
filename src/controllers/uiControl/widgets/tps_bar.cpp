@@ -1,5 +1,6 @@
 #include "UI/ui.h"
 #include "tps_bar.h"
+#include "controllers/canBus/can_bus.h"
 
 tpsBar::tpsBar()
 {
@@ -8,9 +9,12 @@ tpsBar::tpsBar()
 
 void tpsBar::setValue(uint16_t value)
 {
+    int tpsValue;
+
     if (_previousTps != value)
     {
         _previousTps = value;
-        _ui_bar_set_property(ui_TpsBar, _UI_BAR_PROPERTY_VALUE, map(value, 0, 10000, 0, 100));
+        tpsValue = (value * canbus_encode.tps);
+        _ui_bar_set_property(ui_TpsBar, _UI_BAR_PROPERTY_VALUE, tpsValue);
     }
 }

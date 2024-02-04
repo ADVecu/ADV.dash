@@ -211,19 +211,19 @@ void gp_arc::setValue(int16_t value)
         }
 
         // Set the the high warning color change except for the fuel level gauge
-        if (value >= _warningValue && value < _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
+        if (arcValue >= _warningValue && arcValue < _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
         {
             lv_obj_set_style_arc_color(_arc, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_INDICATOR | LV_STATE_DEFAULT);
         }
 
         // Set the the high alert color change except for the fuel level gauge
-        else if (value >= _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
+        else if (arcValue >= _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
         {
             lv_obj_set_style_arc_color(_arc, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR | LV_STATE_DEFAULT);
         }
 
         // Set the low warning alert color change except for the duty cycle and manifold pressure gauges
-        else if (value <= _lowWarningValue && value > _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
+        else if (arcValue <= _lowWarningValue && arcValue > _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
         {
             switch (_gaugeType)
             {

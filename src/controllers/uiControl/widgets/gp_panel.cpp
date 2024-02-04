@@ -1,6 +1,7 @@
 #include "UI/ui.h"
 #include "gp_panel.h"
 #include <muTimer.h>
+#include "controllers/canBus/can_bus.h"
 
 muTimer batteryTimerPanel;
 
@@ -108,6 +109,8 @@ gp_panel::gp_panel(uint16_t alertValue,
 void gp_panel::setValue(int16_t value)
 {
 
+    float panelValue;
+
     if (_previousValue != value)
     {
         _previousValue = value;
@@ -120,21 +123,49 @@ void gp_panel::setValue(int16_t value)
 
             if (batteryTimerPanel.cycleTrigger(1000))
             {
-                _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value, 1).c_str());
+                panelValue = (value * canbus_encode.battery_voltage);
+                _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
+                panelValue * 10;
             }
             break;
+
+        case gauge_type::AFR:
+            panelValue = (value * canbus_encode.afr);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
+            panelValue * 10;
+            break;
         
+        case gauge_type::INJ_DUTY:
+        case gauge_type::IGN_DUTY:
+            panelValue = (value * canbus_encode.levels_duty);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 0).c_str());
+            break;
+        
+        case gauge_type::ING_TIMING:
+            panelValue = (value * canbus_encode.ign_advance);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
+            break;
+    
         case gauge_type::INJ_PWM:
-            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value, 1).c_str());
+            panelValue = (value * canbus_encode.pwm);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
+            break;
+        
+        case gauge_type::COOLANT_TEMP:
+        case gauge_type::OIL_TEMP:
+        case gauge_type::MCU_TEMP:
+        case gauge_type::AIR_TEMP:
+            panelValue = (value - canbus_encode.temps);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 0).c_str());
             break;
 
         default:
-            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value, 0).c_str());
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value).c_str());
             break;
         }
 
         // Set the panel color
-        if (value >= _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
+        if (panelValue >= _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
         {
             lv_obj_set_style_border_color(_panel, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
         }

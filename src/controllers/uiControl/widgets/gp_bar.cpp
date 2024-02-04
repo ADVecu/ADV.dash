@@ -2,6 +2,7 @@
 #include "gp_bar.h"
 #include "../ui_strings.h"
 #include <muTimer.h>
+#include "controllers/canBus/can_bus.h"
 
 muTimer batteryTimer;
 
@@ -151,6 +152,7 @@ gp_bar::gp_bar(uint16_t highWarningValue,
 
 void gp_bar::setValue(int16_t value)
 {
+    float barValue;
 
     if (_previousValue != value)
     {
@@ -162,17 +164,35 @@ void gp_bar::setValue(int16_t value)
         case gauge_type::BATTERY_VOLTAGE:
 
             if (batteryTimer.cycleTrigger(1000))
-            {
+            {   
+                barValue = (value * canbus_encode.battery_voltage);
                 _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
-                _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(value, 1).c_str());
+                _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(barValue, 1).c_str());
+                barValue * 10;
             }
             break;
 
         case gauge_type::MANIFOLD_PRESSURE:
         case gauge_type::OIL_PRESSURE:
         case gauge_type::FUEL_PRESSURE:
-            _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
-            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(value, 0).c_str());
+            barValue = (value * canbus_encode.pressures);
+            _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(barValue, _minValue, _maxValue, 0, 100));
+            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(barValue, 0).c_str());
+            break;
+
+        case gauge_type::FUEL_LEVEL:
+        case gauge_type::INJ_DUTY:
+            barValue = (value * canbus_encode.levels_duty);
+            _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(barValue, _minValue, _maxValue, 0, 100));
+            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(barValue, 0).c_str());
+            break;
+
+        case gauge_type::COOLANT_TEMP:
+        case gauge_type::OIL_TEMP:
+        case gauge_type::AIR_TEMP:
+            barValue = (value - canbus_encode.temps);
+            _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(barValue, _minValue, _maxValue, 0, 100));
+            _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(barValue, 0).c_str());
             break;
 
         default:
@@ -182,19 +202,19 @@ void gp_bar::setValue(int16_t value)
         }
 
         // Set the the high warning color change except for the fuel level gauge
-        if (value >= _warningValue && value < _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
+        if (barValue >= _warningValue && barValue < _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
         {
             lv_obj_set_style_bg_color(_bar, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_INDICATOR | LV_STATE_DEFAULT);
         }
 
         // Set the the high alert color change except for the fuel level gauge
-        else if (value >= _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
+        else if (barValue >= _alertValue && _gaugeType != gauge_type::FUEL_LEVEL)
         {
             lv_obj_set_style_bg_color(_bar, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR | LV_STATE_DEFAULT);
         }
 
         // Set the low warning alert color change except for the duty cycle and manifold pressure gauges
-        else if (value <= _lowWarningValue && value > _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
+        else if (barValue <= _lowWarningValue && barValue > _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
         {
             switch (_gaugeType)
             {
@@ -211,7 +231,7 @@ void gp_bar::setValue(int16_t value)
         }
 
         // Set the low alert color change except for the duty cycle and manifold pressure gauges
-        else if (value <= _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
+        else if (barValue <= _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
         {
             switch (_gaugeType)
             {
