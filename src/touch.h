@@ -32,10 +32,10 @@
 /* uncomment for GT911 ADVdash5inch */
 #if defined(ADVdash5inch)
 #define TOUCH_GT911
-#define TOUCH_GT911_SCL 18 // 20
-#define TOUCH_GT911_SDA 42 // 19
+#define TOUCH_GT911_SCL 42 // 20
+#define TOUCH_GT911_SDA 38 // 19
 #define TOUCH_GT911_INT -1 //-1
-#define TOUCH_GT911_RST -1 // 38
+#define TOUCH_GT911_RST 18 // 38
 #define TOUCH_GT911_ROTATION ROTATION_NORMAL
 #define TOUCH_MAP_X1 800 // 480
 #define TOUCH_MAP_X2 0
