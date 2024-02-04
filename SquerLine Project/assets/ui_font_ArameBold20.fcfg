@@ -5,10 +5,11 @@
   "c_path": "\\assets\\ui_font_ArameBold20.c",
   "cfg_path": "\\assets\\ui_font_ArameBold20.fcfg",
   "size": 20,
-  "bpp": 1,
+  "bpp": 4,
   "letters": 0,
   "ranges": [
-    "0x20-0x7f"
+    "0x20-0x7f",
+    " 0xB0"
   ],
   "symbols": "",
   "customparams": "--no-compress --no-prefilter",

@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Size: 30 px
  * Bpp: 4
- * Opts: --bpp 4 --size 30 --font C:\Users\danie\Documents\GNVPerformance\ADVdash\SquerLine Project\assets\Arame-Bold.ttf -o C:\Users\danie\Documents\GNVPerformance\ADVdash\SquerLine Project\assets\ui_font_ArameBold30.c --format lvgl -r 0x20-0x7f -r 0xB0 --no-compress --no-prefilter
+ * Opts: --bpp 4 --size 30 --font C:\Users\danie\Documents\GNVPerformance\ADVdash\SquerLine Project\assets\Arame-Bold.ttf -o C:\Users\danie\Documents\GNVPerformance\ADVdash\SquerLine Project\assets\ui_font_ArameBold30c.c --format lvgl -r 0x20-0x7f -r 0xB0 --no-compress --no-prefilter
  ******************************************************************************/
 
 #include "../ui.h"
 
-#ifndef UI_FONT_ARAMEBOLD30
-#define UI_FONT_ARAMEBOLD30 1
+#ifndef UI_FONT_ARAMEBOLD30C
+#define UI_FONT_ARAMEBOLD30C 1
 #endif
 
-#if UI_FONT_ARAMEBOLD30
+#if UI_FONT_ARAMEBOLD30C
 
 /*-----------------
  *    BITMAPS
@@ -2194,9 +2194,9 @@ static lv_font_fmt_txt_dsc_t font_dsc = {
 
 /*Initialize a public general font descriptor*/
 #if LV_VERSION_CHECK(8, 0, 0)
-const lv_font_t ui_font_ArameBold30 = {
+const lv_font_t ui_font_ArameBold30c = {
 #else
-lv_font_t ui_font_ArameBold30 = {
+lv_font_t ui_font_ArameBold30c = {
 #endif
     .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
     .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/
@@ -2214,5 +2214,5 @@ lv_font_t ui_font_ArameBold30 = {
 
 
 
-#endif /*#if UI_FONT_ARAMEBOLD30*/
+#endif /*#if UI_FONT_ARAMEBOLD30C*/
 

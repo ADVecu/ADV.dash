@@ -1,15 +1,15 @@
 {
-  "codename": "ArameBold30",
+  "codename": "ArameBold30c",
   "ttf_path": "\\assets\\Arame-Bold.ttf",
-  "bin_path": "\\assets\\ui_font_ArameBold30.bin",
-  "c_path": "\\assets\\ui_font_ArameBold30.c",
-  "cfg_path": "\\assets\\ui_font_ArameBold30.fcfg",
+  "bin_path": "\\assets\\ui_font_ArameBold30c.bin",
+  "c_path": "\\assets\\ui_font_ArameBold30c.c",
+  "cfg_path": "\\assets\\ui_font_ArameBold30c.fcfg",
   "size": 30,
   "bpp": 4,
   "letters": 0,
   "ranges": [
     "0x20-0x7f",
-    " 0xB0"
+    "  0xB0"
   ],
   "symbols": "",
   "customparams": "--no-compress --no-prefilter",
