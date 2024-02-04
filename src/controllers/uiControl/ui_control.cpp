@@ -198,7 +198,7 @@ void ui_task(void *pvParameters)
     while (1)
     {
         // Read the CAN bus queue
-        if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen && canbusDataRate.cycleTrigger(50))
+        if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen)
         {
             // Set the flag to true
             canReady = true;
