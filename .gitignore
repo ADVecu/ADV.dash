@@ -4,6 +4,8 @@
 .vscode/launch.json
 .vscode/ipch
 .vscode/settings.json
+.vscode/extensions.json
+.vscode/**/*
 lazygit.exe
 *-bak
 *-backups
