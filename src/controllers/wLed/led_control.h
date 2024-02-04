@@ -58,6 +58,7 @@ public:
     void init_leds();
     static void ledsWelcomeAnimation(void *pvParameters);
     void triggerWelcomeAnimation();
+    void clearLeds();
     
     // void setIndicatorLeds(ledState state, ledPosition position ,ledColor color);
 };

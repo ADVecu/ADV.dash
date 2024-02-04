@@ -8,7 +8,7 @@
 
 xSemaphoreHandle semaphore = NULL;
 
-NeoPixelBusLg<NeoGrbFeature, NeoEsp32Rmt0Ws2812xMethod> strip(LEDS_NUM, LEDS_PIN);
+NeoPixelBusLg<DotStarRgbFeature, DotStarMethod> strip(LEDS_NUM, LEDS_PIN_CLOCK, LEDS_PIN);
 
 TaskHandle_t ledWelcomeAnimTask;
 TaskHandle_t commit_task;
@@ -27,8 +27,8 @@ void led_control::init_leds()
     strip.SetLuminance(50);
     strip.Show();
 
-    xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 1, &ledWelcomeAnimTask, 1);
-    xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 10, NULL, 0);
+    xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 1, &ledWelcomeAnimTask, 0);
+    xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 4, NULL, 0);
 
     commit_task = NULL;
     semaphore = xSemaphoreCreateBinary();
@@ -91,6 +91,11 @@ void led_control::triggerWelcomeAnimation()
     vTaskResume(ledWelcomeAnimTask);
 }
 
+void led_control::clearLeds()
+{
+    strip.ClearTo(0);
+    strip.Show();
+}
 
 void ledControlTask(void *pvParameters)
 {
@@ -134,7 +139,7 @@ void ledControlTask(void *pvParameters)
             }
             else if (canbus_data.rpms >= 6000)
             {
-                if (FlashTimer.cycleOnOff(100, 100))
+                if (FlashTimer.cycleOnOff(300, 300))
                 {
                     static boolean ps0; // stores the pixel state
                     ps0 = !ps0;         // toggle on/off state
@@ -161,7 +166,7 @@ void ledControlTask(void *pvParameters)
             {
                 indicatorLedStateP.FuelST = indicatorLedST.FuelST;
                 indicatorLedST.FuelST = true;
-                strip.SetPixelColor(FUEL_LED, RgbColor(255, 255, 0));
+                strip.SetPixelColor(FUEL_LED, RgbColor(255, 255, 51));
                 commit();
             }
             else if (canbus_data.fuel_level > 20 && indicatorLedST.FuelST != indicatorLedStateP.FuelST)
@@ -189,7 +194,7 @@ void ledControlTask(void *pvParameters)
 
             ledsOnPrev = ledsOn;
 
-            delay(10);
+            vTaskDelay( 10 / portTICK_PERIOD_MS );
         }
     }
 }
