@@ -3,6 +3,7 @@
 #include <Arduino_GFX_Library.h>
 #include <driver/twai.h>
 #include <driver/gpio.h>
+#include <Wire.h>
 #include "UI/ui.h"
 #include "muTimer.h"
 #include "controllers/canBus/can_bus.h"
@@ -11,25 +12,22 @@
 #include "controllers/wLed/led_control.h"
 #include "soc/gpio_periph.h"
 #include "hal/gpio_hal.h"
+#include "controllers/uiControl/screen_manager.h"
+#include "controllers/rtc/rtc_control.h"
+#include "controllers/sensors/bmp280.h"
 
-/*
-#include <SparkFun_RV8803.h>
-#include <Adafruit_BMP280.h>
-#include "SparkFun_External_EEPROM.h"
-*/
+//  #include "SparkFun_External_EEPROM.h"
 
 #define TFT_BL 2
 #define GFX_BL DF_GFX_BL // default backlight pin
 
-pcb_def pcb; // pcb definitions struct
-
-muTimer testTimer4;
-muTimer testTimer5;
+pcb_def pcb;                // pcb definitions struct
+rtc_control rtc_controller; // rtc control class
+bmp280 bmp280_controller;   // bmp280 control class
 
 bool pse;
 bool entry = true;
 int count = 0;
-bool initScreen = true;
 
 // create a task handler for the leds
 TaskHandle_t test_leds_task;
@@ -77,6 +75,7 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
   lv_disp_flush_ready(disp);
 }
 
+
 void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
 {
   if (touch_has_signal())
@@ -85,7 +84,7 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
     {
       data->state = LV_INDEV_STATE_PR;
 
-      /*Set the coordinates*/
+      
       data->point.x = touch_last_x;
       data->point.y = touch_last_y;
       Serial.print("Data x :");
@@ -105,6 +104,7 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
   }
 }
 
+
 led_control leds; // led control class
 
 /*******************************************************************************
@@ -112,9 +112,7 @@ led_control leds; // led control class
  *******************************************************************************/
 void setup()
 {
-  gpio_hal_iomux_func_sel(GPIO_PIN_MUX_REG[CAN_TX_PIN], PIN_FUNC_GPIO);
-  gpio_hal_iomux_func_sel(GPIO_PIN_MUX_REG[CAN_RX_PIN], PIN_FUNC_GPIO);
-  
+
   // put your setup code here, to run once:
   Serial.begin(115200); // Init Display
 
@@ -128,6 +126,8 @@ void setup()
 #endif
   lv_init();
   touch_init();
+
+  
   screenWidth = lcd->width();
   screenHeight = lcd->height();
 
@@ -145,29 +145,50 @@ void setup()
   lv_disp_drv_register(&disp_drv);
 
   /* Initialize the (dummy) input device driver */
-  static lv_indev_drv_t indev_drv;
-  lv_indev_drv_init(&indev_drv);
-  indev_drv.type = LV_INDEV_TYPE_POINTER;
-  indev_drv.read_cb = my_touchpad_read;
-  lv_indev_drv_register(&indev_drv);
+  if (BOARD_HAS_TOUCH_CAPABILITY)
+  {
+    static lv_indev_drv_t indev_drv;
+    lv_indev_drv_init(&indev_drv);
+    indev_drv.type = LV_INDEV_TYPE_POINTER;
+    //indev_drv.read_cb = my_touchpad_read;
+    lv_indev_drv_register(&indev_drv);
+  }
 
-  gpio_hold_dis(pcb.v5Enable);
-  pinMode(pcb.v5Enable, OUTPUT);    // Enable 5V
-  digitalWrite(pcb.v5Enable, HIGH); // Enable 5V
+  if (BOARD_HAS_SLEEP_CAPABILITY)
+  {
+    gpio_hold_dis(pcb.v5Enable);
+    pinMode(pcb.v5Enable, OUTPUT);    // Enable 5V
+    digitalWrite(pcb.v5Enable, HIGH); // Enable 5V
+  }
 
-  /* Main UI init Function*/
-  ui_init(); // ui from Squareline or GUI Guider
+  rtc_controller.init_rtc(); // RTC Init
+
+  bmp280_controller.init_bmp280(); // BMP280 Init
 
   // CAN BUS Init
   canbus_init();
 
+  /* Main UI init Function*/
+  ui_init(); // ui from Squareline or GUI Guider
+
   // UI Initial Configurations
   ui_init_config();
 
-  esp_sleep_enable_ext0_wakeup(GPIO_NUM_10, 0); // 1 = High, 0 = Low
-  // xTaskCreatePinnedToCore(light_sleep, "light_sleep", 10000, NULL, 1, NULL, APP_CPU_NUM);
+  // Screen Manager Init
+  if (BOARD_HAS_SLEEP_CAPABILITY)
+  {
+    screen_manager_init();
+  }
 
-  leds.init_leds();
+  if (RMPS_LEDS)
+  {
+    leds.init_leds();
+  }
+
+  if (!BOARD_HAS_SLEEP_CAPABILITY)
+  {
+    _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 2000, ui_MainScreen_screen_init);
+  }
 }
 
 /*******************************************************************************
@@ -175,19 +196,8 @@ void setup()
  *******************************************************************************/
 void loop()
 {
+
   lv_timer_handler();
-
-  // TODO: Create a xTask for this function and move to ui_control.cpp
-  if (testTimer4.delayOn(initScreen, 1000))
-  {
-    _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 0, ui_MainScreen_screen_init);
-
-    if (lv_scr_act() == ui_WelcomeScreen)
-    {
-      initScreen = false;
-      _ui_screen_delete(&ui_WelcomeScreen);
-    }
-  }
 
   delay(5);
 }
