@@ -20,8 +20,11 @@
         "KBITS",
         "leds",
         "LEDS",
+        "mapf",
         "mbox",
+        "MCUT",
         "msgbox",
+        "MSNM",
         "nscale",
         "OILP",
         "OILT",
@@ -44,6 +47,9 @@
     "files.associations": {
         "functional": "cpp",
         "tuple": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "fstream": "cpp"
     }
 }
