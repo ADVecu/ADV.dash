@@ -38,8 +38,8 @@
 
 #define DISPLAY_DRAW_BUF 800 * 480 / 10
 
-#define RMPS_LEDS false
-#define INDICATOR_LEDS false
+#define RMPS_LEDS true
+#define INDICATOR_LEDS true
 #define LEDS_NUM 18
 #define LEDS_PIN 13
 #define LEDS_PIN_CLOCK 12
