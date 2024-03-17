@@ -56,8 +56,8 @@
 #define CAN_TX_PIN GPIO_NUM_44
 #define CAN_RX_PIN GPIO_NUM_43
 
-#define BOARD_HAS_SLEEP_CAPABILITY true
-#define BOARD_HAS_TOUCH_CAPABILITY false
+#define BOARD_HAS_SLEEP_CAPABILITY false
+#define BOARD_HAS_TOUCH_CAPABILITY true
 
 struct pcb_def
 {

@@ -471,7 +471,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../Fabrication/R0.2.0/AdvDash_5_inch.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""

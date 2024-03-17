@@ -6,6 +6,7 @@
 
 muTimer batteryTimer;
 
+
 gp_bar::gp_bar(uint16_t highWarningValue,
                uint16_t highAlertValue,
                uint16_t lowWarningValue,
@@ -250,6 +251,8 @@ void gp_bar::setValue(int16_t value)
         {
             lv_obj_set_style_bg_color(_bar, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT);
         }
+
+        
     }
 }
 

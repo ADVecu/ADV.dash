@@ -5,16 +5,16 @@
 
 struct rtc_time
 {
-    uint8_t seconds;
-    uint8_t minutes;
-    uint8_t hours;
+    String seconds;
+    String minutes;
+    String hours;
 };
 
 struct rtc_date
 {
-    uint8_t day;
-    uint8_t month;
-    uint16_t year;
+    String day;
+    String month;
+    String year;
 };
 
 class rtc_control
@@ -24,7 +24,6 @@ public:
     void init_rtc();
     rtc_date get_date();
     rtc_time get_time();
-
 };
 
 #endif // RTC_CONTROL_H

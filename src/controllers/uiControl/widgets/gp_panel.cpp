@@ -3,6 +3,7 @@
 #include <muTimer.h>
 #include "controllers/canBus/can_bus.h"
 
+
 muTimer batteryTimerPanel;
 
 gp_panel::gp_panel(uint16_t alertValue,
@@ -111,7 +112,7 @@ void gp_panel::setValue(int16_t value)
 
     float panelValue;
 
-    if (_previousValue != value)
+    if (_previousValue != value )
     {
         _previousValue = value;
 
@@ -173,6 +174,8 @@ void gp_panel::setValue(int16_t value)
         {
             lv_obj_set_style_border_color(_panel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
         }
+
+        
     }
 }
 

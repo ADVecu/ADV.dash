@@ -15,11 +15,14 @@
 #include "controllers/uiControl/screen_manager.h"
 #include "controllers/rtc/rtc_control.h"
 #include "controllers/sensors/bmp280.h"
-
 //  #include "SparkFun_External_EEPROM.h"
 
 #define TFT_BL 2
 #define GFX_BL DF_GFX_BL // default backlight pin
+#define LGFX_USE_V1
+#include <LovyanGFX.hpp>
+#include <lgfx/v1/platforms/esp32s3/Panel_RGB.hpp>
+#include <lgfx/v1/platforms/esp32s3/Bus_RGB.hpp>
 
 pcb_def pcb;                // pcb definitions struct
 rtc_control rtc_controller; // rtc control class
@@ -36,18 +39,66 @@ TaskHandle_t test_leds_task;
  * Screen Driver Configuration
  *******************************************************************************/
 
-Arduino_ESP32RGBPanel *bus = new Arduino_ESP32RGBPanel(
-    pcb.cs /* CS */, pcb.sck /* SCK */, pcb.sda_display /* SDA */,
-    pcb.de /* DE */, pcb.vsync /* VSYNC */, pcb.hsync /* HSYNC */, pcb.pclk /* PCLK */,
-    pcb.r0 /* R0 */, pcb.r1 /* R1 */, pcb.r2 /* R2 */, pcb.r3 /* R3 */, pcb.r4 /* R4 */,
-    pcb.g0 /* G0 */, pcb.g1 /* G1 */, pcb.g2 /* G2 */, pcb.g3 /* G3 */, pcb.g4 /* G4 */, pcb.g5 /* G5 */,
-    pcb.b0 /* B0 */, pcb.b1 /* B1 */, pcb.b2 /* B2 */, pcb.b3 /* B3 */, pcb.b4 /* B4 */
-);
-Arduino_RPi_DPI_RGBPanel *lcd = new Arduino_RPi_DPI_RGBPanel(
-    bus,
-    pcb.width /* width */, pcb.hsync_polarity /* hsync_polarity */, pcb.hsync_front_porch /* hsync_front_porch */, pcb.hsync_pulse /* hsync_pulse_width */, pcb.hsync_back_porch /* hsync_back_porch */,
-    pcb.height /* height */, pcb.vsync_polarity /* vsync_polarity */, pcb.vsync_front_porch /* vsync_front_porch */, pcb.vsync_pulse /* vsync_pulse_width */, pcb.vsync_back_porch /* vsync_back_porch */,
-    pcb.pclk /* pclk_active_neg */, pcb.prefer_speed /* prefer_speed */, pcb.auto_flush /* auto_flush */);
+class LGFX : public lgfx::LGFX_Device
+{
+public:
+  lgfx::Bus_RGB _bus_instance;
+  lgfx::Panel_RGB _panel_instance;
+  LGFX(void)
+  {
+    {
+      auto cfg = _bus_instance.config();
+      cfg.panel = &_panel_instance;
+      cfg.pin_d0 = GPIO_NUM_8;   // B0
+      cfg.pin_d1 = GPIO_NUM_3;   // B1
+      cfg.pin_d2 = GPIO_NUM_46;  // B2
+      cfg.pin_d3 = GPIO_NUM_9;   // B3
+      cfg.pin_d4 = GPIO_NUM_1;   // B4
+      cfg.pin_d5 = GPIO_NUM_5;   // G0
+      cfg.pin_d6 = GPIO_NUM_6;   // G1
+      cfg.pin_d7 = GPIO_NUM_7;   // G2
+      cfg.pin_d8 = GPIO_NUM_15;  // G3
+      cfg.pin_d9 = GPIO_NUM_16;  // G4
+      cfg.pin_d10 = GPIO_NUM_4;  // G5
+      cfg.pin_d11 = GPIO_NUM_45; // R0
+      cfg.pin_d12 = GPIO_NUM_48; // R1
+      cfg.pin_d13 = GPIO_NUM_47; // R2
+      cfg.pin_d14 = GPIO_NUM_21; // R3
+      cfg.pin_d15 = GPIO_NUM_14; // R4
+      cfg.pin_henable = GPIO_NUM_40;
+      cfg.pin_vsync = GPIO_NUM_41;
+      cfg.pin_hsync = GPIO_NUM_39;
+      cfg.pin_pclk = GPIO_NUM_0;
+      cfg.freq_write = 15000000;
+      cfg.hsync_polarity = 0;
+      cfg.hsync_front_porch = 8;
+      cfg.hsync_pulse_width = 4;
+      cfg.hsync_back_porch = 43;
+      cfg.vsync_polarity = 0;
+      cfg.vsync_front_porch = 8;
+      cfg.vsync_pulse_width = 4;
+      cfg.vsync_back_porch = 12;
+      cfg.pclk_active_neg = 1;
+      cfg.de_idle_high = 0;
+      cfg.pclk_idle_high = 0;
+      _bus_instance.config(cfg);
+    }
+    {
+      auto cfg = _panel_instance.config();
+      cfg.memory_width = 800;
+      cfg.memory_height = 480;
+      cfg.panel_width = 800;
+      cfg.panel_height = 480;
+      cfg.offset_x = 0;
+      cfg.offset_y = 0;
+      _panel_instance.config(cfg);
+    }
+    _panel_instance.setBus(&_bus_instance);
+    setPanel(&_panel_instance);
+  }
+};
+
+LGFX lcd;
 
 /*******************************************************************************
  * Display Driver Configuration
@@ -67,14 +118,13 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
   uint32_t h = (area->y2 - area->y1 + 1);
 
 #if (LV_COLOR_16_SWAP != 0)
-  lcd->draw16bitBeRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
+  lcd.pushImageDMA(area->x1, area->y1, w, h, (lgfx::rgb565_t *)&color_p->full);
 #else
-  lcd->draw16bitRGBBitmap(area->x1, area->y1, (uint16_t *)&color_p->full, w, h);
+  lcd.pushImageDMA(area->x1, area->y1, w, h, (lgfx::rgb565_t *)&color_p->full);
 #endif
 
   lv_disp_flush_ready(disp);
 }
-
 
 void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
 {
@@ -84,7 +134,6 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
     {
       data->state = LV_INDEV_STATE_PR;
 
-      
       data->point.x = touch_last_x;
       data->point.y = touch_last_y;
       Serial.print("Data x :");
@@ -104,7 +153,6 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
   }
 }
 
-
 led_control leds; // led control class
 
 /*******************************************************************************
@@ -116,20 +164,21 @@ void setup()
   // put your setup code here, to run once:
   Serial.begin(115200); // Init Display
 
-  lcd->begin();
-  lcd->fillScreen(BLACK);
-  lcd->setTextSize(2);
   delay(200);
 #ifdef TFT_BL
   pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
-  analogWrite(pcb.tft_bl, 50);
+  analogWrite(pcb.tft_bl, 255);
 #endif
   lv_init();
   touch_init();
 
-  
-  screenWidth = lcd->width();
-  screenHeight = lcd->height();
+  lcd.begin();
+  lcd.fillScreen(TFT_BLACK);
+  lcd.setTextSize(2);
+  delay(200);
+
+  screenWidth = lcd.width();
+  screenHeight = lcd.height();
 
   lv_disp_draw_buf_init(&draw_buf, disp_draw_buf, NULL, screenWidth * screenHeight / 10);
   //  lv_disp_draw_buf_init(&draw_buf, disp_draw_buf, NULL, 480 * 272 / 10);
@@ -150,7 +199,7 @@ void setup()
     static lv_indev_drv_t indev_drv;
     lv_indev_drv_init(&indev_drv);
     indev_drv.type = LV_INDEV_TYPE_POINTER;
-    //indev_drv.read_cb = my_touchpad_read;
+    indev_drv.read_cb = my_touchpad_read;
     lv_indev_drv_register(&indev_drv);
   }
 

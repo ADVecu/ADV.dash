@@ -3,8 +3,10 @@
 #include "rus_efi_can_verbose.h"
 #include "can_bus.h"
 #include "pcb_definitions.h"
+#include <muTimer.h>
 
 canbus_encode_msg canbus_encode;
+muTimer canbusDataRate;
 
 void canbus_init()
 {
@@ -56,6 +58,7 @@ void canbus_init()
 // read the CAN bus for messages
 void canbus_read(void *pvParameters)
 {
+
     // Initialize RUS EFI CAN Messages Structs
     rus_efi_can_verbose_base0_t rus_efi_can_verbose_base0;
     rus_efi_can_verbose_base1_t rus_efi_can_verbose_base1;
@@ -86,6 +89,7 @@ void canbus_read(void *pvParameters)
 
     while (1)
     {
+
         // Receive a CAN message
         // capture error and print it
         int err = twai_receive(&rx_msg, pdMS_TO_TICKS(1000));
@@ -184,7 +188,5 @@ void canbus_read(void *pvParameters)
 
         // Send the CAN data to the queue for use in the UI
         xQueueSend(canbus_queue, &canbus_data, 1000);
-
-        // vTaskDelay(10);
     }
 }

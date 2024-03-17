@@ -13,7 +13,6 @@
 #include <muTimer.h>
 #include "controllers/canBus/rus_efi_can_verbose.h"
 
-
 // Widgets
 #include "widgets/rpms_bar.h"
 #include "widgets/gp_bar.h"
@@ -29,7 +28,9 @@ QueueSetHandle_t canbus_queue;
 
 muTimer welcomeInfoTimer;
 muTimer mainScreenClockTimer;
-muTimer canbusDataRate;
+muTimer panelDataRate;
+muTimer barDataRate;
+muTimer DataRate;
 
 rtc_date dateUI;
 rtc_time timeUI;
@@ -53,6 +54,7 @@ void ui_init_config()
         0,            /* Priority of the task */
         NULL,         /* Task handle. */
         APP_CPU_NUM); /* Core where the task should run */
+
 }
 
 /**
@@ -194,147 +196,158 @@ void ui_task(void *pvParameters)
     led_control leds;
 
     bool canReady = false;
+
+    //Serial.println(db.getRpmsRedline());
     // Infinite loop
     while (1)
     {
+        
+
         // Read the CAN bus queue
         if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen)
         {
             // Set the flag to true
             canReady = true;
 
-            // Update the rpms bar
-            rpmsBar.setRPMs(rx_msg.rpms);
+            if (DataRate.cycleTrigger(50))
+            {
+                // Update the rpms bar
+                rpmsBar.setRPMs(rx_msg.rpms);
 
-            // Set Rpms lEDs
-            // leds.setRmpsLeds(rx_msg.rpms, 3000, 5000);
+                // Update the tps bar
+                tpsBar.setValue(rx_msg.tps);
 
-            // Update the tps bar
-            tpsBar.setValue(rx_msg.tps);
+                // iterate through the arc gauges and update the values
+                for (j = 0; j < 5; j++)
+                {
+                    switch (gp_arc_array[j].getGaugeType())
+                    {
+                    case gauge_type::COOLANT_TEMP:
+                        gp_arc_array[j].setValue(rx_msg.coolant_temp);
+                        break;
+                    case gauge_type::OIL_TEMP:
+                        gp_arc_array[j].setValue(rx_msg.aux1_temp);
+                        break;
+                    case gauge_type::AIR_TEMP:
+                        gp_arc_array[j].setValue(rx_msg.air_temp);
+                        break;
+                    case gauge_type::OIL_PRESSURE:
+                        gp_arc_array[j].setValue(rx_msg.oil_pressure);
+                        break;
+                    case gauge_type::FUEL_PRESSURE:
+                        gp_arc_array[j].setValue(rx_msg.fuel_pressure);
+                        break;
+                    case gauge_type::BATTERY_VOLTAGE:
+                        gp_arc_array[j].setValue(rx_msg.battery_voltage);
+                        break;
+                    case gauge_type::FUEL_LEVEL:
+                        gp_arc_array[j].setValue(rx_msg.fuel_level);
+                        break;
+                    case gauge_type::INJ_DUTY:
+                        gp_arc_array[j].setValue(rx_msg.inj_duty);
+                        break;
+                    case gauge_type::MANIFOLD_PRESSURE:
+                        gp_arc_array[j].setValue(rx_msg.map);
+                        break;
+                    case gauge_type::AFR:
+                        gp_arc_array[j].setValue(rx_msg.o2_sensor);
+                        break;
+                    }
+                }
+            }
 
             // iterate through the bar gauges and update the values
-            for (i = 0; i < 4; i++)
+            if (barDataRate.cycleTrigger(200))
             {
-                switch (gp_bar_array[i].getGaugeType())
+                for (i = 0; i < 4; i++)
                 {
-                case gauge_type::COOLANT_TEMP:
-                    gp_bar_array[i].setValue(rx_msg.coolant_temp);
-                    break;
-                case gauge_type::OIL_TEMP:
-                    gp_bar_array[i].setValue(rx_msg.aux1_temp);
-                    break;
-                case gauge_type::AIR_TEMP:
-                    gp_bar_array[i].setValue(rx_msg.air_temp);
-                    break;
-                case gauge_type::OIL_PRESSURE:
-                    gp_bar_array[i].setValue(rx_msg.oil_pressure);
-                    break;
-                case gauge_type::FUEL_PRESSURE:
-                    gp_bar_array[i].setValue(rx_msg.fuel_pressure);
-                    break;
-                case gauge_type::BATTERY_VOLTAGE:
-                    gp_bar_array[i].setValue(rx_msg.battery_voltage);
-                    break;
-                case gauge_type::FUEL_LEVEL:
-                    gp_bar_array[i].setValue(rx_msg.fuel_level);
-                    break;
-                case gauge_type::INJ_DUTY:
-                    gp_bar_array[i].setValue(rx_msg.inj_duty);
-                    break;
-                case gauge_type::MANIFOLD_PRESSURE:
-                    gp_bar_array[i].setValue(rx_msg.map);
-                    break;
+                    switch (gp_bar_array[i].getGaugeType())
+                    {
+                    case gauge_type::COOLANT_TEMP:
+                        gp_bar_array[i].setValue(rx_msg.coolant_temp);
+                        break;
+                    case gauge_type::OIL_TEMP:
+                        gp_bar_array[i].setValue(rx_msg.aux1_temp);
+                        break;
+                    case gauge_type::AIR_TEMP:
+                        gp_bar_array[i].setValue(rx_msg.air_temp);
+                        break;
+                    case gauge_type::OIL_PRESSURE:
+                        gp_bar_array[i].setValue(rx_msg.oil_pressure);
+                        break;
+                    case gauge_type::FUEL_PRESSURE:
+                        gp_bar_array[i].setValue(rx_msg.fuel_pressure);
+                        break;
+                    case gauge_type::BATTERY_VOLTAGE:
+                        gp_bar_array[i].setValue(rx_msg.battery_voltage);
+                        break;
+                    case gauge_type::FUEL_LEVEL:
+                        gp_bar_array[i].setValue(rx_msg.fuel_level);
+                        break;
+                    case gauge_type::INJ_DUTY:
+                        gp_bar_array[i].setValue(rx_msg.inj_duty);
+                        break;
+                    case gauge_type::MANIFOLD_PRESSURE:
+                        gp_bar_array[i].setValue(rx_msg.map);
+                        break;
+                    }
                 }
             }
 
-            // iterate through the arc gauges and update the values
-            for (j = 0; j < 5; j++)
-            {
-                switch (gp_arc_array[j].getGaugeType())
-                {
-                case gauge_type::COOLANT_TEMP:
-                    gp_arc_array[j].setValue(rx_msg.coolant_temp);
-                    break;
-                case gauge_type::OIL_TEMP:
-                    gp_arc_array[j].setValue(rx_msg.aux1_temp);
-                    break;
-                case gauge_type::AIR_TEMP:
-                    gp_arc_array[j].setValue(rx_msg.air_temp);
-                    break;
-                case gauge_type::OIL_PRESSURE:
-                    gp_arc_array[j].setValue(rx_msg.oil_pressure);
-                    break;
-                case gauge_type::FUEL_PRESSURE:
-                    gp_arc_array[j].setValue(rx_msg.fuel_pressure);
-                    break;
-                case gauge_type::BATTERY_VOLTAGE:
-                    gp_arc_array[j].setValue(rx_msg.battery_voltage);
-                    break;
-                case gauge_type::FUEL_LEVEL:
-                    gp_arc_array[j].setValue(rx_msg.fuel_level);
-                    break;
-                case gauge_type::INJ_DUTY:
-                    gp_arc_array[j].setValue(rx_msg.inj_duty);
-                    break;
-                case gauge_type::MANIFOLD_PRESSURE:
-                    gp_arc_array[j].setValue(rx_msg.map);
-                    break;
-                case gauge_type::AFR:
-                    gp_arc_array[j].setValue(rx_msg.o2_sensor);
-                    break;
-                }
-            }
 
             // iterate through the panel gauges and update the values
-            for (k = 0; k < 6; k++)
+            if (panelDataRate.cycleTrigger(200))
             {
-                switch (gp_panel_array[k].getGaugeType())
+                for (k = 0; k < 6; k++)
                 {
-                case gauge_type::COOLANT_TEMP:
-                    gp_panel_array[k].setValue(rx_msg.coolant_temp);
-                    break;
-                case gauge_type::OIL_TEMP:
-                    gp_panel_array[k].setValue(rx_msg.aux1_temp);
-                    break;
-                case gauge_type::AIR_TEMP:
-                    gp_panel_array[k].setValue(rx_msg.air_temp);
-                    break;
-                case gauge_type::OIL_PRESSURE:
-                    gp_panel_array[k].setValue(rx_msg.oil_pressure);
-                    break;
-                case gauge_type::FUEL_PRESSURE:
-                    gp_panel_array[k].setValue(rx_msg.fuel_pressure);
-                    break;
-                case gauge_type::BATTERY_VOLTAGE:
-                    gp_panel_array[k].setValue(rx_msg.battery_voltage);
-                    break;
-                case gauge_type::FUEL_LEVEL:
-                    gp_panel_array[k].setValue(rx_msg.fuel_level);
-                    break;
-                case gauge_type::INJ_DUTY:
-                    gp_panel_array[k].setValue(rx_msg.inj_duty);
-                    break;
-                case gauge_type::MANIFOLD_PRESSURE:
-                    gp_panel_array[k].setValue(rx_msg.map);
-                    break;
-                case gauge_type::AFR:
-                    gp_panel_array[k].setValue(rx_msg.o2_sensor);
-                    break;
-                case gauge_type::WARNING_COUNT:
-                    gp_panel_array[k].setValue(rx_msg.warning_counter);
-                    break;
-                case gauge_type::ING_TIMING:
-                    gp_panel_array[k].setValue(rx_msg.ignition_timing);
-                    break;
-                case gauge_type::INJ_PWM:
-                    gp_panel_array[k].setValue(rx_msg.inj_pwm);
-                    break;
-                case gauge_type::IGN_DUTY:
-                    gp_panel_array[k].setValue(rx_msg.ing_duty);
-                    break;
-                case gauge_type::MCU_TEMP:
-                    gp_panel_array[k].setValue(rx_msg.mcu_temp);
-                    break;
+                    switch (gp_panel_array[k].getGaugeType())
+                    {
+                    case gauge_type::COOLANT_TEMP:
+                        gp_panel_array[k].setValue(rx_msg.coolant_temp);
+                        break;
+                    case gauge_type::OIL_TEMP:
+                        gp_panel_array[k].setValue(rx_msg.aux1_temp);
+                        break;
+                    case gauge_type::AIR_TEMP:
+                        gp_panel_array[k].setValue(rx_msg.air_temp);
+                        break;
+                    case gauge_type::OIL_PRESSURE:
+                        gp_panel_array[k].setValue(rx_msg.oil_pressure);
+                        break;
+                    case gauge_type::FUEL_PRESSURE:
+                        gp_panel_array[k].setValue(rx_msg.fuel_pressure);
+                        break;
+                    case gauge_type::BATTERY_VOLTAGE:
+                        gp_panel_array[k].setValue(rx_msg.battery_voltage);
+                        break;
+                    case gauge_type::FUEL_LEVEL:
+                        gp_panel_array[k].setValue(rx_msg.fuel_level);
+                        break;
+                    case gauge_type::INJ_DUTY:
+                        gp_panel_array[k].setValue(rx_msg.inj_duty);
+                        break;
+                    case gauge_type::MANIFOLD_PRESSURE:
+                        gp_panel_array[k].setValue(rx_msg.map);
+                        break;
+                    case gauge_type::AFR:
+                        gp_panel_array[k].setValue(rx_msg.o2_sensor);
+                        break;
+                    case gauge_type::WARNING_COUNT:
+                        gp_panel_array[k].setValue(rx_msg.warning_counter);
+                        break;
+                    case gauge_type::ING_TIMING:
+                        gp_panel_array[k].setValue(rx_msg.ignition_timing);
+                        break;
+                    case gauge_type::INJ_PWM:
+                        gp_panel_array[k].setValue(rx_msg.inj_pwm);
+                        break;
+                    case gauge_type::IGN_DUTY:
+                        gp_panel_array[k].setValue(rx_msg.ing_duty);
+                        break;
+                    case gauge_type::MCU_TEMP:
+                        gp_panel_array[k].setValue(rx_msg.mcu_temp);
+                        break;
+                    }
                 }
             }
         }
@@ -986,7 +999,7 @@ void ui_task(void *pvParameters)
                 atmosphericData = atmosphericSensor.get_atmospheric_data();
 
                 // Set the clock info
-                clockInfo = String(timeUI.hours) + ":" + String(timeUI.minutes) +  " | " + String(dateUI.day) + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(atmosphericData.temperature, 1) + "°C";
+                clockInfo = timeUI.hours + ":" + timeUI.minutes + " | " + dateUI.day + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(atmosphericData.temperature, 1) + "°C";
 
                 _ui_label_set_property(ui_ClockLabel, _UI_LABEL_PROPERTY_TEXT, clockInfo.c_str());
             }
