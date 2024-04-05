@@ -19,7 +19,7 @@ typedef struct
     int8_t ignition_timing;
     uint8_t inj_duty;
     uint8_t speed;
-    uint8_t tps;
+    uint16_t tps;
     uint16_t map;
     int8_t coolant_temp;
     int8_t air_temp;
