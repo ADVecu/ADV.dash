@@ -14,7 +14,8 @@ void tpsBar::setValue(uint16_t value)
     if (_previousTps != value)
     {
         _previousTps = value;
-        tpsValue = (value * canbus_encode.tps);
-        _ui_bar_set_property(ui_TpsBar, _UI_BAR_PROPERTY_VALUE, tpsValue);
+        // tpsValue = (value * canbus_encode.tps);
+        //_ui_label_set_property(ui_CriticalAlertText, _UI_LABEL_PROPERTY_TEXT, String(value).c_str());
+        _ui_bar_set_property(ui_TpsBar, _UI_BAR_PROPERTY_VALUE, value);
     }
 }

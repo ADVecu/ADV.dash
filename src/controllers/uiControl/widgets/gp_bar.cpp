@@ -164,13 +164,16 @@ void gp_bar::setValue(int16_t value)
         {
         case gauge_type::BATTERY_VOLTAGE:
 
+            barValue = (value * canbus_encode.battery_voltage);
+
             if (batteryTimer.cycleTrigger(1000))
-            {   
-                barValue = (value * canbus_encode.battery_voltage);
+            {    
                 _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
                 _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(barValue, 1).c_str());
-                barValue * 10;
+                //_ui_label_set_property(ui_CriticalAlertText, _UI_LABEL_PROPERTY_TEXT, String(barValue).c_str());
             }
+
+            barValue = barValue * 10;
             break;
 
         case gauge_type::MANIFOLD_PRESSURE:
