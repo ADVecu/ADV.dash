@@ -47,7 +47,7 @@ void canbus_init()
     canbus_encode.pwm = 0.0033;
     canbus_encode.lambda = 0.0001;
     canbus_encode.afr = 14.7;
-    canbus_encode.tps = 0.1;
+    canbus_encode.tps = 0.01;
 
     // Create a queue to handle CAN messages traduced by the canbus_read task
 
