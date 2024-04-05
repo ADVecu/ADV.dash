@@ -22,6 +22,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
 
     gauge_name_str_double_row gauge_name_strings;
     gauge_unit_str gauge_unit_strings;
+    
 
     // Assign the arc widget, arc name and arc unit
     switch (arc)
@@ -160,6 +161,7 @@ gp_arc::gp_arc(uint16_t highWarningValue,
 void gp_arc::setValue(int16_t value)
 {
     float arcValue;
+    uint16_t end_angle;
 
     if (_previousValue != value)
     {
@@ -169,9 +171,9 @@ void gp_arc::setValue(int16_t value)
         case gauge_type::BATTERY_VOLTAGE:
             if (batteryTimerARC.cycleTrigger(1000))
             {
-                
+                arcValue = (value * canbus_encode.battery_voltage);
                 lv_arc_set_value(_arc, map(value, _minValue, _maxValue, 0, 100));
-                _ui_label_set_property(_arcValue, _UI_LABEL_PROPERTY_TEXT, String((value * canbus_encode.battery_voltage), 1).c_str());
+                _ui_label_set_property(_arcValue, _UI_LABEL_PROPERTY_TEXT, String((arcValue), 1).c_str());
             }
             break;
 
@@ -185,7 +187,10 @@ void gp_arc::setValue(int16_t value)
 
         case gauge_type::AFR:
             arcValue = (value * canbus_encode.lambda) * 100;
-            lv_arc_set_value(_arc, map(arcValue, _minValue, _maxValue, 0, 100));
+            lv_arc_set_value(_arc, map((arcValue > 76) ? arcValue : 76, _minValue, _maxValue, 0, 100));
+            end_angle = lv_arc_get_angle_end(_arc);
+            end_angle = end_angle - 30;
+            lv_arc_set_start_angle(_arc, end_angle);
             _ui_label_set_property(_arcValue, _UI_LABEL_PROPERTY_TEXT, String((value * canbus_encode.lambda) * canbus_encode.afr, 1).c_str());
             break;
 
@@ -230,6 +235,7 @@ void gp_arc::setValue(int16_t value)
             case gauge_type::AIR_TEMP:
             case gauge_type::COOLANT_TEMP:
             case gauge_type::OIL_TEMP:
+            case gauge_type::AFR:
                 lv_obj_set_style_arc_color(_arc, lv_palette_main(LV_PALETTE_BLUE), LV_PART_INDICATOR | LV_STATE_DEFAULT);
                 break;
 
@@ -240,13 +246,14 @@ void gp_arc::setValue(int16_t value)
         }
 
         // Set the low alert color change except for the duty cycle and manifold pressure gauges
-        else if (value <= _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
+        else if (arcValue <= _lowAlertValue && _gaugeType != gauge_type::INJ_DUTY && _gaugeType != gauge_type::MANIFOLD_PRESSURE)
         {
             switch (_gaugeType)
             {
             case gauge_type::AIR_TEMP:
             case gauge_type::COOLANT_TEMP:
             case gauge_type::OIL_TEMP:
+            case gauge_type::AFR:
                 lv_obj_set_style_arc_color(_arc, lv_palette_main(LV_PALETTE_BLUE), LV_PART_INDICATOR | LV_STATE_DEFAULT);
                 break;
 
