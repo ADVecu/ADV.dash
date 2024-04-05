@@ -4,9 +4,20 @@
 
 // TODO: Map pressure representation in the traditional way needs Barometric pressure reading
 
+temp_unit tempUNIT;
+pressure_unit pressureUNIT;
+speed_unit speedUNIT;
+
+void initUnitManager()
+{
+    tempUNIT = db.getTempUnit();
+    pressureUNIT = db.getPressureUnit();
+    speedUNIT = db.getSpeedUnit();
+};
+
 uint16_t getTemp_Number(uint16_t value)
 {
-    if (db.getTempUnit() == temp_unit::CELSIUS)
+    if (tempUNIT == temp_unit::CELSIUS)
     {
         return value;
     }
@@ -18,7 +29,7 @@ uint16_t getTemp_Number(uint16_t value)
 
 String getTemp_String(uint16_t value)
 {
-    if (db.getTempUnit() == temp_unit::CELSIUS)
+    if (tempUNIT == temp_unit::CELSIUS)
     {
         return String(value);
     }
@@ -30,7 +41,7 @@ String getTemp_String(uint16_t value)
 
 uint16_t getPressure_Number(uint16_t value)
 {
-    switch (db.getPressureUnit())
+    switch (pressureUNIT)
     {
     case pressure_unit::KPA:
         return value;
@@ -54,7 +65,7 @@ uint16_t getBatteryVoltage_Number(uint16_t value)
 
 String getPressure_String(uint16_t value)
 {
-    switch (db.getPressureUnit())
+    switch (pressureUNIT)
     {
     case pressure_unit::KPA:
         return String(value);
@@ -73,7 +84,7 @@ String getPressure_String(uint16_t value)
 
 uint16_t getSpeed_Number(uint16_t value)
 {
-    switch (db.getSpeedUnit())
+    switch (speedUNIT)
     {
     case speed_unit::KPH:
         return value;
@@ -89,7 +100,7 @@ uint16_t getSpeed_Number(uint16_t value)
 
 String getSpeed_String(uint16_t value)
 {
-    switch (db.getSpeedUnit())
+    switch (speedUNIT)
     {
     case speed_unit::KPH:
         return String(value);

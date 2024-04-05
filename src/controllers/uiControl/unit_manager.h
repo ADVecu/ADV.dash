@@ -31,7 +31,6 @@ uint16_t getSpeed_Number(uint16_t value);
  */
 uint16_t getBatteryVoltage_Number(uint16_t value);
 
-
 /**
  * @brief Get the Temperature reading in the correct unit formatted as a string
  * @param value temperature reding raw from canbus
@@ -60,5 +59,9 @@ String getSpeed_String(uint16_t value);
  */
 String getBatteryVoltage_String(uint16_t value);
 
+/**
+ * @brief Get the database data for the units and store them in RAM
+ */
+void initUnitManager();
 
 #endif
