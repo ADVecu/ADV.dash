@@ -11,6 +11,8 @@ lazygit.exe
 *-backups
 *-cache*
 *-bak*
-_autosave*
+*autosave*
 \#auto_saved_files\#
-
+backup/*
+SquerLine Project/autosave/*
+SquerLine Project/cache/*
