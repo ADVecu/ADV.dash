@@ -267,7 +267,7 @@
               {
                 "nid": -314229385,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\e30.png",
+                "strval": "assets/e30.png",
                 "InheritedType": 5
               },
               {
@@ -935,7 +935,7 @@
                       {
                         "nid": -131523726,
                         "strtype": "_style/Bg_Image",
-                        "strval": "assets\\banner.png",
+                        "strval": "assets/banner.png",
                         "InheritedType": 5
                       },
                       {
@@ -1269,7 +1269,7 @@
               {
                 "nid": -1397997743,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\PROup.png",
+                "strval": "assets/PROup.png",
                 "InheritedType": 5
               },
               {
@@ -1564,7 +1564,7 @@
               {
                 "nid": 251681927,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\ProAdvV1Amarillo.png",
+                "strval": "assets/ProAdvV1Amarillo.png",
                 "InheritedType": 5
               },
               {
@@ -1600,6 +1600,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 1000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -2122,7 +2124,7 @@
               {
                 "nid": 374551448,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\RPMscalev3T.png",
+                "strval": "assets/RPMscalev3T.png",
                 "InheritedType": 5
               },
               {
@@ -4856,7 +4858,7 @@
                 "strtype": "BAR/Range",
                 "intarray": [
                   0,
-                  100
+                  10000
                 ],
                 "InheritedType": 7
               },
@@ -6499,7 +6501,7 @@
               {
                 "nid": 208713973,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\arcScaleNoRed.png",
+                "strval": "assets/arcScaleNoRed.png",
                 "InheritedType": 5
               },
               {
@@ -8315,7 +8317,7 @@
               {
                 "nid": -851023849,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\barScale.png",
+                "strval": "assets/barScale.png",
                 "InheritedType": 5
               },
               {
@@ -12375,7 +12377,7 @@
               {
                 "nid": -322519800,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\arcScaleRR.png",
+                "strval": "assets/arcScaleRR.png",
                 "InheritedType": 5
               },
               {
@@ -13979,7 +13981,7 @@
               {
                 "nid": -745737448,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\arcScaleRB.png",
+                "strval": "assets/arcScaleRB.png",
                 "InheritedType": 5
               },
               {
@@ -15594,7 +15596,7 @@
               {
                 "nid": 1338757580,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\arcScale.png",
+                "strval": "assets/arcScale.png",
                 "InheritedType": 5
               },
               {
@@ -23540,7 +23542,7 @@
               {
                 "nid": -1856651145,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\barScaleRB.png",
+                "strval": "assets/barScaleRB.png",
                 "InheritedType": 5
               },
               {
@@ -25070,7 +25072,7 @@
               {
                 "nid": 107507655,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets\\barScaleRed.png",
+                "strval": "assets/barScaleRed.png",
                 "InheritedType": 5
               },
               {
@@ -28956,6 +28958,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 2000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -29918,6 +29922,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 3000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -30466,8 +30472,8 @@
                 "InheritedType": 2
               },
               {
-                "nid": -843446983,
-                "strtype": "ROLLER/Label",
+                "nid": -1060709413,
+                "strtype": "ROLLER/Roller",
                 "InheritedType": 1
               },
               {
@@ -30481,6 +30487,11 @@
                 "strtype": "ROLLER/Mode",
                 "strval": "NORMAL",
                 "InheritedType": 3
+              },
+              {
+                "nid": -1988514368,
+                "strtype": "ROLLER/Selected",
+                "InheritedType": 6
               },
               {
                 "part": "lv.PART.MAIN",
@@ -30564,11 +30575,6 @@
                 "strtype": "ROLLER/Style_selected",
                 "strval": "lv.PART.SELECTED, Text, Rectangle",
                 "InheritedType": 11
-              },
-              {
-                "nid": -1988514368,
-                "strtype": "ROLLER/Selected",
-                "InheritedType": 6
               }
             ],
             "saved_objtypeKey": "ROLLER",
@@ -44350,6 +44356,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 4000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -45877,6 +45885,8 @@
           }
         ],
         "isPage": true,
+        "editor_posx": 5000,
+        "editor_posy": -1000,
         "locked": false,
         "properties": [
           {
@@ -47071,6 +47081,7 @@
       "saved_objtypeKey": "ELOANIMATION"
     }
   ],
+  "selected_theme": "Default",
   "info": {
     "name": "ADVdash",
     "depth": 1,
@@ -47084,10 +47095,11 @@
     "description": "",
     "board": "Arduino with TFT_eSPI",
     "board_version": "v1.1.0",
-    "editor_version": "1.3.4",
+    "editor_version": "1.4.0",
     "image": "",
     "force_export_images": false,
     "flat_export": false,
+    "advanced_alpha": false,
     "pointfilter": false,
     "theme_simplified": false,
     "theme_dark": true,
@@ -47095,11 +47107,22 @@
     "theme_color2": 0,
     "uiExportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\src\\UI",
     "projectExportFolderPath": "C:\\Users\\danie\\Documents\\GNVPerformance\\ADVdash\\SquerLine Project",
-    "backup_cnt": 3336,
+    "backup_cnt": 3342,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "CPP_FILE",
+    "imageexport": "SOURCE",
     "lvgl_include_path": "lvgl.h",
+    "drive_stdio": null,
+    "drive_stdio_path": null,
+    "drive_posix": null,
+    "drive_posix_path": null,
+    "drive_win32": null,
+    "drive_win32_path": null,
+    "drive_fatfs": null,
+    "drive_fatfs_path": null,
+    "naming": null,
+    "naming_force_lowercase": false,
     "BitDepth": 16,
     "Name": "ADVdash"
   }
