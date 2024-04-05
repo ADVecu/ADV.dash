@@ -15,6 +15,7 @@
 #include "controllers/uiControl/screen_manager.h"
 #include "controllers/rtc/rtc_control.h"
 #include "controllers/sensors/bmp280.h"
+#include "controllers/uiControl/unit_manager.h"
 //  #include "SparkFun_External_EEPROM.h"
 
 #define TFT_BL 2
@@ -165,10 +166,7 @@ void setup()
   Serial.begin(115200); // Init Display
 
   delay(200);
-#ifdef TFT_BL
-  pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
-  analogWrite(pcb.tft_bl, 255);
-#endif
+
   lv_init();
   touch_init();
 
@@ -210,6 +208,8 @@ void setup()
     digitalWrite(pcb.v5Enable, HIGH); // Enable 5V
   }
 
+  initUnitManager(); // Unit Manager Init
+
   rtc_controller.init_rtc(); // RTC Init
 
   bmp280_controller.init_bmp280(); // BMP280 Init
@@ -238,6 +238,11 @@ void setup()
   {
     _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 2000, ui_MainScreen_screen_init);
   }
+
+#ifdef TFT_BL
+  pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
+  analogWrite(pcb.tft_bl, 255);
+#endif
 }
 
 /*******************************************************************************
