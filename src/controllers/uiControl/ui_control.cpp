@@ -54,7 +54,6 @@ void ui_init_config()
         0,            /* Priority of the task */
         NULL,         /* Task handle. */
         APP_CPU_NUM); /* Core where the task should run */
-
 }
 
 /**
@@ -97,71 +96,26 @@ void ui_task(void *pvParameters)
     tpsBar tpsBar;
 
     // Bar gauges
-    gp_bar gp_Bar_1(db.getBarGaugeHighWarningValue(bar_number_t::BAR_1),
-                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_1),
-                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_1),
-                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_1),
-                    db.getBarGaugeType(bar_number_t::BAR_1),
-                    bar_number_t::BAR_1);
+    gp_bar gp_Bar_1(bar_number_t::BAR_1);
 
-    gp_bar gp_Bar_2(db.getBarGaugeHighWarningValue(bar_number_t::BAR_2),
-                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_2),
-                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_2),
-                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_2),
-                    db.getBarGaugeType(bar_number_t::BAR_2),
-                    bar_number_t::BAR_2);
+    gp_bar gp_Bar_2(bar_number_t::BAR_2);
 
-    gp_bar gp_Bar_3(db.getBarGaugeHighWarningValue(bar_number_t::BAR_3),
-                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_3),
-                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_3),
-                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_3),
-                    db.getBarGaugeType(bar_number_t::BAR_3),
-                    bar_number_t::BAR_3);
+    gp_bar gp_Bar_3(bar_number_t::BAR_3);
 
-    gp_bar gp_Bar_4(db.getBarGaugeHighWarningValue(bar_number_t::BAR_4),
-                    db.getBarGaugeHighAlertValue(bar_number_t::BAR_4),
-                    db.getBarGaugeLowWarningValue(bar_number_t::BAR_4),
-                    db.getBarGaugeLowAlertValue(bar_number_t::BAR_4),
-                    db.getBarGaugeType(bar_number_t::BAR_4),
-                    bar_number_t::BAR_4);
+    gp_bar gp_Bar_4(bar_number_t::BAR_4);
 
     gp_bar gp_bar_array[4] = {gp_Bar_1, gp_Bar_2, gp_Bar_3, gp_Bar_4};
 
     // Arc gauges
-    gp_arc gp_Arc_1(db.getArcGaugeHighWarningValue(arc_number_t::ARC_1),
-                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_1),
-                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_1),
-                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_1),
-                    db.getArcGaugeType(arc_number_t::ARC_1),
-                    arc_number_t::ARC_1);
+    gp_arc gp_Arc_1(arc_number_t::ARC_1);
 
-    gp_arc gp_Arc_2(db.getArcGaugeHighWarningValue(arc_number_t::ARC_2),
-                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_2),
-                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_2),
-                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_2),
-                    db.getArcGaugeType(arc_number_t::ARC_2),
-                    arc_number_t::ARC_2);
+    gp_arc gp_Arc_2(arc_number_t::ARC_2);
 
-    gp_arc gp_Arc_3(db.getArcGaugeHighWarningValue(arc_number_t::ARC_3),
-                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_3),
-                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_3),
-                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_3),
-                    db.getArcGaugeType(arc_number_t::ARC_3),
-                    arc_number_t::ARC_3);
+    gp_arc gp_Arc_3(arc_number_t::ARC_3);
 
-    gp_arc gp_Arc_4(db.getArcGaugeHighWarningValue(arc_number_t::ARC_4),
-                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_4),
-                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_4),
-                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_4),
-                    db.getArcGaugeType(arc_number_t::ARC_4),
-                    arc_number_t::ARC_4);
+    gp_arc gp_Arc_4(arc_number_t::ARC_4);
 
-    gp_arc gp_Arc_5(db.getArcGaugeHighWarningValue(arc_number_t::ARC_5),
-                    db.getArcGaugeHighAlertValue(arc_number_t::ARC_5),
-                    db.getArcGaugeLowWarningValue(arc_number_t::ARC_5),
-                    db.getArcGaugeLowAlertValue(arc_number_t::ARC_5),
-                    db.getArcGaugeType(arc_number_t::ARC_5),
-                    arc_number_t::ARC_5);
+    gp_arc gp_Arc_5(arc_number_t::ARC_5);
 
     gp_arc gp_arc_array[5] = {gp_Arc_1, gp_Arc_2, gp_Arc_3, gp_Arc_4, gp_Arc_5};
 
@@ -197,11 +151,10 @@ void ui_task(void *pvParameters)
 
     bool canReady = false;
 
-    //Serial.println(db.getRpmsRedline());
-    // Infinite loop
+    // Serial.println(db.getRpmsRedline());
+    //  Infinite loop
     while (1)
     {
-        
 
         // Read the CAN bus queue
         if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen)
@@ -293,7 +246,6 @@ void ui_task(void *pvParameters)
                     }
                 }
             }
-
 
             // iterate through the panel gauges and update the values
             if (panelDataRate.cycleTrigger(200))

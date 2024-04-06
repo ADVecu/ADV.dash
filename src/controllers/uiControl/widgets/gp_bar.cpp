@@ -3,23 +3,15 @@
 #include "../ui_strings.h"
 #include <muTimer.h>
 #include "controllers/canBus/can_bus.h"
+#include "../ui_control.h"
 
 muTimer batteryTimer;
 
-
-gp_bar::gp_bar(uint16_t highWarningValue,
-               uint16_t highAlertValue,
-               uint16_t lowWarningValue,
-               uint16_t lowAlertValue,
-               gauge_type gaugeType,
-               bar_number_t bar)
+gp_bar::gp_bar(bar_number_t bar)
 {
-    _warningValue = highWarningValue;
-    _alertValue = highAlertValue;
-    _lowWarningValue = lowWarningValue;
-    _lowAlertValue = lowAlertValue;
+
     _previousValue = 0;
-    _gaugeType = gaugeType;
+    _gaugeType = db.getBarGaugeType(bar);
 
     gauge_name_str_single_row gauge_name_strings;
     gauge_unit_str gauge_unit_strings;
@@ -66,6 +58,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
         _bgImg = ui_img_barscalerb_png;
+
+        _warningValue = db.getCoolantTempHighWarningValue();
+        _alertValue = db.getCoolantTempHighAlertValue();
+        _lowWarningValue = db.getCoolantTempLowWarningValue();
+        _lowAlertValue = db.getCoolantTempLowAlertValue();
         break;
 
     case gauge_type::OIL_TEMP:
@@ -74,6 +71,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
         _bgImg = ui_img_barscalerb_png;
+
+        _warningValue = db.getOilTempHighWarningValue();
+        _alertValue = db.getOilTempHighAlertValue();
+        _lowWarningValue = db.getOilTempLowWarningValue();
+        _lowAlertValue = db.getOilTempLowAlertValue();
         break;
 
     case gauge_type::AIR_TEMP:
@@ -82,6 +84,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
         _bgImg = ui_img_barscalerb_png;
+
+        _warningValue = db.getAirTempHighWarningValue();
+        _alertValue = db.getAirTempHighAlertValue();
+        _lowWarningValue = db.getAirTempLowWarningValue();
+        _lowAlertValue = db.getAirTempLowAlertValue();
         break;
 
     case gauge_type::OIL_PRESSURE:
@@ -90,6 +97,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = PRESSURE_MAX_VALUE;
         _minValue = PRESSURE_MIN_VALUE;
         _bgImg = ui_img_barscalered_png;
+
+        _warningValue = db.getOilPressureHighWarningValue();
+        _alertValue = db.getOilPressureHighAlertValue();
+        _lowWarningValue = db.getOilPressureLowWarningValue();
+        _lowAlertValue = db.getOilPressureLowAlertValue();
         break;
 
     case gauge_type::FUEL_PRESSURE:
@@ -98,6 +110,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = PRESSURE_MAX_VALUE;
         _minValue = PRESSURE_MIN_VALUE;
         _bgImg = ui_img_barscalered_png;
+
+        _warningValue = db.getFuelPressureHighWarningValue();
+        _alertValue = db.getFuelPressureHighAlertValue();
+        _lowWarningValue = db.getFuelPressureLowWarningValue();
+        _lowAlertValue = db.getFuelPressureLowAlertValue();
         break;
 
     case gauge_type::MANIFOLD_PRESSURE:
@@ -106,6 +123,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = MANIFOLD_MAX_VALUE;
         _minValue = MANIFOLD_MIN_VALUE;
         _bgImg = ui_img_barscalered_png;
+
+        _warningValue = db.getMAPHighWarningValue();
+        _alertValue = db.getMAPHighAlertValue();
+        _lowWarningValue = 5;
+        _lowAlertValue = 5;
         break;
 
     case gauge_type::BATTERY_VOLTAGE:
@@ -114,6 +136,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = VOLTAGE_MAX_VALUE;
         _minValue = VOLTAGE_MIN_VALUE;
         _bgImg = ui_img_barscalered_png;
+
+        _warningValue = db.getBatteryVoltageHighWarningValue();
+        _alertValue = db.getBatteryVoltageHighAlertValue();
+        _lowWarningValue = db.getBatteryVoltageLowWarningValue();
+        _lowAlertValue = db.getBatteryVoltageLowAlertValue();
         break;
 
     case gauge_type::FUEL_LEVEL:
@@ -122,6 +149,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = FUEL_MAX_VALUE;
         _minValue = FUEL_MIN_VALUE;
         _bgImg = ui_img_barscale_png;
+
+        _warningValue = db.getFuelLevelHighWarningValue();
+        _alertValue = db.getFuelLevelHighAlertValue();
+        _lowWarningValue = db.getFuelLevelLowWarningValue();
+        _lowAlertValue = db.getFuelLevelLowAlertValue();
         break;
 
     case gauge_type::INJ_DUTY:
@@ -130,6 +162,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = DUTY_MAX_VALUE;
         _minValue = DUTY_MIN_VALUE;
         _bgImg = ui_img_barscalered_png;
+
+        _warningValue = db.getInjDutyHighWarningValue();
+        _alertValue = db.getInjDutyHighAlertValue();
+        _lowWarningValue = 0;
+        _lowAlertValue = 0;
         break;
 
     case gauge_type::AFR:
@@ -138,6 +175,11 @@ gp_bar::gp_bar(uint16_t highWarningValue,
         _maxValue = AFR_MAX_VALUE;
         _minValue = AFR_MIN_VALUE;
         _bgImg = ui_img_barscalered_png;
+
+        _warningValue = db.getAFRHighWarningValue();
+        _alertValue = db.getAFRHighAlertValue();
+        _lowWarningValue = db.getAFRLowWarningValue();
+        _lowAlertValue = db.getAFRLowAlertValue();
         break;
     }
 
@@ -167,7 +209,7 @@ void gp_bar::setValue(int16_t value)
             barValue = (value * canbus_encode.battery_voltage);
 
             if (batteryTimer.cycleTrigger(1000))
-            {    
+            {
                 _ui_bar_set_property(_bar, _UI_BAR_PROPERTY_VALUE, map(value, _minValue, _maxValue, 0, 100));
                 _ui_label_set_property(_barValue, _UI_LABEL_PROPERTY_TEXT, String(barValue, 1).c_str());
                 //_ui_label_set_property(ui_CriticalAlertText, _UI_LABEL_PROPERTY_TEXT, String(barValue).c_str());
@@ -254,8 +296,6 @@ void gp_bar::setValue(int16_t value)
         {
             lv_obj_set_style_bg_color(_bar, lv_color_hex(0xFFFFFF), LV_PART_INDICATOR | LV_STATE_DEFAULT);
         }
-
-        
     }
 }
 

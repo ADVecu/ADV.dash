@@ -42,21 +42,9 @@ public:
     // constructor
     /**
      * @brief Construct a new generic bar object
-     *
-     * @param highWarningValue At which value the bar will change color to yellow at the high end
-     * @param highAlertValue At which value the bar will change color to red at the high end
-     * @param lowWarningValue At which value the bar will change color at the low end
-     * @param lowAlertValue At which value the bar will change color at the low end
-     * @param gaugeType Choose between the available gauge types
-     * @param bgImg Choose between the 3 available background images for the bar widget
      * @param bar Choose which bar widget to initialize from the 4 available
      */
-    gp_bar(uint16_t highWarningValue,
-           uint16_t highAlertValue,
-           u_int16_t lowWarningValue,
-           uint16_t lowAlertValue,
-           gauge_type gaugeType,
-           bar_number_t bar);
+    gp_bar(bar_number_t bar);
 
     // methods
     /**

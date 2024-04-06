@@ -3,26 +3,18 @@
 #include "../ui_strings.h"
 #include <muTimer.h>
 #include "controllers/canBus/can_bus.h"
+#include "../ui_control.h"
 
 muTimer batteryTimerARC;
 
-gp_arc::gp_arc(uint16_t highWarningValue,
-               uint16_t highAlertValue,
-               uint16_t lowWarningValue,
-               uint16_t lowAlertValue,
-               gauge_type gaugeType,
-               arc_number_t arc)
+gp_arc::gp_arc(arc_number_t arc)
 {
-    _warningValue = highWarningValue;
-    _alertValue = highAlertValue;
-    _lowWarningValue = lowWarningValue;
-    _lowAlertValue = lowAlertValue;
+
     _previousValue = 0;
-    _gaugeType = gaugeType;
+    _gaugeType = db.getArcGaugeType(arc);
 
     gauge_name_str_double_row gauge_name_strings;
     gauge_unit_str gauge_unit_strings;
-    
 
     // Assign the arc widget, arc name and arc unit
     switch (arc)
@@ -73,6 +65,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
         _bgImg = ui_img_arcscalerb_png;
+
+        _warningValue = db.getCoolantTempHighWarningValue();
+        _alertValue = db.getCoolantTempHighAlertValue();
+        _lowWarningValue = db.getCoolantTempLowWarningValue();
+        _lowAlertValue = db.getCoolantTempLowAlertValue();
         break;
 
     case gauge_type::OIL_TEMP:
@@ -81,6 +78,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
         _bgImg = ui_img_arcscalerb_png;
+
+        _warningValue = db.getOilTempHighWarningValue();
+        _alertValue = db.getOilTempHighAlertValue();
+        _lowWarningValue = db.getOilTempLowWarningValue();
+        _lowAlertValue = db.getOilTempLowAlertValue();
         break;
 
     case gauge_type::AIR_TEMP:
@@ -89,6 +91,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = TEMP_MAX_VALUE;
         _minValue = TEMP_MIN_VALUE;
         _bgImg = ui_img_arcscalerb_png;
+
+        _warningValue = db.getAirTempHighWarningValue();
+        _alertValue = db.getAirTempHighAlertValue();
+        _lowWarningValue = db.getAirTempLowWarningValue();
+        _lowAlertValue = db.getAirTempLowAlertValue();
         break;
 
     case gauge_type::OIL_PRESSURE:
@@ -97,6 +104,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = PRESSURE_MAX_VALUE;
         _minValue = PRESSURE_MIN_VALUE;
         _bgImg = ui_img_arcscalerr_png;
+
+        _warningValue = db.getOilPressureHighWarningValue();
+        _alertValue = db.getOilPressureHighAlertValue();
+        _lowWarningValue = db.getOilPressureLowWarningValue();
+        _lowAlertValue = db.getOilPressureLowAlertValue();
         break;
 
     case gauge_type::FUEL_PRESSURE:
@@ -105,6 +117,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = PRESSURE_MAX_VALUE;
         _minValue = PRESSURE_MIN_VALUE;
         _bgImg = ui_img_arcscalerr_png;
+
+        _warningValue = db.getFuelPressureHighWarningValue();
+        _alertValue = db.getFuelPressureHighAlertValue();
+        _lowWarningValue = db.getFuelPressureLowWarningValue();
+        _lowAlertValue = db.getFuelPressureLowAlertValue();
         break;
 
     case gauge_type::MANIFOLD_PRESSURE:
@@ -113,6 +130,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = MANIFOLD_MAX_VALUE;
         _minValue = MANIFOLD_MIN_VALUE;
         _bgImg = ui_img_arcscale_png;
+
+        _warningValue = db.getMAPHighWarningValue();
+        _alertValue = db.getMAPHighAlertValue();
+        _lowWarningValue = 5;
+        _lowAlertValue = 5;
         break;
 
     case gauge_type::BATTERY_VOLTAGE:
@@ -121,6 +143,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = VOLTAGE_MAX_VALUE;
         _minValue = VOLTAGE_MIN_VALUE;
         _bgImg = ui_img_arcscalerr_png;
+
+        _warningValue = db.getBatteryVoltageHighWarningValue();
+        _alertValue = db.getBatteryVoltageHighAlertValue();
+        _lowWarningValue = db.getBatteryVoltageLowWarningValue();
+        _lowAlertValue = db.getBatteryVoltageLowAlertValue();
         break;
 
     case gauge_type::FUEL_LEVEL:
@@ -129,6 +156,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = FUEL_MAX_VALUE;
         _minValue = FUEL_MIN_VALUE;
         _bgImg = ui_img_arcscalenored_png;
+
+        _warningValue = db.getFuelLevelHighWarningValue();
+        _alertValue = db.getFuelLevelHighAlertValue();
+        _lowWarningValue = db.getFuelLevelLowWarningValue();
+        _lowAlertValue = db.getFuelLevelLowAlertValue();
         break;
 
     case gauge_type::INJ_DUTY:
@@ -137,6 +169,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = DUTY_MAX_VALUE;
         _minValue = DUTY_MIN_VALUE;
         _bgImg = ui_img_arcscale_png;
+
+        _warningValue = db.getInjDutyHighWarningValue();
+        _alertValue = db.getInjDutyHighAlertValue();
+        _lowWarningValue = 0;
+        _lowAlertValue = 0;
         break;
 
     case gauge_type::AFR:
@@ -145,6 +182,11 @@ gp_arc::gp_arc(uint16_t highWarningValue,
         _maxValue = AFR_MAX_VALUE;
         _minValue = AFR_MIN_VALUE;
         _bgImg = ui_img_arcscalenored_png;
+
+        _warningValue = db.getAFRHighWarningValue();
+        _alertValue = db.getAFRHighAlertValue();
+        _lowWarningValue = db.getAFRLowWarningValue();
+        _lowAlertValue = db.getAFRLowAlertValue();
         break;
     }
 
@@ -196,7 +238,7 @@ void gp_arc::setValue(int16_t value)
 
         case gauge_type::FUEL_LEVEL:
         case gauge_type::INJ_DUTY:
-           arcValue = (value * canbus_encode.levels_duty);
+            arcValue = (value * canbus_encode.levels_duty);
             lv_arc_set_value(_arc, map(arcValue, _minValue, _maxValue, 0, 100));
             _ui_label_set_property(_arcValue, _UI_LABEL_PROPERTY_TEXT, String(arcValue, 0).c_str());
             break;

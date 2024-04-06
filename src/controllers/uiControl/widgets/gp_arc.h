@@ -41,21 +41,9 @@ class gp_arc
 public:
     /**
      * @brief Construct a new generic arc object
-     *
-     * @param highWarningValue At which value the arc will change color to yellow at the high end
-     * @param highAlertValue At which value the arc will change color to red at the high end
-     * @param lowWarningValue At which value the arc will change color at the low end
-     * @param lowAlertValue At which value the arc will change color at the low end
-     * @param gaugeType Choose between the available gauge types
-     * @param bgImg Choose between the 3 available background images for the arc widget
      * @param arc Choose which arc widget to initialize from the 4 available
      */
-    gp_arc(uint16_t highWarningValue,
-           uint16_t highAlertValue,
-           u_int16_t lowWarningValue,
-           uint16_t lowAlertValue,
-           gauge_type gaugeType,
-           arc_number_t arc);
+    gp_arc(arc_number_t arc);
 
     /**
      * @brief Set the value of the arc
