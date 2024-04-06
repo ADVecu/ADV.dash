@@ -108,7 +108,7 @@ public:
      * @brief Reset to default Settings
      */
     void resetToDefault(void);
-    
+
     /*******************************************************************************
      * RPMS Data
      *******************************************************************************/
@@ -314,6 +314,442 @@ public:
      * @return Alert value of the panel gauge to be retrieved
      */
     uint16_t getPanelGaugeAlertValue(panel_number_t panelNumber);
+
+    /*******************************************************************************
+     * MAP Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief  Get MAP Gauge High Warning Value
+     */
+    uint16_t getMAPHighWarningValue();
+
+    /**
+     * @brief  Get MAP Gauge High Alert Value
+     */
+    uint16_t getMAPHighAlertValue();
+
+    /**
+     * @brief  Save MAP Gauge High Warning Value
+     * @param  warningValue: MAP Gauge High Warning Value
+     */
+    void saveMAPHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief  Save MAP Gauge High Alert Value
+     * @param  alertValue: MAP Gauge High Alert Value
+     */
+    void saveMAPHighAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Coolant Temp Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief Get Coolant Temp High Warning Value
+     */
+    uint16_t getCoolantTempHighWarningValue();
+
+    /**
+     * @brief Get Coolant Temp High Alert Value
+     */
+    uint16_t getCoolantTempHighAlertValue();
+
+    /**
+     * @brief Get Coolant Temp Low Warning Value
+     */
+    uint16_t getCoolantTempLowWarningValue();
+
+    /**
+     * @brief Get Coolant Temp Low Alert Value
+     */
+    uint16_t getCoolantTempLowAlertValue();
+
+    /**
+     * @brief Save Coolant Temp High Warning Value
+     * @param warningValue: Coolant Temp High Warning Value
+     */
+    void saveCoolantTempHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Coolant Temp High Alert Value
+     * @param alertValue: Coolant Temp High Alert Value
+     */
+    void saveCoolantTempHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief Save Coolant Temp Low Warning Value
+     * @param warningValue: Coolant Temp Low Warning Value
+     */
+    void saveCoolantTempLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Coolant Temp Low Alert Value
+     * @param alertValue: Coolant Temp Low Alert Value
+     */
+    void saveCoolantTempLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Oil Temp Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief Get Oil Temp High Warning Value
+     */
+    uint16_t getOilTempHighWarningValue();
+
+    /**
+     * @brief Get Oil Temp High Alert Value
+     */
+    uint16_t getOilTempHighAlertValue();
+
+    /**
+     * @brief Get Oil Temp Low Warning Value
+     */
+    uint16_t getOilTempLowWarningValue();
+
+    /**
+     * @brief Get Oil Temp Low Alert Value
+     */
+    uint16_t getOilTempLowAlertValue();
+
+    /**
+     * @brief Save Oil Temp High Warning Value
+     * @param warningValue: Oil Temp High Warning Value
+     */
+    void saveOilTempHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Oil Temp High Alert Value
+     * @param alertValue: Oil Temp High Alert Value
+     */
+    void saveOilTempHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief Save Oil Temp Low Warning Value
+     * @param warningValue: Oil Temp Low Warning Value
+     */
+    void saveOilTempLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Oil Temp Low Alert Value
+     * @param alertValue: Oil Temp Low Alert Value
+     */
+    void saveOilTempLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Air Temp Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief Get Air Temp High Warning Value
+     */
+    uint16_t getAirTempHighWarningValue();
+
+    /**
+     * @brief Get Air Temp High Alert Value
+     */
+    uint16_t getAirTempHighAlertValue();
+
+    /**
+     * @brief Get Air Temp Low Warning Value
+     */
+    uint16_t getAirTempLowWarningValue();
+
+    /**
+     * @brief Get Air Temp Low Alert Value
+     */
+    uint16_t getAirTempLowAlertValue();
+
+    /**
+     * @brief Save Air Temp High Warning Value
+     * @param warningValue: Air Temp High Warning Value
+     */
+    void saveAirTempHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Air Temp High Alert Value
+     * @param alertValue: Air Temp High Alert Value
+     */
+    void saveAirTempHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief Save Air Temp Low Warning Value
+     * @param warningValue: Air Temp Low Warning Value
+     */
+    void saveAirTempLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Air Temp Low Alert Value
+     * @param alertValue: Air Temp Low Alert Value
+     */
+    void saveAirTempLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Oil Pressure Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief get Oil Pressure High Warning Value
+     */
+    uint16_t getOilPressureHighWarningValue();
+
+    /**
+     * @brief get Oil Pressure High Alert Value
+     */
+    uint16_t getOilPressureHighAlertValue();
+
+    /**
+     * @brief get Oil Pressure Low Warning Value
+     */
+    uint16_t getOilPressureLowWarningValue();
+
+    /**
+     * @brief get Oil Pressure Low Alert Value
+     */
+    uint16_t getOilPressureLowAlertValue();
+
+    /**
+     * @brief Save Oil Pressure High Warning Value
+     * @param warningValue: Oil Pressure High Warning Value
+     */
+    void saveOilPressureHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Oil Pressure High Alert Value
+     * @param alertValue: Oil Pressure High Alert Value
+     */
+    void saveOilPressureHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief Save Oil Pressure Low Warning Value
+     * @param warningValue: Oil Pressure Low Warning Value
+     */
+    void saveOilPressureLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Oil Pressure Low Alert Value
+     * @param alertValue: Oil Pressure Low Alert Value
+     */
+    void saveOilPressureLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Fuel Pressure Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief Get Fuel Pressure High Warning Value
+     */
+    uint16_t getFuelPressureHighWarningValue();
+
+    /**
+     * @brief Get Fuel Pressure High Alert Value
+     */
+    uint16_t getFuelPressureHighAlertValue();
+
+    /**
+     * @brief Get Fuel Pressure Low Warning Value
+     */
+    uint16_t getFuelPressureLowWarningValue();
+
+    /**
+     * @brief Get Fuel Pressure Low Alert Value
+     */
+    uint16_t getFuelPressureLowAlertValue();
+
+    /**
+     * @brief Save Fuel Pressure High Warning Value
+     * @param warningValue: Fuel Pressure High Warning Value
+     */
+    void saveFuelPressureHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Fuel Pressure High Alert Value
+     * @param alertValue: Fuel Pressure High Alert Value
+     */
+    void saveFuelPressureHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief Save Fuel Pressure Low Warning Value
+     * @param warningValue: Fuel Pressure Low Warning Value
+     */
+    void saveFuelPressureLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Fuel Pressure Low Alert Value
+     * @param alertValue: Fuel Pressure Low Alert Value
+     */
+    void saveFuelPressureLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Battery voltage Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief Get Battery Voltage High Warning Value
+     */
+    uint16_t getBatteryVoltageHighWarningValue();
+
+    /**
+     * @brief Get Battery Voltage High Alert Value
+     */
+    uint16_t getBatteryVoltageHighAlertValue();
+
+    /**
+     * @brief Get Battery Voltage Low Warning Value
+     */
+    uint16_t getBatteryVoltageLowWarningValue();
+
+    /**
+     * @brief Get Battery Voltage Low Alert Value
+     */
+    uint16_t getBatteryVoltageLowAlertValue();
+
+    /**
+     * @brief Save Battery Voltage High Warning Value
+     * @param warningValue: Battery Voltage High Warning Value
+     */
+    void saveBatteryVoltageHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Battery Voltage High Alert Value
+     * @param alertValue: Battery Voltage High Alert Value
+     */
+    void saveBatteryVoltageHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief Save Battery Voltage Low Warning Value
+     * @param warningValue: Battery Voltage Low Warning Value
+     */
+    void saveBatteryVoltageLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Battery Voltage Low Alert Value
+     * @param alertValue: Battery Voltage Low Alert Value
+     */
+    void saveBatteryVoltageLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Fuel Level Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief  Get Fuel Level High Warning Value
+     */
+    uint16_t getFuelLevelHighWarningValue();
+
+    /**
+     * @brief  Get Fuel Level High Alert Value
+     */
+    uint16_t getFuelLevelHighAlertValue();
+
+    /**
+     * @brief  Get Fuel Level Low Warning Value
+     */
+    uint16_t getFuelLevelLowWarningValue();
+
+    /**
+     * @brief  Get Fuel Level Low Alert Value
+     */
+    uint16_t getFuelLevelLowAlertValue();
+
+    /**
+     * @brief  Save Fuel Level High Warning Value
+     * @param  warningValue: Fuel Level High Warning Value
+     */
+    void saveFuelLevelHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief  Save Fuel Level High Alert Value
+     * @param  alertValue: Fuel Level High Alert Value
+     */
+    void saveFuelLevelHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief  Save Fuel Level Low Warning Value
+     * @param  warningValue: Fuel Level Low Warning Value
+     */
+    void saveFuelLevelLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief  Save Fuel Level Low Alert Value
+     * @param  alertValue: Fuel Level Low Alert Value
+     */
+    void saveFuelLevelLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * AFR Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief Get AFR High Warning Value
+     */
+    uint16_t getAFRHighWarningValue();
+
+    /**
+     * @brief Get AFR High Alert Value
+     */
+    uint16_t getAFRHighAlertValue();
+
+    /**
+     * @brief Get AFR Low Warning Value
+     */
+    uint16_t getAFRLowWarningValue();
+
+    /**
+     * @brief Get AFR Low Alert Value
+     */
+    uint16_t getAFRLowAlertValue();
+
+    /**
+     * @brief Save AFR High Warning Value
+     * @param warningValue: AFR High Warning Value
+     */
+    void saveAFRHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save AFR High Alert Value
+     * @param alertValue: AFR High Alert Value
+     */
+    void saveAFRHighAlertValue(uint16_t alertValue);
+
+    /**
+     * @brief Save AFR Low Warning Value
+     * @param warningValue: AFR Low Warning Value
+     */
+    void saveAFRLowWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save AFR Low Alert Value
+     * @param alertValue: AFR Low Alert Value
+     */
+    void saveAFRLowAlertValue(uint16_t alertValue);
+
+    /*******************************************************************************
+     * Inj Duty Warnings/Alerts
+     ********************************************************************************/
+
+    /**
+     * @brief get Inj Duty High Warning Value
+     */
+    uint16_t getInjDutyHighWarningValue();
+
+    /**
+     * @brief get Inj Duty High Alert Value
+     */
+    uint16_t getInjDutyHighAlertValue();
+
+    /**
+     * @brief Save Inj Duty High Warning Value
+     * @param warningValue: Inj Duty High Warning Value
+     */
+    void saveInjDutyHighWarningValue(uint16_t warningValue);
+
+    /**
+     * @brief Save Inj Duty High Alert Value
+     * @param alertValue: Inj Duty High Alert Value
+     */
+    void saveInjDutyHighAlertValue(uint16_t alertValue);
 };
 
 #endif // __DATABASE__

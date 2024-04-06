@@ -576,3 +576,619 @@ uint16_t Database::getPanelGaugeAlertValue(panel_number_t gaugeNumber)
 
     return alertValue;
 }
+
+/*******************************************************************************
+ * MAP Warnings/Alerts Data
+ ********************************************************************************/
+
+uint16_t Database::getMAPHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("mapHighWarning", MANIFOLD_PRESSURE_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveMAPHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("mapHighWarning", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getMAPHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("mapHighAlert", MANIFOLD_PRESSURE_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveMAPHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("mapHighAlert", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Coolant Temp Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getCoolantTempHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("coolantHighW", COOLANT_TEMP_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveCoolantTempHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("coolantHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getCoolantTempHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("coolantHighA", COOLANT_TEMP_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveCoolantTempHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("coolantHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getCoolantTempLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("coolantLowW", COOLANT_TEMP_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveCoolantTempLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("coolantLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getCoolantTempLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("coolantLowA", COOLANT_TEMP_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveCoolantTempLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("coolantLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Oil Temp Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getOilTempHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("oilHighW", OIL_TEMP_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveOilTempHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getOilTempHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("oilHighA", OIL_TEMP_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveOilTempHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getOilTempLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("oilLowW", OIL_TEMP_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveOilTempLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getOilTempLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("oilLowA", OIL_TEMP_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveOilTempLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Air Temp Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getAirTempHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("airHighW", AIR_TEMP_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveAirTempHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("airHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getAirTempHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("airHighA", AIR_TEMP_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveAirTempHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("airHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getAirTempLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("airLowW", AIR_TEMP_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveAirTempLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("airLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getAirTempLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("airLowA", AIR_TEMP_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveAirTempLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("airLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Oil Pressure Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getOilPressureHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("oilPHighW", OIL_PRESSURE_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveOilPressureHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilPHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getOilPressureHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("oilPHighA", OIL_PRESSURE_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveOilPressureHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilPHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getOilPressureLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("oilPLowW", OIL_PRESSURE_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveOilPressureLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilPLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getOilPressureLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("oilPLowA", OIL_PRESSURE_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveOilPressureLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("oilPLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Fuel Pressure Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getFuelPressureHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("fuelPHighW", FUEL_PRESSURE_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveFuelPressureHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelPHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getFuelPressureHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("fuelPHighA", FUEL_PRESSURE_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveFuelPressureHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelPHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getFuelPressureLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("fuelPLowW", FUEL_PRESSURE_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveFuelPressureLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelPLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getFuelPressureLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("fuelPLowA", FUEL_PRESSURE_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveFuelPressureLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelPLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Battery voltage Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getBatteryVoltageHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("battHighW", BATTERY_VOLTAGE_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveBatteryVoltageHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("battHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getBatteryVoltageHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("battHighA", BATTERY_VOLTAGE_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveBatteryVoltageHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("battHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getBatteryVoltageLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("battLowW", BATTERY_VOLTAGE_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveBatteryVoltageLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("battLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getBatteryVoltageLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("battLowA", BATTERY_VOLTAGE_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveBatteryVoltageLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("battLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Fuel Level Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getFuelLevelHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("fuelLVHighW", FUEL_LEVEL_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveFuelLevelHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelLVHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getFuelLevelHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("fuelLVHighA", FUEL_LEVEL_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveFuelLevelHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelLVHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getFuelLevelLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("fuelLVLowW", FUEL_LEVEL_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveFuelLevelLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelLVLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getFuelLevelLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("fuelLVLowA", FUEL_LEVEL_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveFuelLevelLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("fuelLVLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * AFR Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getAFRHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("afrHighW", AFR_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveAFRHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("afrHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getAFRHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("afrHighA", AFR_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveAFRHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("afrHighA", alertValue);
+    preferences.end();
+}
+
+uint16_t Database::getAFRLowWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("afrLowW", AFR_LOW_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveAFRLowWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("afrLowW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getAFRLowAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("afrLowA", AFR_LOW_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveAFRLowAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("afrLowA", alertValue);
+    preferences.end();
+}
+
+/*******************************************************************************
+ * Inj Duty Warnings/Alerts
+ ********************************************************************************/
+
+uint16_t Database::getInjDutyHighWarningValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t warningValue = preferences.getUShort("injDutyHighW", INJ_DUTY_HIGH_WARNING_DEFAULT);
+    preferences.end();
+
+    return warningValue;
+}
+
+void Database::saveInjDutyHighWarningValue(uint16_t warningValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("injDutyHighW", warningValue);
+    preferences.end();
+}
+
+uint16_t Database::getInjDutyHighAlertValue()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t alertValue = preferences.getUShort("injDutyHighA", INJ_DUTY_HIGH_ALERT_DEFAULT);
+    preferences.end();
+
+    return alertValue;
+}
+
+void Database::saveInjDutyHighAlertValue(uint16_t alertValue)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("injDutyHighA", alertValue);
+    preferences.end();
+}
