@@ -177,14 +177,14 @@ void ledControlTask(void *pvParameters)
                 commit();
             }
 
-            if (canbus_data.battery_voltage <= 1200 && indicatorLedST.BatteryST != indicatorLedStateP.BatteryST)
+            if (canbus_data.battery_voltage <= 12000 && indicatorLedST.BatteryST != indicatorLedStateP.BatteryST)
             {
                 indicatorLedStateP.BatteryST = indicatorLedST.BatteryST;
                 indicatorLedST.BatteryST = true;
                 strip.SetPixelColor(BATTERY_LIGHT, RgbColor(255, 0, 0));
                 commit();
             }
-            else if (canbus_data.battery_voltage > 1200 && indicatorLedST.BatteryST != indicatorLedStateP.BatteryST)
+            else if (canbus_data.battery_voltage > 12000 && indicatorLedST.BatteryST != indicatorLedStateP.BatteryST)
             {
                 indicatorLedStateP.BatteryST = indicatorLedST.BatteryST;
                 indicatorLedST.BatteryST = false;
