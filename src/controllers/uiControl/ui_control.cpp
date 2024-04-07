@@ -12,6 +12,7 @@
 #include "controllers/sensors/bmp280.h"
 #include <muTimer.h>
 #include "controllers/canBus/rus_efi_can_verbose.h"
+#include "alert_manager.h"
 
 // Widgets
 #include "widgets/rpms_bar.h"
@@ -88,6 +89,7 @@ void ui_task(void *pvParameters)
     settings_strings settings_strings;
 
     // Initialize all the widgets and set the initial values
+    // TODO - Change the way rpms and panels widgets are initialized
 
     // RPMS Bar
     rpmsBar rpmsBar(db.getRpmsRedline(), db.getRpmsWarning());
@@ -149,6 +151,9 @@ void ui_task(void *pvParameters)
     // Leds control
     led_control leds;
 
+    //Alert Manager
+    Alert_manager alert_manager;
+
     bool canReady = false;
 
     // Serial.println(db.getRpmsRedline());
@@ -169,6 +174,16 @@ void ui_task(void *pvParameters)
 
                 // Update the tps bar
                 tpsBar.setValue(rx_msg.tps);
+
+                 // Send data to the alert manager
+                alert_manager.alert_manager_data(rx_msg.rpms,
+                                   rx_msg.map,
+                                   rx_msg.coolant_temp,
+                                   rx_msg.oil_pressure,
+                                   rx_msg.battery_voltage,
+                                   rx_msg.fuel_pressure,
+                                   rx_msg.fuel_level,
+                                   rx_msg.aux1_temp);
 
                 // iterate through the arc gauges and update the values
                 for (j = 0; j < 5; j++)

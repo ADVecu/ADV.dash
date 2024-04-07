@@ -18,18 +18,21 @@ public:
      *
      * @param  message: Message to display
      * @param  bg_color: Background color
-     * @param  timeOn: Time to display the panel
-     * @return bool: True if panel is on
      */
-    bool ShowPanel(
+    void ShowPanel(
         String message,
-        lv_palette_t bg_color,
-        uint16_t timeOn);
-    
+        lv_palette_t bg_color);
+
     /**
      * @brief Force hide the panel
      */
     void HidePanel();
+
+    /**
+     * @brief Check if the panel is on
+     * @return bool: True if panel is on
+     */
+    bool isPanelOn();
 
 private:
     // Member variables

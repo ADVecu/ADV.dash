@@ -1,6 +1,7 @@
 #include "critical_panel.h"
 
 muTimer offTimer;
+muTimer delayAlertTimer;
 
 CriticalPanel::CriticalPanel()
 {
@@ -9,10 +10,9 @@ CriticalPanel::CriticalPanel()
     isOn = false;
 }
 
-bool CriticalPanel::ShowPanel(
+void CriticalPanel::ShowPanel(
     String message,
-    lv_palette_t bg_color,
-    uint16_t timeOn)
+    lv_palette_t bg_color)
 {
     if (!isOn)
     {
@@ -28,16 +28,6 @@ bool CriticalPanel::ShowPanel(
         // Set the flag
         isOn = true;
     }
-    else if (offTimer.delayOn(isOn, timeOn))
-    {
-        // Hide the panel
-        lv_obj_add_flag(ui_CriticalAlertPanel, LV_OBJ_FLAG_HIDDEN);
-
-        // Reset the flag
-        isOn = false;
-    }
-
-    return isOn;
 }
 
 void CriticalPanel::HidePanel()
@@ -47,4 +37,9 @@ void CriticalPanel::HidePanel()
 
     // Reset the flag
     isOn = false;
+}
+
+bool CriticalPanel::isPanelOn()
+{
+    return isOn;
 }
