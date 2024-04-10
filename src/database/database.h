@@ -32,7 +32,7 @@
 #define FUEL_PRESSURE_HIGH_WARNING_DEFAULT 413
 #define FUEL_PRESSURE_HIGH_ALERT_DEFAULT 482
 #define FUEL_PRESSURE_LOW_WARNING_DEFAULT 240
-#define FUEL_PRESSURE_LOW_ALERT_DEFAULT 172
+#define FUEL_PRESSURE_LOW_ALERT_DEFAULT 30
 
 #define MANIFOLD_PRESSURE_HIGH_WARNING_DEFAULT 180
 #define MANIFOLD_PRESSURE_HIGH_ALERT_DEFAULT 210
@@ -56,6 +56,11 @@
 #define FUEL_FLOW_ALERT_DEFAULT 100
 #define FUEL_TRIM_ALERT_DEFAULT 150
 #define FUEL_USED_ALERT_DEFAULT 100
+
+#define ENGINE_ON_RPMS_DEFAULT 400
+#define ALERT_DELAY_DEFAULT 5000
+#define ALERT_DURATION_DEFAULT 5000
+#define ALERT_HIDE_DURATION_DEFAULT 2000
 
 /**
  * @brief Database class
@@ -110,8 +115,53 @@ public:
     void resetToDefault(void);
 
     /*******************************************************************************
+     * Alert Manager Data
+     *******************************************************************************/
+
+    /**
+     * @brief Get the user settings for the rpms value at which the engine is considered to be ON
+     */
+    uint16_t getEngineONrpms(void);
+
+    /**
+     * @brief Save the user settings for the rpms value at which the engine is considered to be ON
+     */
+    void saveEngineONrpms(uint16_t rpms);
+
+    /**
+     * @brief Get the user settings for the time to wait before alerts are shown after the engine is considered to be ON
+     */
+    uint16_t getAlertDelay(void);
+
+    /**
+     * @brief Save the user settings for the time to wait before alerts are shown after the engine is considered to be ON
+     */
+    void saveAlertDelay(uint16_t delay);
+
+    /**
+     * @brief Get the user settings for the time the alert is shown
+     */
+    uint16_t getAlertDuration(void);
+
+    /**
+     * @brief Save the user settings for the time the alert is shown
+     */
+    void saveAlertDuration(uint16_t duration);
+
+    /**
+     * @brief Get the user settings for the time the alert is hidden before it is shown again
+     */
+    uint16_t getAlertHideDuration(void);
+
+    /**
+     * @brief Save the user settings for the time the alert is hidden before it is shown again
+     */
+    void saveAlertHideDuration(uint16_t duration);
+
+    /*******************************************************************************
      * RPMS Data
      *******************************************************************************/
+
     /**
      * @brief Saves the redline rpms setting in the flash memory
      * @param redline Rpms at which the redline should be set, Range: 5000 - 10000

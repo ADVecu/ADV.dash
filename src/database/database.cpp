@@ -66,6 +66,74 @@ void Database::resetToDefault()
 }
 
 /*******************************************************************************
+ * Alert Manager Data
+ *******************************************************************************/
+
+uint16_t Database::getEngineONrpms()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t rpms = preferences.getUShort("enONrpms", ENGINE_ON_RPMS_DEFAULT);
+    preferences.end();
+
+    return rpms;
+}
+
+void Database::saveEngineONrpms(uint16_t rpms)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("enONrpms", rpms);
+    preferences.end();
+}
+
+uint16_t Database::getAlertDelay()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t delay = preferences.getUShort("alertDelay", ALERT_DELAY_DEFAULT);
+    preferences.end();
+
+    return delay;
+}
+
+void Database::saveAlertDelay(uint16_t delay)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("alertDelay", delay);
+    preferences.end();
+}
+
+uint16_t Database::getAlertDuration()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t duration = preferences.getUShort("alertDur", ALERT_DURATION_DEFAULT);
+    preferences.end();
+
+    return duration;
+}
+
+void Database::saveAlertDuration(uint16_t duration)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("alertDur", duration);
+    preferences.end();
+}
+
+uint16_t Database::getAlertHideDuration()
+{
+    preferences.begin(DATABASE_NAME, true);
+    uint16_t duration = preferences.getUShort("alertHideDur", ALERT_HIDE_DURATION_DEFAULT);
+    preferences.end();
+
+    return duration;
+}
+
+void Database::saveAlertHideDuration(uint16_t duration)
+{
+    preferences.begin(DATABASE_NAME, false);
+    preferences.putUShort("alertHideDur", duration);
+    preferences.end();
+}
+
+/*******************************************************************************
  * RPMs Data
  *******************************************************************************/
 void Database::saveRpmsRedline(uint16_t redline)
