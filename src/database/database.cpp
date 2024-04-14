@@ -8,7 +8,7 @@
 Preferences preferences;
 
 /*******************************************************************************
- * General Data
+    //MARK: General Data
  *******************************************************************************/
 void Database::saveTempUnit(temp_unit tempUnit)
 {
@@ -66,7 +66,7 @@ void Database::resetToDefault()
 }
 
 /*******************************************************************************
- * Alert Manager Data
+ //MARK: Alert Manager Data
  *******************************************************************************/
 
 uint16_t Database::getEngineONrpms()
@@ -134,7 +134,7 @@ void Database::saveAlertHideDuration(uint16_t duration)
 }
 
 /*******************************************************************************
- * RPMs Data
+ //MARK: RPMs Data
  *******************************************************************************/
 void Database::saveRpmsRedline(uint16_t redline)
 {
@@ -175,7 +175,7 @@ uint16_t Database::getRpmsWarning()
 }
 
 /*******************************************************************************
- * Bar Gauges Data
+ //MARK: Bar Gauges Data
  ********************************************************************************/
 
 void Database::saveBarGaugeType(bar_number_t gaugeNumber, gauge_type gaugeType)
@@ -359,7 +359,7 @@ uint16_t Database::getBarGaugeLowAlertValue(bar_number_t gaugeNumber)
 }
 
 /*******************************************************************************
- * Arc Gauges Data
+ //MARK: Arc Gauges Data
  ********************************************************************************/
 
 void Database::saveArcGaugeType(arc_number_t gaugeNumber, gauge_type gaugeType)
@@ -558,7 +558,7 @@ uint16_t Database::getArcGaugeLowAlertValue(arc_number_t gaugeNumber)
 }
 
 /*******************************************************************************
- * Panel Gauges Data
+ //MARK: Panel Gauges Data
  ********************************************************************************/
 
 void Database::savePanelGaugeType(panel_number_t gaugeNumber, gauge_type gaugeType)
@@ -646,7 +646,7 @@ uint16_t Database::getPanelGaugeAlertValue(panel_number_t gaugeNumber)
 }
 
 /*******************************************************************************
- * MAP Warnings/Alerts Data
+ //MARK: MAP Warnings/Alerts Data
  ********************************************************************************/
 
 uint16_t Database::getMAPHighWarningValue()
@@ -682,7 +682,7 @@ void Database::saveMAPHighAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Coolant Temp Warnings/Alerts
+ //MARK: Coolant Temp Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getCoolantTempHighWarningValue()
@@ -750,7 +750,7 @@ void Database::saveCoolantTempLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Oil Temp Warnings/Alerts
+ //MARK: Oil Temp Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getOilTempHighWarningValue()
@@ -818,7 +818,7 @@ void Database::saveOilTempLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Air Temp Warnings/Alerts
+ //MARK: Air Temp Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getAirTempHighWarningValue()
@@ -886,7 +886,7 @@ void Database::saveAirTempLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Oil Pressure Warnings/Alerts
+ //MARK: Oil Pressure Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getOilPressureHighWarningValue()
@@ -954,7 +954,7 @@ void Database::saveOilPressureLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Fuel Pressure Warnings/Alerts
+ //MARK: Fuel Pressure Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getFuelPressureHighWarningValue()
@@ -1022,7 +1022,7 @@ void Database::saveFuelPressureLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Battery voltage Warnings/Alerts
+ //MARK: Battery voltage Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getBatteryVoltageHighWarningValue()
@@ -1090,7 +1090,7 @@ void Database::saveBatteryVoltageLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Fuel Level Warnings/Alerts
+ //MARK: Fuel Level Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getFuelLevelHighWarningValue()
@@ -1158,7 +1158,7 @@ void Database::saveFuelLevelLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * AFR Warnings/Alerts
+ //MARK: AFR Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getAFRHighWarningValue()
@@ -1226,7 +1226,7 @@ void Database::saveAFRLowAlertValue(uint16_t alertValue)
 }
 
 /*******************************************************************************
- * Inj Duty Warnings/Alerts
+ //MARK: Inj Duty Warnings/Alerts
  ********************************************************************************/
 
 uint16_t Database::getInjDutyHighWarningValue()
