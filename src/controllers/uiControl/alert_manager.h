@@ -6,6 +6,7 @@
 #include "database/database.h"
 #include "muTimer.h"
 #include "controllers/canBus/can_bus.h"
+#include "ui_control.h"
 
 /**
  * @brief Alert manager class
@@ -24,6 +25,7 @@ class Alert_manager
     uint16_t _fuelPressureLowAlert;
     uint8_t _fuelLevelLowAlert;
     uint16_t _oilTempHighAlert;
+    uint16_t _mapHighAlert;
 
 public:
     Alert_manager();
