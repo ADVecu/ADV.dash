@@ -7,6 +7,22 @@
 #include "muTimer.h"
 #include "controllers/canBus/can_bus.h"
 #include "ui_control.h"
+#include "CircularBuffer.hpp"
+
+#define ALERTS_SIZE 7
+#define ALERTS_BUFFER_SIZE 5
+
+
+enum AlertsIndex
+{
+    OIL_PRESSURE_ALERT,
+    COOLANT_TEMP_ALERT,
+    BATTERY_VOLTAGE_ALERT,
+    FUEL_PRESSURE_ALERT,
+    FUEL_LEVEL_ALERT,
+    OIL_TEMP_ALERT,
+    MAP_ALERT
+};
 
 /**
  * @brief Alert manager class
@@ -18,6 +34,7 @@ class Alert_manager
     bool isEngineRunning = false;
     muTimer engineONdelay;
     muTimer alertTimer;
+    muTimer alertHideTimer;
 
     uint16_t _coolantHighAlert;
     uint16_t _oilPressureLowAlert;
@@ -26,6 +43,21 @@ class Alert_manager
     uint8_t _fuelLevelLowAlert;
     uint16_t _oilTempHighAlert;
     uint16_t _mapHighAlert;
+
+    uint16_t _engineONrpms;
+    uint16_t _alertDelay;
+    uint16_t _alertDuration;
+    uint16_t _alertHideDuration;
+
+    bool _oilPressureAlert = false;
+    bool _coolantTempAlert = false;
+    bool _batteryVoltageAlert = false;
+    bool _fuelPressureAlert = false;
+    bool _fuelLevelAlert = false;
+    bool _oilTempAlert = false;
+    bool _mapAlert = false;
+
+    bool _alertActive = false;
 
 public:
     Alert_manager();
