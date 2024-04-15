@@ -17,6 +17,9 @@
 			"touchpad",
 			"vsync",
 			"VSYNC"
-		]
+		],
+		"files.associations": {
+			"*.tpp": "cpp"
+		}
 	}
 }
