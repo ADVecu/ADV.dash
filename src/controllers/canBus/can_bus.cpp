@@ -173,9 +173,9 @@ void canbus_read(void *pvParameters)
         canbus_data.speed = rus_efi_can_verbose_base1.vehicle_speed;
         canbus_data.tps = rus_efi_can_verbose_base2.tps1;
         canbus_data.map = rus_efi_can_verbose_base3.map;
-        canbus_data.coolant_temp = rus_efi_can_verbose_base3.coolant_temp;
-        canbus_data.air_temp = rus_efi_can_verbose_base3.intake_temp;
-        canbus_data.aux1_temp = rus_efi_can_verbose_base3.aux1_temp;
+        canbus_data.coolant_temp = (rus_efi_can_verbose_base3_coolant_temp_is_in_range(rus_efi_can_verbose_base3.coolant_temp)) ? rus_efi_can_verbose_base3.coolant_temp : -40;
+        canbus_data.air_temp = (rus_efi_can_verbose_base3_intake_temp_is_in_range(rus_efi_can_verbose_base3.intake_temp)) ? rus_efi_can_verbose_base3.intake_temp : -40;
+        canbus_data.aux1_temp = (rus_efi_can_verbose_base3_aux1_temp_is_in_range(rus_efi_can_verbose_base3.aux1_temp)) ? rus_efi_can_verbose_base3.aux1_temp : -40;
         canbus_data.aux2_temp = rus_efi_can_verbose_base3.aux2_temp;
         canbus_data.oil_pressure = rus_efi_can_verbose_base4.oil_press;
         canbus_data.battery_voltage = rus_efi_can_verbose_base4.batt_volt;
