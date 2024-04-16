@@ -11,7 +11,7 @@ Alert_manager::Alert_manager()
     _mapHighAlert = db.getMAPHighAlertValue();
     _coolantHighAlert = db.getCoolantTempHighAlertValue();
     _oilPressureLowAlert = db.getOilPressureLowAlertValue();
-    _batteryVoltageLowAlert = db.getBatteryVoltageLowAlertValue();
+    _batteryVoltageLowAlert = (db.getBatteryVoltageLowAlertValue() / 10);
     _fuelPressureLowAlert = db.getFuelPressureLowAlertValue();
     _fuelLevelLowAlert = db.getFuelLevelLowAlertValue();
     _oilTempHighAlert = db.getOilTempHighAlertValue();
@@ -48,11 +48,11 @@ void Alert_manager::alert_manager_data(uint16_t rpms,
     {
         // Check for alerts
         _oilPressureAlert = (oil_pressure * canbus_encode.pressures) < _oilPressureLowAlert ? true : false;
-        _coolantTempAlert = (coolant_temp * canbus_encode.temps) > _coolantHighAlert ? true : false;
+        _coolantTempAlert = (coolant_temp - canbus_encode.temps) > _coolantHighAlert ? true : false;
         _batteryVoltageAlert = (battery_voltage * canbus_encode.battery_voltage) < _batteryVoltageLowAlert ? true : false;
         _fuelPressureAlert = (fuel_pressure * canbus_encode.pressures) < _fuelPressureLowAlert ? true : false;
         _fuelLevelAlert = (fuel_level * canbus_encode.levels_duty) < _fuelLevelLowAlert ? true : false;
-        _oilTempAlert = (oil_temp * canbus_encode.temps) > _oilTempHighAlert ? true : false;
+        _oilTempAlert = (oil_temp - canbus_encode.temps) > _oilTempHighAlert ? true : false;
         _mapAlert = (map * canbus_encode.pressures) > _mapHighAlert ? true : false;
 
         // add all alerts to a array
@@ -63,7 +63,7 @@ void Alert_manager::alert_manager_data(uint16_t rpms,
         {
             if (alerts[i])
             {
-                if (!alertBuffer.isFull() && alertBuffer[0] != i)
+                if (!alertBuffer.isFull() && alertBuffer[0] != i || alertBuffer.isEmpty())
                 {
                     switch (i)
                     {
@@ -103,25 +103,25 @@ void Alert_manager::alert_manager_data(uint16_t rpms,
             switch (alertBuffer[0])
             {
             case OIL_PRESSURE_ALERT:
-                criticalPanel.ShowPanel("OIL PRESSURE\nLOW", LV_PALETTE_RED);
+                criticalPanel.ShowPanel("OIL PRESSURE\nLOW " + String(oil_pressure * canbus_encode.pressures) + " KPA", LV_PALETTE_RED);
                 break;
             case COOLANT_TEMP_ALERT:
-                criticalPanel.ShowPanel("COOLANT TEMP\nHIGH", LV_PALETTE_RED);
+                criticalPanel.ShowPanel("COOLANT TEMP\nHIGH " + String(coolant_temp - canbus_encode.temps) + " °C", LV_PALETTE_RED);
                 break;
             case BATTERY_VOLTAGE_ALERT:
-                criticalPanel.ShowPanel("BATTERY VOLTAGE\nLOW", LV_PALETTE_RED);
+                criticalPanel.ShowPanel("BATTERY VOLTAGE\nLOW " + String(battery_voltage * canbus_encode.battery_voltage) + "V", LV_PALETTE_RED);
                 break;
             case FUEL_PRESSURE_ALERT:
-                criticalPanel.ShowPanel("FUEL PRESSURE\nLOW", LV_PALETTE_RED);
+                criticalPanel.ShowPanel("FUEL PRESSURE\nLOW " + String(fuel_pressure * canbus_encode.pressures) + " KPA", LV_PALETTE_RED);
                 break;
             case FUEL_LEVEL_ALERT:
-                criticalPanel.ShowPanel("FUEL LEVEL\nLOW", LV_PALETTE_RED);
+                criticalPanel.ShowPanel("FUEL LEVEL\nLOW " + String(fuel_level * canbus_encode.levels_duty) + " %", LV_PALETTE_RED);
                 break;
             case OIL_TEMP_ALERT:
-                criticalPanel.ShowPanel("OIL TEMP\nHIGH", LV_PALETTE_RED);
+                criticalPanel.ShowPanel("OIL TEMP\nHIGH " + String(oil_temp - canbus_encode.temps) + " °C", LV_PALETTE_RED);
                 break;
             case MAP_ALERT:
-                criticalPanel.ShowPanel("MAP\nHIGH", LV_PALETTE_RED);
+                criticalPanel.ShowPanel("MAP\nHIGH " + String(map * canbus_encode.pressures) + " KPA", LV_PALETTE_RED);
                 break;
             }
         }
