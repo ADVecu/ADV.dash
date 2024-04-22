@@ -359,7 +359,7 @@ uint16_t Database::getBarGaugeLowAlertValue(bar_number_t gaugeNumber)
 }
 
 /*******************************************************************************
- //MARK: Arc Gauges Data
+ // MARK: Arc Gauges Data
  ********************************************************************************/
 
 void Database::saveArcGaugeType(arc_number_t gaugeNumber, gauge_type gaugeType)
@@ -558,7 +558,7 @@ uint16_t Database::getArcGaugeLowAlertValue(arc_number_t gaugeNumber)
 }
 
 /*******************************************************************************
- //MARK: Panel Gauges Data
+ // MARK: Panel Gauges Data
  ********************************************************************************/
 
 void Database::savePanelGaugeType(panel_number_t gaugeNumber, gauge_type gaugeType)
