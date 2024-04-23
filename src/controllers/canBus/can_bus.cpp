@@ -142,22 +142,22 @@ void canbus_read(void *pvParameters)
         else
         {
             // TODO:  Handle this error, for example, send a message to the UI to display an error message on the screen, and set all the values to 0
-            printf("Failed to receive message\n");
-            switch (err)
-            {
-            case ESP_ERR_TIMEOUT:
-                printf("Error: Timeout\n");
-                break;
-            case ESP_ERR_INVALID_ARG:
-                printf("Error: Invalid Argument\n");
-                break;
-            case ESP_FAIL:
-                printf("Error: Fail\n");
-                break;
-            case ESP_ERR_INVALID_STATE:
-                printf("Error: Invalid State\n");
-                break;
-            }
+            /* printf("Failed to receive message\n");
+             switch (err)
+             {
+             case ESP_ERR_TIMEOUT:
+                 printf("Error: Timeout\n");
+                 break;
+             case ESP_ERR_INVALID_ARG:
+                 printf("Error: Invalid Argument\n");
+                 break;
+             case ESP_FAIL:
+                 printf("Error: Fail\n");
+                 break;
+             case ESP_ERR_INVALID_STATE:
+                 printf("Error: Invalid State\n");
+                 break;
+             }*/
         }
 
         // Parce the received can data into a struct for use in the UI
