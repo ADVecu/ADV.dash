@@ -134,7 +134,7 @@ void Database::saveAlertHideDuration(uint16_t duration)
 }
 
 /*******************************************************************************
- //MARK: RPMs Data
+ // MARK: RPMs Data
  *******************************************************************************/
 void Database::saveRpmsRedline(uint16_t redline)
 {
