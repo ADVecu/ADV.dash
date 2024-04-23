@@ -16,6 +16,7 @@
 #include "controllers/rtc/rtc_control.h"
 #include "controllers/sensors/bmp280.h"
 #include "controllers/uiControl/unit_manager.h"
+#include "controllers/comms/comms.h"
 //  #include "SparkFun_External_EEPROM.h"
 
 #define TFT_BL 2
@@ -238,6 +239,8 @@ void setup()
   {
     _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 2000, ui_MainScreen_screen_init);
   }
+
+  // SerialCommsInit();
 
 #ifdef TFT_BL
   pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
