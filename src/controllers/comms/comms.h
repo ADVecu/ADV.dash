@@ -53,6 +53,30 @@ enum SerialStatus
 extern SerialStatus serialStatusFlag;
 extern SerialStatus serialSecondaryStatusFlag;
 
+void SerialCommsInit(void);
+
+/**
+ * @brief Is a serial write in progress?
+ *
+ * Expectation is that ::serialTransmit is called until this
+ * returns false
+ */
+inline bool serialTransmitInProgress(void)
+{
+  return serialStatusFlag == SERIAL_TRANSMIT_INPROGRESS || serialStatusFlag == SERIAL_TRANSMIT_INPROGRESS_LEGACY || serialStatusFlag == SERIAL_TRANSMIT_TOOTH_INPROGRESS || serialStatusFlag == SERIAL_TRANSMIT_TOOTH_INPROGRESS_LEGACY || serialStatusFlag == SERIAL_TRANSMIT_COMPOSITE_INPROGRESS || serialStatusFlag == SERIAL_TRANSMIT_COMPOSITE_INPROGRESS_LEGACY;
+}
+
+/**
+ * @brief Is a non-blocking serial receive operation in progress?
+ *
+ * Expectation is the ::serialReceive is called until this
+ * returns false.
+ */
+inline bool serialRecieveInProgress(void)
+{
+  return serialStatusFlag == SERIAL_RECEIVE_INPROGRESS || serialStatusFlag == SERIAL_COMMAND_INPROGRESS_LEGACY;
+}
+
 /**
  * @brief The serial receive pump. Should be called whenever the serial port
  * has data available to read.
