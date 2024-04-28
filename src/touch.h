@@ -1,3 +1,4 @@
+
 /*******************************************************************************
  * Touch libraries:
  * FT6X36: https://github.com/strange-v/FT6X36.git
@@ -69,6 +70,20 @@
 // #define TOUCH_MAP_X2 100
 // #define TOUCH_MAP_Y1 100
 // #define TOUCH_MAP_Y2 4000
+
+/* uncomment for GT911 ADVdash5inch */
+#if defined(ADVdash7inchV2SD)
+#define TOUCH_GT911
+#define TOUCH_GT911_SCL 18 // 20
+#define TOUCH_GT911_SDA 17 // 19
+#define TOUCH_GT911_INT -1 //-1
+#define TOUCH_GT911_RST 38 // 38
+#define TOUCH_GT911_ROTATION ROTATION_NORMAL
+#define TOUCH_MAP_X1 1024 // 480
+#define TOUCH_MAP_X2 200
+#define TOUCH_MAP_Y1 600 // 272
+#define TOUCH_MAP_Y2 120
+#endif
 
 int touch_last_x = 0,
     touch_last_y = 0;
