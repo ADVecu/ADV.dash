@@ -240,11 +240,11 @@ void setup()
     _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 2000, ui_MainScreen_screen_init);
   }
 
-  SerialCommsInit();
+  //SerialCommsInit();
 
 #ifdef TFT_BL
   pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
-  analogWrite(pcb.tft_bl, 255);
+  analogWrite(pcb.tft_bl, 0);
 #endif
 }
 
