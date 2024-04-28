@@ -49,11 +49,11 @@ SerialStatus serialSecondaryStatusFlag;
  */
 constexpr byte serialVersion[] PROGMEM = {SERIAL_RC_OK, '0', '0', '2'};
 constexpr byte canId[] PROGMEM = {SERIAL_RC_OK, 0};
-constexpr byte codeVersion[] PROGMEM = {SERIAL_RC_OK, 'A', 'D', 'V', 'd', 'a', 's', 'h', ' ', '2', '0', '2', '4', 'd', 'e', 'v'}; // Note no null terminator in array and statu variable at the start
+constexpr byte codeVersion[] = {SERIAL_RC_OK, 'A', 'D', 'V', 'd', 'a', 's', 'h', ' ', '2', '0', '2', '4', 'd', 'e', 'v'}; // Note no null terminator in array and statu variable at the start
 constexpr byte productString[] PROGMEM = {SERIAL_RC_OK, 'A', 'D', 'V', 'd', 'a', 's', 'h', ' ', '2', '0', '2', '4', 'd', 'e', 'v'};
 // constexpr byte codeVersion[] PROGMEM = { SERIAL_RC_OK, 's','p','e','e','d','u','i','n','o',' ','2','0','2','4','0','2'} ; //Note no null terminator in array and statu variable at the start
 // constexpr byte productString[] PROGMEM = { SERIAL_RC_OK, 'S', 'p', 'e', 'e', 'd', 'u', 'i', 'n', 'o', ' ', '2', '0', '2', '4', '.', '0', '2'};
-const byte testCommsResponse[] = {SERIAL_RC_OK, 255};
+constexpr byte testCommsResponse[] PROGMEM = {SERIAL_RC_OK, 255};
 //!@}
 
 /** @brief The number of bytes received or transmitted to date during nonblocking I/O.
@@ -352,81 +352,7 @@ void serial_comms(void *pvParameters)
     // Check for any new or in-progress requests from serial.
     if (Serial.available() > 0 || serialRecieveInProgress())
     {
-      // Check for an existing legacy command in progress
-      if (serialStatusFlag == SERIAL_COMMAND_INPROGRESS_LEGACY)
-      {
-        // legacySerialCommand();
-        return;
-      }
-
-      if (Serial.available() != 0 && serialStatusFlag == SERIAL_INACTIVE)
-      {
-        // New command received
-        // Need at least 2 bytes to read the length of the command
-        byte highByte = (byte)Serial.peek();
-
-        // Check if the command is legacy using the call/response mechanism
-        if (highByte == 'F')
-        {
-          // F command is always allowed as it provides the initial serial protocol version.
-          Serial.print(F("002"));
-          return;
-        }
-        else
-        {
-          Serial.read();
-          while (Serial.available() == 0)
-          { /* Wait for the 2nd byte to be received (This will almost never happen) */
-          }
-
-          serialPayloadLength = word(highByte, Serial.read());
-          serialBytesRxTx = 2;
-          serialStatusFlag = SERIAL_RECEIVE_INPROGRESS; // Flag the serial receive as being in progress
-          serialReceiveStartTime = millis();
-        }
-      }
-
-      // If there is a serial receive in progress, read as much from the buffer as possible or until we receive all bytes
-      while ((Serial.available() > 0) && (serialStatusFlag == SERIAL_RECEIVE_INPROGRESS))
-      {
-        if (serialBytesRxTx < (serialPayloadLength + SERIAL_LEN_SIZE))
-        {
-          serialPayload[serialBytesRxTx - SERIAL_LEN_SIZE] = (byte)Serial.read();
-          serialBytesRxTx++;
-        }
-        else
-        {
-          uint32_t incomingCrc = readSerial32Timeout();
-          serialStatusFlag = SERIAL_INACTIVE; // The serial receive is now complete
-
-          if (!isTimeout()) // CRC read can timeout also!
-          {
-            if (incomingCrc == CRC32_serial.crc32(serialPayload, serialPayloadLength))
-            {
-              // CRC is correct. Process the command
-              processSerialCommand();
-              // BIT_CLEAR(currentStatus.status4, BIT_STATUS4_ALLOW_LEGACY_COMMS); //Lock out legacy commands until next power cycle
-            }
-            else
-            {
-              // CRC Error. Need to send an error message
-              sendReturnCodeMsg(SERIAL_RC_CRC_ERR);
-              flushRXbuffer();
-            }
-          }
-          // else timeout - code below will kick in.
-        }
-      } // Data in serial buffer and serial receive in progress
-
-      // Check for a timeout
-      if (isTimeout())
-      {
-        serialStatusFlag = SERIAL_INACTIVE; // Reset the serial receive
-
-        flushRXbuffer();
-        sendReturnCodeMsg(SERIAL_RC_TIMEOUT);
-
-      } // Timeout
+      serialReceive();
     }
   }
 }
@@ -571,9 +497,7 @@ void processSerialCommand(void)
     break;
 
   case 'C': // test communications. This is used by Tunerstudio to see whether there is an ECU on a given serial port
-    //(void)memcpy(serialPayload, testCommsResponse, sizeof(testCommsResponse));
-    serialPayload[0] = SERIAL_RC_OK;
-    serialPayload[1] = 255;
+    (void)memcpy_P(serialPayload, testCommsResponse, sizeof(testCommsResponse));
     sendSerialPayloadNonBlocking(sizeof(testCommsResponse));
     break;
 
