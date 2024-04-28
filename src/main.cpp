@@ -51,36 +51,36 @@ public:
     {
       auto cfg = _bus_instance.config();
       cfg.panel = &_panel_instance;
-      cfg.pin_d0 = GPIO_NUM_8;   // B0
-      cfg.pin_d1 = GPIO_NUM_3;   // B1
-      cfg.pin_d2 = GPIO_NUM_46;  // B2
-      cfg.pin_d3 = GPIO_NUM_9;   // B3
-      cfg.pin_d4 = GPIO_NUM_1;   // B4
-      cfg.pin_d5 = GPIO_NUM_5;   // G0
-      cfg.pin_d6 = GPIO_NUM_6;   // G1
-      cfg.pin_d7 = GPIO_NUM_7;   // G2
-      cfg.pin_d8 = GPIO_NUM_15;  // G3
-      cfg.pin_d9 = GPIO_NUM_16;  // G4
-      cfg.pin_d10 = GPIO_NUM_4;  // G5
-      cfg.pin_d11 = GPIO_NUM_45; // R0
-      cfg.pin_d12 = GPIO_NUM_48; // R1
-      cfg.pin_d13 = GPIO_NUM_47; // R2
-      cfg.pin_d14 = GPIO_NUM_21; // R3
-      cfg.pin_d15 = GPIO_NUM_14; // R4
-      cfg.pin_henable = GPIO_NUM_40;
-      cfg.pin_vsync = GPIO_NUM_41;
-      cfg.pin_hsync = GPIO_NUM_39;
-      cfg.pin_pclk = GPIO_NUM_0;
-      cfg.freq_write = 15000000;
-      cfg.hsync_polarity = 0;
-      cfg.hsync_front_porch = 8;
-      cfg.hsync_pulse_width = 4;
-      cfg.hsync_back_porch = 43;
-      cfg.vsync_polarity = 0;
-      cfg.vsync_front_porch = 8;
-      cfg.vsync_pulse_width = 4;
-      cfg.vsync_back_porch = 12;
-      cfg.pclk_active_neg = 1;
+      cfg.pin_d0 = pcb.b0;  // B0
+      cfg.pin_d1 = pcb.b1;  // B1
+      cfg.pin_d2 = pcb.b2;  // B2
+      cfg.pin_d3 = pcb.b3;  // B3
+      cfg.pin_d4 = pcb.b4;  // B4
+      cfg.pin_d5 = pcb.g0;  // G0
+      cfg.pin_d6 = pcb.g1;  // G1
+      cfg.pin_d7 = pcb.g2;  // G2
+      cfg.pin_d8 = pcb.g3;  // G3
+      cfg.pin_d9 = pcb.g4;  // G4
+      cfg.pin_d10 = pcb.g5; // G5
+      cfg.pin_d11 = pcb.r0; // R0
+      cfg.pin_d12 = pcb.r1; // R1
+      cfg.pin_d13 = pcb.r2; // R2
+      cfg.pin_d14 = pcb.r3; // R3
+      cfg.pin_d15 = pcb.r4; // R4
+      cfg.pin_henable = pcb.de;
+      cfg.pin_vsync = pcb.vsync;
+      cfg.pin_hsync = pcb.hsync;
+      cfg.pin_pclk = pcb.pclk;
+      cfg.freq_write = pcb.prefer_speed;
+      cfg.hsync_polarity = pcb.hsync_polarity;
+      cfg.hsync_front_porch = pcb.hsync_front_porch;
+      cfg.hsync_pulse_width = pcb.hsync_pulse;
+      cfg.hsync_back_porch = pcb.hsync_back_porch;
+      cfg.vsync_polarity = pcb.vsync_polarity;
+      cfg.vsync_front_porch = pcb.vsync_front_porch;
+      cfg.vsync_pulse_width = pcb.vsync_pulse;
+      cfg.vsync_back_porch = pcb.vsync_back_porch;
+      cfg.pclk_active_neg = pcb.pclk_active_neg;
       cfg.de_idle_high = 0;
       cfg.pclk_idle_high = 0;
       _bus_instance.config(cfg);
@@ -240,7 +240,7 @@ void setup()
     _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 2000, ui_MainScreen_screen_init);
   }
 
-  // SerialCommsInit();
+  SerialCommsInit();
 
 #ifdef TFT_BL
   pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
