@@ -5,6 +5,7 @@
 #include <Arduino.h>
 
 extern Database db;
+extern TaskHandle_t ui_task_handle;
 
 // UI task
 void ui_task(void *pvParameters);

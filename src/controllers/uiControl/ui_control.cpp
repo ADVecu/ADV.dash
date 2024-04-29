@@ -27,6 +27,9 @@ Database db;
 // CAN bus data queue
 QueueSetHandle_t canbus_queue;
 
+// ui task handeler
+TaskHandle_t ui_task_handle;
+
 muTimer welcomeInfoTimer;
 muTimer mainScreenClockTimer;
 muTimer panelDataRate;
@@ -53,7 +56,7 @@ void ui_init_config()
         10000,        /* Stack size in words */
         NULL,         /* Task input parameter */
         0,            /* Priority of the task */
-        NULL,         /* Task handle. */
+        &ui_task_handle,         /* Task handle. */
         APP_CPU_NUM); /* Core where the task should run */
 }
 
@@ -97,17 +100,6 @@ void ui_task(void *pvParameters)
     // TPS Bar
     tpsBar tpsBar;
 
-    // Bar gauges
-    gp_bar gp_Bar_1(bar_number_t::BAR_1);
-
-    gp_bar gp_Bar_2(bar_number_t::BAR_2);
-
-    gp_bar gp_Bar_3(bar_number_t::BAR_3);
-
-    gp_bar gp_Bar_4(bar_number_t::BAR_4);
-
-    gp_bar gp_bar_array[4] = {gp_Bar_1, gp_Bar_2, gp_Bar_3, gp_Bar_4};
-
     // Arc gauges
     gp_arc gp_Arc_1(arc_number_t::ARC_1);
 
@@ -120,6 +112,17 @@ void ui_task(void *pvParameters)
     gp_arc gp_Arc_5(arc_number_t::ARC_5);
 
     gp_arc gp_arc_array[5] = {gp_Arc_1, gp_Arc_2, gp_Arc_3, gp_Arc_4, gp_Arc_5};
+
+    // Bar gauges
+    gp_bar gp_Bar_1(bar_number_t::BAR_1);
+
+    gp_bar gp_Bar_2(bar_number_t::BAR_2);
+
+    gp_bar gp_Bar_3(bar_number_t::BAR_3);
+
+    gp_bar gp_Bar_4(bar_number_t::BAR_4);
+
+    gp_bar gp_bar_array[4] = {gp_Bar_1, gp_Bar_2, gp_Bar_3, gp_Bar_4};
 
     // Panel gauges
     gp_panel gp_Panel_1(db.getPanelGaugeAlertValue(panel_number_t::PANEL_1),
@@ -364,5 +367,18 @@ void ui_task(void *pvParameters)
                 _ui_label_set_property(ui_ClockLabel, _UI_LABEL_PROPERTY_TEXT, clockInfo.c_str());
             }
         }
+        uint32_t notificationValue = 0;
+
+        // check task notification
+        if (xTaskNotifyWait(0, 0, &notificationValue, 0) == pdTRUE)
+        {
+            Serial.print("Task notification received ");
+            Serial.println(notificationValue);
+        } 
     }
+}
+
+void refresh_arc_gauges(arc_number_t arc_number)
+{
+    
 }
