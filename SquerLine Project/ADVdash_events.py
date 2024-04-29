@@ -18,3 +18,11 @@ def ResetAction(event_struct):
 def DefaultSettingsAction(event_struct):
     return
 
+
+def Arc4Config(event_struct):
+    return
+
+
+def Arc3Config(event_struct):
+    return
+
