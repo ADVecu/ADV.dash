@@ -244,7 +244,7 @@ void setup()
 
 #ifdef TFT_BL
   pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
-  analogWrite(pcb.tft_bl, 0);
+  analogWrite(pcb.tft_bl, 255);
 #endif
 }
 
