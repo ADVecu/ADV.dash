@@ -26,7 +26,6 @@ lv_obj_t * ui_proIMG;
 
 // SCREEN: ui_MainScreen
 void ui_MainScreen_screen_init(void);
-void ui_event_MainScreen(lv_event_t * e);
 lv_obj_t * ui_MainScreen;
 lv_obj_t * ui_RpmsBG;
 lv_obj_t * ui_RedLineBar;
@@ -71,11 +70,13 @@ lv_obj_t * ui_Arc3;
 lv_obj_t * ui_ArcValue3;
 lv_obj_t * ui_ArcUnit3;
 lv_obj_t * ui_ArcName3;
+void ui_event_ArcBG3(lv_event_t * e);
 lv_obj_t * ui_ArcBG3;
 lv_obj_t * ui_Arc4;
 lv_obj_t * ui_ArcValue4;
 lv_obj_t * ui_ArcUnit4;
 lv_obj_t * ui_ArcName4;
+void ui_event_ArcBG4(lv_event_t * e);
 lv_obj_t * ui_ArcBG4;
 lv_obj_t * ui_Panel1;
 lv_obj_t * ui_PanelValue1;
@@ -117,6 +118,27 @@ lv_obj_t * ui_ClockLabel;
 void ui_event_Button3(lv_event_t * e);
 lv_obj_t * ui_Button3;
 lv_obj_t * ui_ButtonLabel3;
+lv_obj_t * ui_ConfigPanel;
+lv_obj_t * ui_ConfigName;
+void ui_event_ConfigExit(lv_event_t * e);
+lv_obj_t * ui_ConfigExit;
+lv_obj_t * ui_Label7;
+lv_obj_t * ui_GaugeType;
+lv_obj_t * ui_ConfigText;
+void ui_event_HWASlider(lv_event_t * e);
+lv_obj_t * ui_HWASlider;
+void ui_event_HDASlider(lv_event_t * e);
+lv_obj_t * ui_HDASlider;
+void ui_event_LWASlider(lv_event_t * e);
+lv_obj_t * ui_LWASlider;
+void ui_event_LDASlider(lv_event_t * e);
+lv_obj_t * ui_LDASlider;
+lv_obj_t * ui_HWALabel;
+lv_obj_t * ui_HDALabel;
+lv_obj_t * ui_LWALabel;
+lv_obj_t * ui_LDALabel;
+lv_obj_t * ui_SaveBTN;
+lv_obj_t * ui_Label9;
 
 
 // SCREEN: ui_GraphScreen
@@ -124,61 +146,6 @@ void ui_GraphScreen_screen_init(void);
 void ui_event_GraphScreen(lv_event_t * e);
 lv_obj_t * ui_GraphScreen;
 lv_obj_t * ui_Chart2;
-
-
-// SCREEN: ui_SettingsScreen
-void ui_SettingsScreen_screen_init(void);
-lv_obj_t * ui_SettingsScreen;
-lv_obj_t * ui_Roller;
-lv_obj_t * ui_SetingsPanel;
-lv_obj_t * ui_SelectPanel;
-lv_obj_t * ui_GaugeNumberD;
-lv_obj_t * ui_GaugeTypeD;
-lv_obj_t * ui_HighAlertPanel;
-lv_obj_t * ui_HWAPanel;
-lv_obj_t * ui_HWATittle;
-lv_obj_t * ui_HWALabel;
-void ui_event_HWASlider(lv_event_t * e);
-lv_obj_t * ui_HWASlider;
-lv_obj_t * ui_HDAPanel;
-lv_obj_t * ui_HDATittle;
-lv_obj_t * ui_HDALabel;
-void ui_event_HDASlider(lv_event_t * e);
-lv_obj_t * ui_HDASlider;
-lv_obj_t * ui_LowAlertPanel;
-lv_obj_t * ui_LWAPanel;
-lv_obj_t * ui_LWATittle;
-lv_obj_t * ui_LWALabel;
-void ui_event_LWASlider(lv_event_t * e);
-lv_obj_t * ui_LWASlider;
-lv_obj_t * ui_LDAPanel;
-lv_obj_t * ui_LDATittle;
-lv_obj_t * ui_LDALabel;
-void ui_event_LDASlider(lv_event_t * e);
-lv_obj_t * ui_LDASlider;
-lv_obj_t * ui_SelectUnit;
-lv_obj_t * ui_Panel8;
-lv_obj_t * ui_TempUnitText;
-lv_obj_t * ui_TempUnitD;
-lv_obj_t * ui_Panel9;
-lv_obj_t * ui_PressUnitText;
-lv_obj_t * ui_PressUnitD;
-lv_obj_t * ui_Panel10;
-lv_obj_t * ui_SpeedUnitText;
-lv_obj_t * ui_SpeedUnitD;
-lv_obj_t * ui_Panel7;
-void ui_event_SaveBTN(lv_event_t * e);
-lv_obj_t * ui_SaveBTN;
-lv_obj_t * ui_Label3;
-void ui_event_DefaultBTN(lv_event_t * e);
-lv_obj_t * ui_DefaultBTN;
-lv_obj_t * ui_Label2;
-void ui_event_ResetBTN(lv_event_t * e);
-lv_obj_t * ui_ResetBTN;
-lv_obj_t * ui_Label1;
-void ui_event_ExitBtn(lv_event_t * e);
-lv_obj_t * ui_ExitBtn;
-lv_obj_t * ui_Label4;
 
 
 // SCREEN: ui_FinalScreen
@@ -300,18 +267,20 @@ void finalTextAnim_Animation(lv_obj_t * TargetObject, int delay)
 }
 
 ///////////////////// FUNCTIONS ////////////////////
-void ui_event_MainScreen(lv_event_t * e)
+void ui_event_ArcBG3(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_LEFT) {
-        lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_FinalScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_FinalScreen_screen_init);
-        _ui_screen_delete(&ui_MainScreen);
+    if(event_code == LV_EVENT_CLICKED) {
+        Arc3Config(e);
     }
+}
+void ui_event_ArcBG4(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_LONG_PRESSED) {
-        _ui_screen_change(&ui_SettingsScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_SettingsScreen_screen_init);
-        _ui_screen_delete(&ui_MainScreen);
+        Arc4Config(e);
     }
 }
 void ui_event_Button1(lv_event_t * e)
@@ -338,14 +307,12 @@ void ui_event_Button3(lv_event_t * e)
         _ui_flag_modify(ui_MainAletPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_TOGGLE);
     }
 }
-void ui_event_GraphScreen(lv_event_t * e)
+void ui_event_ConfigExit(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
-        lv_indev_wait_release(lv_indev_get_act());
-        _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
-        _ui_screen_delete(&ui_GraphScreen);
+    if(event_code == LV_EVENT_CLICKED) {
+        _ui_flag_modify(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
     }
 }
 void ui_event_HWASlider(lv_event_t * e)
@@ -380,37 +347,14 @@ void ui_event_LDASlider(lv_event_t * e)
         _ui_slider_set_text_value(ui_LDALabel, target, "", "");
     }
 }
-void ui_event_SaveBTN(lv_event_t * e)
+void ui_event_GraphScreen(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
-        saveSettings(e);
-    }
-}
-void ui_event_DefaultBTN(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_LONG_PRESSED) {
-        DefaultSettingsAction(e);
-    }
-}
-void ui_event_ResetBTN(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_LONG_PRESSED) {
-        ResetAction(e);
-    }
-}
-void ui_event_ExitBtn(lv_event_t * e)
-{
-    lv_event_code_t event_code = lv_event_get_code(e);
-    lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_RELEASED) {
+    if(event_code == LV_EVENT_GESTURE &&  lv_indev_get_gesture_dir(lv_indev_get_act()) == LV_DIR_RIGHT) {
+        lv_indev_wait_release(lv_indev_get_act());
         _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_MainScreen_screen_init);
-        _ui_screen_delete(&ui_SettingsScreen);
+        _ui_screen_delete(&ui_GraphScreen);
     }
 }
 void ui_event_FinalScreen(lv_event_t * e)
@@ -435,7 +379,6 @@ void ui_init(void)
     ui_WelcomeScreen_screen_init();
     ui_MainScreen_screen_init();
     ui_GraphScreen_screen_init();
-    ui_SettingsScreen_screen_init();
     ui_FinalScreen_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
     lv_disp_load_scr(ui_WelcomeScreen);

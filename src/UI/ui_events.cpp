@@ -7,71 +7,7 @@
 #include "controllers/uiControl/ui_enums.h"
 #include "controllers/uiControl/ui_control.h"
 #include "controllers/uiControl/ui_control.h"
-
-void saveSettings(lv_event_t *e)
-{
-	switch (lv_roller_get_selected(ui_Roller))
-	{
-	case 0: // Rpms Settings
-	{
-		uint16_t rpmsWARNING = lv_slider_get_value(ui_HWASlider);
-		uint16_t rpmsALERT = lv_slider_get_value(ui_HDASlider);
-
-		db.saveRpmsWarning(rpmsWARNING);
-		db.saveRpmsRedline(rpmsALERT);
-	}
-	break;
-
-	case 1: // Bar Settings
-	{
-		uint16_t barsHighWarning = lv_slider_get_value(ui_HWASlider);
-		uint16_t barsHighAlert = lv_slider_get_value(ui_HDASlider);
-		uint16_t barsLowWarning = lv_slider_get_value(ui_LWASlider);
-		uint16_t barsLowAlert = lv_slider_get_value(ui_LDASlider);
-
-		uint8_t barNumberRaw = lv_dropdown_get_selected(ui_GaugeNumberD) + 1;
-		bar_number_t barNumber = (bar_number_t)(barNumberRaw);
-		gauge_type barType = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
-
-		db.saveBarGaugeHighAlertValue(barNumber, barsHighAlert);
-		db.saveBarGaugeHighWarningValue(barNumber, barsHighWarning);
-		db.saveBarGaugeLowAlertValue(barNumber, barsLowAlert);
-		db.saveBarGaugeLowWarningValue(barNumber, barsLowWarning);
-		db.saveBarGaugeType(barNumber, barType);
-	}
-	break;
-
-	case 2: // Arcs Settings
-	{
-		uint16_t arcsHighWarning = lv_slider_get_value(ui_HWASlider);
-		uint16_t arcsHighAlert = lv_slider_get_value(ui_HDASlider);
-		uint16_t arcsLowWarning = lv_slider_get_value(ui_LWASlider);
-		uint16_t arcsLowAlert = lv_slider_get_value(ui_LDASlider);
-
-		uint8_t arcNumberRaw = lv_dropdown_get_selected(ui_GaugeNumberD) + 1;
-		arc_number_t arcNumber = (arc_number_t)(arcNumberRaw);
-		gauge_type arcType = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
-
-		db.saveArcGaugeHighAlertValue(arcNumber, arcsHighAlert);
-		db.saveArcGaugeHighWarningValue(arcNumber, arcsHighWarning);
-		db.saveArcGaugeLowAlertValue(arcNumber, arcsLowAlert);
-		db.saveArcGaugeLowWarningValue(arcNumber, arcsLowWarning);
-		db.saveArcGaugeType(arcNumber, arcType);
-	}
-	break;
-
-	case 3: // Panel Settings
-	{
-
-		uint8_t panelNumberRaw = lv_dropdown_get_selected(ui_GaugeNumberD) + 1;
-		panel_number_t panelNumber = (panel_number_t)(panelNumberRaw);
-		gauge_type panelType = (gauge_type)lv_dropdown_get_selected(ui_GaugeTypeD);
-
-		db.savePanelGaugeType(panelNumber, panelType);
-	}
-	break;
-	}
-}
+#include "controllers/uiControl/config_manager.h"
 
 void ResetAction(lv_event_t *e)
 {
@@ -83,4 +19,14 @@ void DefaultSettingsAction(lv_event_t *e)
 	db.resetToDefault();
 	Serial.println("Reset to default");
 	ESP.restart();
+}
+
+void Arc3Config(lv_event_t *e)
+{
+	xTaskNotify(ui_task_handle, 3, eSetValueWithOverwrite);
+}
+
+void Arc4Config(lv_event_t *e)
+{
+	xTaskNotify(ui_task_handle, 4, eSetValueWithOverwrite);
 }

@@ -1,7 +1,6 @@
 SET(SOURCES screens/ui_WelcomeScreen.c
     screens/ui_MainScreen.c
     screens/ui_GraphScreen.c
-    screens/ui_SettingsScreen.c
     screens/ui_FinalScreen.c
     ui.c
     components/ui_comp_hook.c
