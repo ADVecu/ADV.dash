@@ -37,6 +37,7 @@ class gp_arc
     lv_obj_t *_arcBgImg;
     lv_obj_t *_arcValue;
     gauge_type _gaugeType;
+    arc_number _arcNumber;
 
 public:
     /**
@@ -85,6 +86,8 @@ public:
      *
      */
     gauge_type getGaugeType();
+
+    void setConfiguration(void);
 };
 
 #endif // _GP_ARC_H

@@ -6,15 +6,15 @@
 #include "../ui_control.h"
 
 muTimer batteryTimerARC;
+gauge_name_str_double_row gauge_name_strings;
+gauge_unit_str gauge_unit_strings;
 
 gp_arc::gp_arc(arc_number_t arc)
 {
 
     _previousValue = 0;
-    _gaugeType = db.getArcGaugeType(arc);
-
-    gauge_name_str_double_row gauge_name_strings;
-    gauge_unit_str gauge_unit_strings;
+    _arcNumber = arc;
+    //_gaugeType = db.getArcGaugeType(_arcNumber);
 
     // Assign the arc widget, arc name and arc unit
     switch (arc)
@@ -57,6 +57,23 @@ gp_arc::gp_arc(arc_number_t arc)
     }
 
     // Set the name, unit and range of the arc
+    setConfiguration();
+    
+    // Set the arc name
+    _ui_label_set_property(_arcName, _UI_LABEL_PROPERTY_TEXT, _name.c_str());
+
+    // Set the arc unit
+    _ui_label_set_property(_arcUnit, _UI_LABEL_PROPERTY_TEXT, _unit.c_str());
+
+    // Set the arc background image
+    lv_img_set_src(_arcBgImg, &_bgImg);
+}
+
+void gp_arc::setConfiguration()
+{
+
+    _gaugeType = db.getArcGaugeType(_arcNumber);
+
     switch (_gaugeType)
     {
     case gauge_type::COOLANT_TEMP:
@@ -190,14 +207,6 @@ gp_arc::gp_arc(arc_number_t arc)
         break;
     }
 
-    // Set the arc name
-    _ui_label_set_property(_arcName, _UI_LABEL_PROPERTY_TEXT, _name.c_str());
-
-    // Set the arc unit
-    _ui_label_set_property(_arcUnit, _UI_LABEL_PROPERTY_TEXT, _unit.c_str());
-
-    // Set the arc background image
-    lv_img_set_src(_arcBgImg, &_bgImg);
 }
 
 void gp_arc::setValue(int16_t value)
