@@ -28,8 +28,8 @@
  *******************************************************************************/
 
 // #define ADVdash7inch
-#define ADVdash7inchV2SD
-// #define ADVdash5inch
+// #define ADVdash7inchV2SD
+#define ADVdash5inch
 
 /*******************************************************************************
  * PCB Definitions
