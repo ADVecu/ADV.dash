@@ -26,3 +26,19 @@ def Arc4Config(event_struct):
 def Arc3Config(event_struct):
     return
 
+
+def Arc2Config(event_struct):
+    return
+
+
+def Arc1Config(event_struct):
+    return
+
+
+def Arc5Config(event_struct):
+    return
+
+
+def GaugeTChange(event_struct):
+    return
+
