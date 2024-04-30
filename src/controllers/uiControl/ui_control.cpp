@@ -20,6 +20,8 @@
 #include "widgets/gp_arc.h"
 #include "widgets/gp_panel.h"
 #include "widgets/tps_bar.h"
+#include "widgets/speed_panel.h"
+#include "widgets/gear_panel.h"
 
 // Database instance
 Database db;
@@ -51,13 +53,13 @@ void ui_init_config()
 {
     // create the task to handle the UI values refresh
     xTaskCreatePinnedToCore(
-        ui_task,      /* Function to implement the task */
-        "ui_task",    /* Name of the task */
-        10000,        /* Stack size in words */
-        NULL,         /* Task input parameter */
-        0,            /* Priority of the task */
-        &ui_task_handle,         /* Task handle. */
-        APP_CPU_NUM); /* Core where the task should run */
+        ui_task,         /* Function to implement the task */
+        "ui_task",       /* Name of the task */
+        10000,           /* Stack size in words */
+        NULL,            /* Task input parameter */
+        0,               /* Priority of the task */
+        &ui_task_handle, /* Task handle. */
+        APP_CPU_NUM);    /* Core where the task should run */
 }
 
 /**
@@ -99,6 +101,12 @@ void ui_task(void *pvParameters)
 
     // TPS Bar
     tpsBar tpsBar;
+
+    // Speed Panel
+    speedPanel speedPanel;
+
+    // Gear Panel
+    gearPanel gearPanel;
 
     // Arc gauges
     gp_arc gp_Arc_1(arc_number_t::ARC_1);
@@ -177,6 +185,12 @@ void ui_task(void *pvParameters)
 
                 // Update the tps bar
                 tpsBar.setValue(rx_msg.tps);
+
+                // Update the speed panel
+                speedPanel.setValue(rx_msg.speed);
+
+                // Update Current gear
+                gearPanel.setValue(rx_msg.current_gear);
 
                 // Send data to the alert manager
                 alert_manager.alert_manager_data(rx_msg.rpms,
@@ -374,11 +388,10 @@ void ui_task(void *pvParameters)
         {
             Serial.print("Task notification received ");
             Serial.println(notificationValue);
-        } 
+        }
     }
 }
 
 void refresh_arc_gauges(arc_number_t arc_number)
 {
-    
 }
