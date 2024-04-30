@@ -108,4 +108,11 @@ enum speed_unit
     MPH
 };
 
+enum widget_type
+{
+    BARW,
+    ARCW,
+    PANELW
+};
+
 #endif // _UI_ENUMS_H

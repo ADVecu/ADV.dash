@@ -48,7 +48,6 @@ struct panel_name_str
     const String inj_PWM = "PWM";
     const String ign_duty = "DUTY";
     const String mcu_temp = "MCUT";
-    
 };
 
 struct gauge_unit_str
@@ -86,5 +85,11 @@ const String bar_options = "Coolant Temp\nOil Temp\nAir Temp\nOil Pressure\nFuel
 const String arc_options = "Coolant Temp\nOil Temp\nAir Temp\nOil Pressure\nFuel Pressure\nManifold Pressure\nBattery Voltage\nFuel Level\nInj Duty\nAFR";
 const String panel_options = "Coolant Temp\nOil Temp\nAir Temp\nOil Pressure\nFuel Pressure\nManifold Pressure\nBattery Voltage\nFuel Level\nInj Duty\nAFR\nWarning Count\nIng Timing\nInj PWM\nFuel Trim\nFuel Flow\nFuel Used";
 const String panel_number_options = "Panel 1\nPanel 2\nPanel 3\nPanel 4\nPanel 5\nPanel 6";
+
+const String arc_config_name = "Arc ";
+const String full_settings = "GAUGE\n\nH-ALERT\n\nH-DANGER\n\nL-ALERT\n\nL-DANGER\n\n";
+const String noLow_settings = "GAUGE\n\nH-ALERT\n\nH-DANGER\n\n";
+const String noHigh_settings = "GAUGE\n\nL-ALERT\n\nL-DANGER\n\n";
+const String afr_settings = "GAUGE\n\n";
 
 #endif
