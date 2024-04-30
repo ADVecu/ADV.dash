@@ -41,6 +41,7 @@ lv_obj_t * ui_Arc5;
 lv_obj_t * ui_ArcValue5;
 lv_obj_t * ui_ArcUnit5;
 lv_obj_t * ui_ArcName5;
+void ui_event_ArcBG5(lv_event_t * e);
 lv_obj_t * ui_ArcBG5;
 lv_obj_t * ui_MainAletPanel;
 lv_obj_t * ui_MainAlertText;
@@ -60,11 +61,13 @@ lv_obj_t * ui_Arc2;
 lv_obj_t * ui_ArcValue2;
 lv_obj_t * ui_ArcUnit2;
 lv_obj_t * ui_ArcName2;
+void ui_event_ArcBG2(lv_event_t * e);
 lv_obj_t * ui_ArcBG2;
 lv_obj_t * ui_Arc1;
 lv_obj_t * ui_ArcValue1;
 lv_obj_t * ui_ArcUnit1;
 lv_obj_t * ui_ArcName1;
+void ui_event_ArcBG1(lv_event_t * e);
 lv_obj_t * ui_ArcBG1;
 lv_obj_t * ui_Arc3;
 lv_obj_t * ui_ArcValue3;
@@ -123,8 +126,8 @@ lv_obj_t * ui_ConfigName;
 void ui_event_ConfigExit(lv_event_t * e);
 lv_obj_t * ui_ConfigExit;
 lv_obj_t * ui_Label7;
+void ui_event_GaugeType(lv_event_t * e);
 lv_obj_t * ui_GaugeType;
-lv_obj_t * ui_ConfigText;
 void ui_event_HWASlider(lv_event_t * e);
 lv_obj_t * ui_HWASlider;
 void ui_event_HDASlider(lv_event_t * e);
@@ -137,6 +140,7 @@ lv_obj_t * ui_HWALabel;
 lv_obj_t * ui_HDALabel;
 lv_obj_t * ui_LWALabel;
 lv_obj_t * ui_LDALabel;
+lv_obj_t * ui_ConfigText;
 lv_obj_t * ui_SaveBTN;
 lv_obj_t * ui_Label9;
 
@@ -267,12 +271,44 @@ void finalTextAnim_Animation(lv_obj_t * TargetObject, int delay)
 }
 
 ///////////////////// FUNCTIONS ////////////////////
+void ui_event_ArcBG5(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        Arc5Config(e);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  -236);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  72);
+    }
+}
+void ui_event_ArcBG2(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        Arc2Config(e);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  87);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);
+    }
+}
+void ui_event_ArcBG1(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_CLICKED) {
+        Arc1Config(e);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  -63);
+    }
+}
 void ui_event_ArcBG3(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
         Arc3Config(e);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  -87);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);
     }
 }
 void ui_event_ArcBG4(lv_event_t * e)
@@ -281,6 +317,8 @@ void ui_event_ArcBG4(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_LONG_PRESSED) {
         Arc4Config(e);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  63);
+        _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);
     }
 }
 void ui_event_Button1(lv_event_t * e)
@@ -313,6 +351,14 @@ void ui_event_ConfigExit(lv_event_t * e)
     lv_obj_t * target = lv_event_get_target(e);
     if(event_code == LV_EVENT_CLICKED) {
         _ui_flag_modify(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+    }
+}
+void ui_event_GaugeType(lv_event_t * e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    lv_obj_t * target = lv_event_get_target(e);
+    if(event_code == LV_EVENT_VALUE_CHANGED) {
+        GaugeTChange(e);
     }
 }
 void ui_event_HWASlider(lv_event_t * e)

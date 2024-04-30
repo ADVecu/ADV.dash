@@ -10,8 +10,12 @@
 extern "C" {
 #endif
 
+void Arc5Config(lv_event_t * e);
+void Arc2Config(lv_event_t * e);
+void Arc1Config(lv_event_t * e);
 void Arc3Config(lv_event_t * e);
 void Arc4Config(lv_event_t * e);
+void GaugeTChange(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

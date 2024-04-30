@@ -190,7 +190,7 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_x(ui_ArcBG5, 0);
     lv_obj_set_y(ui_ArcBG5, 163);
     lv_obj_set_align(ui_ArcBG5, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_ArcBG5, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_add_flag(ui_ArcBG5, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_ArcBG5, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_img_set_zoom(ui_ArcBG5, 200);
 
@@ -403,7 +403,7 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_x(ui_ArcBG2, -150);
     lv_obj_set_y(ui_ArcBG2, -26);
     lv_obj_set_align(ui_ArcBG2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_ArcBG2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_add_flag(ui_ArcBG2, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_ArcBG2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_img_set_zoom(ui_ArcBG2, 200);
 
@@ -465,7 +465,7 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_x(ui_ArcBG1, -300);
     lv_obj_set_y(ui_ArcBG1, -26);
     lv_obj_set_align(ui_ArcBG1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_ArcBG1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_add_flag(ui_ArcBG1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_ArcBG1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_img_set_zoom(ui_ArcBG1, 200);
 
@@ -1023,8 +1023,8 @@ void ui_MainScreen_screen_init(void)
     ui_ConfigPanel = lv_obj_create(ui_MainScreen);
     lv_obj_set_width(ui_ConfigPanel, 315);
     lv_obj_set_height(ui_ConfigPanel, 330);
-    lv_obj_set_x(ui_ConfigPanel, 63);
-    lv_obj_set_y(ui_ConfigPanel, -5);
+    lv_obj_set_x(ui_ConfigPanel, -236);
+    lv_obj_set_y(ui_ConfigPanel, 72);
     lv_obj_set_align(ui_ConfigPanel, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_obj_clear_flag(ui_ConfigPanel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
@@ -1090,9 +1090,9 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_style_pad_bottom(ui_Label7, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_GaugeType = lv_dropdown_create(ui_ConfigPanel);
-    lv_obj_set_width(ui_GaugeType, 169);
+    lv_obj_set_width(ui_GaugeType, 185);
     lv_obj_set_height(ui_GaugeType, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GaugeType, 60);
+    lv_obj_set_x(ui_GaugeType, 49);
     lv_obj_set_y(ui_GaugeType, -94);
     lv_obj_set_align(ui_GaugeType, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_GaugeType, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
@@ -1119,25 +1119,6 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_style_bg_color(lv_dropdown_get_list(ui_GaugeType), lv_color_hex(0xE3D302),
                               LV_PART_SELECTED | LV_STATE_CHECKED);
     lv_obj_set_style_bg_opa(lv_dropdown_get_list(ui_GaugeType), 255,  LV_PART_SELECTED | LV_STATE_CHECKED);
-
-    ui_ConfigText = lv_textarea_create(ui_ConfigPanel);
-    lv_obj_set_width(ui_ConfigText, 128);
-    lv_obj_set_height(ui_ConfigText, LV_SIZE_CONTENT);    /// 245
-    lv_obj_set_x(ui_ConfigText, -68);
-    lv_obj_set_y(ui_ConfigText, -3);
-    lv_obj_set_align(ui_ConfigText, LV_ALIGN_CENTER);
-    lv_textarea_set_text(ui_ConfigText, "-----\n\n-----\n\n----\n\n-----\n\n-----");
-    lv_textarea_set_one_line(ui_ConfigText, true);
-    lv_obj_clear_flag(ui_ConfigText, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_text_letter_space(ui_ConfigText, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_line_space(ui_ConfigText, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_ConfigText, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_ConfigText, &ui_font_ArameBold20, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_ConfigText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_ConfigText, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_ConfigText, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-
 
     ui_HWASlider = lv_slider_create(ui_ConfigPanel);
     lv_slider_set_range(ui_HWASlider, 1000, 10000);
@@ -1247,6 +1228,18 @@ void ui_MainScreen_screen_init(void)
     lv_label_set_text(ui_LDALabel, "0");
     lv_obj_set_style_text_font(ui_LDALabel, &ui_font_ArameBold20, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_ConfigText = lv_label_create(ui_ConfigPanel);
+    lv_obj_set_width(ui_ConfigText, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_ConfigText, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_ConfigText, 16);
+    lv_obj_set_y(ui_ConfigText, 41);
+    lv_label_set_text(ui_ConfigText, "------\n\n------\n\n------\n\n------\n\n------");
+    lv_obj_clear_flag(ui_ConfigText, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_scrollbar_mode(ui_ConfigText, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_style_text_letter_space(ui_ConfigText, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_line_space(ui_ConfigText, 2, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_ConfigText, &ui_font_ArameBold20, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_SaveBTN = lv_btn_create(ui_ConfigPanel);
     lv_obj_set_height(ui_SaveBTN, 29);
     lv_obj_set_width(ui_SaveBTN, LV_SIZE_CONTENT);   /// 127
@@ -1267,12 +1260,16 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_align(ui_Label9, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Label9, "sAVE sETTINGS");
 
+    lv_obj_add_event_cb(ui_ArcBG5, ui_event_ArcBG5, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_ArcBG2, ui_event_ArcBG2, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_ArcBG1, ui_event_ArcBG1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ArcBG3, ui_event_ArcBG3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ArcBG4, ui_event_ArcBG4, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button1, ui_event_Button1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button2, ui_event_Button2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ConfigExit, ui_event_ConfigExit, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_GaugeType, ui_event_GaugeType, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_HWASlider, ui_event_HWASlider, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_HDASlider, ui_event_HDASlider, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_LWASlider, ui_event_LWASlider, LV_EVENT_ALL, NULL);

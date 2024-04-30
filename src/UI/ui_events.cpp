@@ -23,10 +23,40 @@ void DefaultSettingsAction(lv_event_t *e)
 
 void Arc3Config(lv_event_t *e)
 {
+	_ui_flag_modify(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+	textConfigArc(arc_number_t::ARC_3, true);
 	xTaskNotify(ui_task_handle, 3, eSetValueWithOverwrite);
 }
 
 void Arc4Config(lv_event_t *e)
 {
+	_ui_flag_modify(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+	textConfigArc(arc_number_t::ARC_4, true);
 	xTaskNotify(ui_task_handle, 4, eSetValueWithOverwrite);
+}
+
+void Arc5Config(lv_event_t *e)
+{
+	_ui_flag_modify(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+	textConfigArc(arc_number_t::ARC_5, true);
+	xTaskNotify(ui_task_handle, 5, eSetValueWithOverwrite);
+}
+
+void Arc2Config(lv_event_t *e)
+{
+	_ui_flag_modify(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+	textConfigArc(arc_number_t::ARC_2, true);
+	xTaskNotify(ui_task_handle, 2, eSetValueWithOverwrite);
+}
+
+void Arc1Config(lv_event_t *e)
+{
+	_ui_flag_modify(ui_ConfigPanel, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+	textConfigArc(arc_number_t::ARC_1, true);
+	xTaskNotify(ui_task_handle, 1, eSetValueWithOverwrite);
+}
+
+void GaugeTChange(lv_event_t *e)
+{
+	dropDownChange();
 }
