@@ -145,8 +145,11 @@ extern lv_obj_t * ui_HDALabel;
 extern lv_obj_t * ui_LWALabel;
 extern lv_obj_t * ui_LDALabel;
 extern lv_obj_t * ui_ConfigText;
+extern lv_obj_t * ui_AlertCheck;
 extern lv_obj_t * ui_SaveBTN;
 extern lv_obj_t * ui_Label9;
+extern lv_obj_t * ui_Container1;
+extern lv_obj_t * ui_Image1;
 // SCREEN: ui_GraphScreen
 void ui_GraphScreen_screen_init(void);
 void ui_event_GraphScreen(lv_event_t * e);
@@ -175,6 +178,7 @@ LV_IMG_DECLARE(ui_img_arcscalerb_png);    // assets/arcScaleRB.png
 LV_IMG_DECLARE(ui_img_arcscale_png);    // assets/arcScale.png
 LV_IMG_DECLARE(ui_img_barscalerb_png);    // assets/barScaleRB.png
 LV_IMG_DECLARE(ui_img_barscalered_png);    // assets/barScaleRed.png
+LV_IMG_DECLARE(ui_img_oilpress_png);    // assets/oilPress.png
 LV_IMG_DECLARE(ui_img_advecu200_png);    // assets/Advecu200.png
 LV_IMG_DECLARE(ui_img_rpmscalev2_png);    // assets/RPMscalev2.png
 LV_IMG_DECLARE(ui_img_usersett50_png);    // assets/userSett50.png

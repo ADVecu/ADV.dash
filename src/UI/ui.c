@@ -141,8 +141,11 @@ lv_obj_t * ui_HDALabel;
 lv_obj_t * ui_LWALabel;
 lv_obj_t * ui_LDALabel;
 lv_obj_t * ui_ConfigText;
+lv_obj_t * ui_AlertCheck;
 lv_obj_t * ui_SaveBTN;
 lv_obj_t * ui_Label9;
+lv_obj_t * ui_Container1;
+lv_obj_t * ui_Image1;
 
 
 // SCREEN: ui_GraphScreen
@@ -275,7 +278,7 @@ void ui_event_ArcBG5(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
+    if(event_code == LV_EVENT_LONG_PRESSED_REPEAT) {
         Arc5Config(e);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  -236);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  72);
@@ -285,7 +288,7 @@ void ui_event_ArcBG2(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
+    if(event_code == LV_EVENT_LONG_PRESSED_REPEAT) {
         Arc2Config(e);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  87);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);
@@ -295,7 +298,7 @@ void ui_event_ArcBG1(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
+    if(event_code == LV_EVENT_LONG_PRESSED_REPEAT) {
         Arc1Config(e);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  -63);
@@ -305,7 +308,7 @@ void ui_event_ArcBG3(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_CLICKED) {
+    if(event_code == LV_EVENT_LONG_PRESSED_REPEAT) {
         Arc3Config(e);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  -87);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);
@@ -315,7 +318,7 @@ void ui_event_ArcBG4(lv_event_t * e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
     lv_obj_t * target = lv_event_get_target(e);
-    if(event_code == LV_EVENT_LONG_PRESSED) {
+    if(event_code == LV_EVENT_LONG_PRESSED_REPEAT) {
         Arc4Config(e);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_X,  63);
         _ui_basic_set_property(ui_ConfigPanel, _UI_BASIC_PROPERTY_POSITION_Y,  -5);

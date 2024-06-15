@@ -18,6 +18,7 @@ SET(SOURCES screens/ui_WelcomeScreen.c
     images/ui_img_arcscale_png.c
     images/ui_img_barscalerb_png.c
     images/ui_img_barscalered_png.c
+    images/ui_img_oilpress_png.c
     images/ui_img_advecu200_png.c
     images/ui_img_rpmscalev2_png.c
     images/ui_img_usersett50_png.c
