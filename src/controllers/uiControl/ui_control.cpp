@@ -202,6 +202,7 @@ void ui_task(void *pvParameters)
                                                  rx_msg.fuel_level,
                                                  rx_msg.aux1_temp);
 
+                
                 // iterate through the arc gauges and update the values
                 for (j = 0; j < 5; j++)
                 {

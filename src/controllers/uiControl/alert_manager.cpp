@@ -55,6 +55,8 @@ void Alert_manager::alert_manager_data(uint16_t rpms,
         _oilTempAlert = (oil_temp - canbus_encode.temps) > _oilTempHighAlert ? true : false;
         _mapAlert = (map * canbus_encode.pressures) > _mapHighAlert ? true : false;
 
+        //Check
+
         // add all alerts to a array
         bool alerts[ALERTS_SIZE] = {_oilPressureAlert, _coolantTempAlert, _batteryVoltageAlert, _fuelPressureAlert, _fuelLevelAlert, _oilTempAlert, _mapAlert};
 
