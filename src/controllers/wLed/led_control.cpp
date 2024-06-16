@@ -105,7 +105,7 @@ void ledControlTask(void *pvParameters)
 
     while (1)
     {
-        if (xQueueReceive(canbus_queue, &canbus_data, portMAX_DELAY) == pdTRUE && initAnimationComplete)
+        if (xQueuePeek(canbus_queue, &canbus_data, portMAX_DELAY) == pdTRUE && initAnimationComplete)
         {
             ledsOn = map(canbus_data.rpms, 3000, 6000, LEDS_RPMS_START, LEDS_RPMS_END);
 
