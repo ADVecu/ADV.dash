@@ -173,7 +173,7 @@ void ui_task(void *pvParameters)
     {
 
         // Read the CAN bus queue
-        if (xQueueReceive(canbus_queue, &rx_msg, 1000) == pdTRUE && lv_scr_act() == ui_MainScreen)
+        if (xQueueReceive(canbus_queue, &rx_msg, pdMS_TO_TICKS(1000)) == pdTRUE && lv_scr_act() == ui_MainScreen)
         {
             // Set the flag to true
             canReady = true;
@@ -202,8 +202,7 @@ void ui_task(void *pvParameters)
                                                  rx_msg.fuel_level,
                                                  rx_msg.aux1_temp);
 
-                
-                // iterate through the arc gauges and update the values
+                                // iterate through the arc gauges and update the values
                 for (j = 0; j < 5; j++)
                 {
                     switch (gp_arc_array[j].getGaugeType())
