@@ -8,6 +8,8 @@
 canbus_encode_msg canbus_encode;
 muTimer canbusDataRate;
 
+#define CANBUS_DEBUG 0 // Set to 1 to print CAN messages and debug info
+
 void canbus_init()
 {
     // CAN BUS Init
@@ -69,6 +71,8 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_base6_t rus_efi_can_verbose_base6;
     rus_efi_can_verbose_base7_t rus_efi_can_verbose_base7;
     rus_efi_can_verbose_base8_t rus_efi_can_verbose_base8;
+    rus_efi_can_verbose_pro0_t rus_efi_can_verbose_pro0;
+    rus_efi_can_verbose_pro1_t rus_efi_can_verbose_pro1;
 
     // Set the default values for the structs
     rus_efi_can_verbose_base0_init(&rus_efi_can_verbose_base0);
@@ -80,6 +84,8 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_base6_init(&rus_efi_can_verbose_base6);
     rus_efi_can_verbose_base7_init(&rus_efi_can_verbose_base7);
     rus_efi_can_verbose_base8_init(&rus_efi_can_verbose_base8);
+    rus_efi_can_verbose_pro0_init(&rus_efi_can_verbose_pro0);
+    rus_efi_can_verbose_pro1_init(&rus_efi_can_verbose_pro1);
 
     // Initialize the CAN message struct
     twai_message_t rx_msg;
@@ -96,7 +102,9 @@ void canbus_read(void *pvParameters)
 
         if (err == ESP_OK)
         {
-            /*//PRINT CAN MESSAGE
+#if CANBUS_DEBUG
+
+            // PRINT CAN MESSAGE
             printf("CAN Message Received\n");
             printf("ID: %d\n", rx_msg.identifier);
             printf("Data: ");
@@ -106,7 +114,8 @@ void canbus_read(void *pvParameters)
             }
             printf("\n");
 
-            */
+#endif
+
             // Parce the received CAN message into the correct struct
             switch (rx_msg.identifier)
             {
@@ -137,27 +146,33 @@ void canbus_read(void *pvParameters)
             case RUS_EFI_CAN_VERBOSE_BASE8_FRAME_ID:
                 rus_efi_can_verbose_base8_unpack(&rus_efi_can_verbose_base8, rx_msg.data, rx_msg.data_length_code);
                 break;
+            case RUS_EFI_CAN_VERBOSE_PRO0_FRAME_ID:
+                rus_efi_can_verbose_pro0_unpack(&rus_efi_can_verbose_pro0, rx_msg.data, rx_msg.data_length_code);
+                break;
+            case RUS_EFI_CAN_VERBOSE_PRO1_FRAME_ID:
+                rus_efi_can_verbose_pro1_unpack(&rus_efi_can_verbose_pro1, rx_msg.data, rx_msg.data_length_code);
+                break;
             }
         }
         else
         {
             // TODO:  Handle this error, for example, send a message to the UI to display an error message on the screen, and set all the values to 0
-            /* printf("Failed to receive message\n");
-             switch (err)
-             {
-             case ESP_ERR_TIMEOUT:
-                 printf("Error: Timeout\n");
-                 break;
-             case ESP_ERR_INVALID_ARG:
-                 printf("Error: Invalid Argument\n");
-                 break;
-             case ESP_FAIL:
-                 printf("Error: Fail\n");
-                 break;
-             case ESP_ERR_INVALID_STATE:
-                 printf("Error: Invalid State\n");
-                 break;
-             }*/
+            printf("Failed to receive message\n");
+            switch (err)
+            {
+            case ESP_ERR_TIMEOUT:
+                printf("Error: Timeout\n");
+                break;
+            case ESP_ERR_INVALID_ARG:
+                printf("Error: Invalid Argument\n");
+                break;
+            case ESP_FAIL:
+                printf("Error: Fail\n");
+                break;
+            case ESP_ERR_INVALID_STATE:
+                printf("Error: Invalid State\n");
+                break;
+            }
         }
 
         // Parce the received can data into a struct for use in the UI
@@ -166,7 +181,8 @@ void canbus_read(void *pvParameters)
         canbus_data.warning_counter = rus_efi_can_verbose_base0.warning_counter;
         canbus_data.last_error = rus_efi_can_verbose_base0.last_error;
         canbus_data.check_engine_act = rus_efi_can_verbose_base0.cel_act;
-        canbus_data.current_gear = rus_efi_can_verbose_base0.current_gear;
+        // canbus_data.current_gear = rus_efi_can_verbose_base0.current_gear;
+        canbus_data.current_gear = rus_efi_can_verbose_pro0.gear_sen;
         canbus_data.rpms = rus_efi_can_verbose_base1.rpm;
         canbus_data.ignition_timing = rus_efi_can_verbose_base1.ignition_timing;
         canbus_data.inj_duty = rus_efi_can_verbose_base1.inj_duty;
@@ -186,7 +202,13 @@ void canbus_read(void *pvParameters)
         canbus_data.fuel_pressure = rus_efi_can_verbose_base7.fp_low;
         canbus_data.o2_sensor = rus_efi_can_verbose_base7.lam1;
 
+        uint8_t QueueError;
+
         // Send the CAN data to the queue for use in the UI
-        xQueueSend(canbus_queue, &canbus_data, 1000);
+        QueueError = xQueueSend(canbus_queue, &canbus_data, pdMS_TO_TICKS(1000));
+
+#if CANBUS_DEBUG
+        Serial.println(QueueError);
+#endif
     }
 }

@@ -11,28 +11,28 @@ extern QueueHandle_t canbus_queue;
 typedef struct
 {
 
-    uint16_t warning_counter;
-    uint16_t last_error;
-    bool check_engine_act;
-    uint8_t current_gear;
-    uint16_t rpms;
-    int8_t ignition_timing;
-    uint8_t inj_duty;
-    uint8_t speed;
-    uint16_t tps;
-    uint16_t map;
-    int8_t coolant_temp;
-    int8_t air_temp;
-    int8_t aux1_temp;
-    int8_t aux2_temp;
-    uint16_t oil_pressure;
-    uint16_t battery_voltage;
-    uint8_t fuel_level;
-    uint16_t inj_pwm;
-    uint8_t ing_duty;
-    uint8_t mcu_temp;
-    uint16_t fuel_pressure;
-    uint16_t o2_sensor;
+    uint16_t warning_counter = 0;
+    uint16_t last_error = 0;
+    bool check_engine_act = 0;
+    uint8_t current_gear = 0;
+    uint16_t rpms = 0;
+    int8_t ignition_timing = 0;
+    uint8_t inj_duty = 0;
+    uint8_t speed = 0;
+    uint16_t tps = 0;
+    uint16_t map = 0;
+    int8_t coolant_temp = 0;
+    int8_t air_temp = 0;
+    int8_t aux1_temp = 0;
+    int8_t aux2_temp = 0;
+    uint16_t oil_pressure = 0;
+    uint16_t battery_voltage = 0;
+    uint8_t fuel_level = 0;
+    uint16_t inj_pwm = 0;
+    uint8_t ing_duty = 0;
+    uint8_t mcu_temp = 0;
+    uint16_t fuel_pressure = 0;
+    uint16_t o2_sensor = 0;
 
 } canbus_data_t;
 
