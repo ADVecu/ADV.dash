@@ -205,7 +205,7 @@ void canbus_read(void *pvParameters)
         uint8_t QueueError;
 
         // Send the CAN data to the queue for use in the UI
-        QueueError = xQueueSend(canbus_queue, &canbus_data, pdMS_TO_TICKS(1000));
+        QueueError = xQueueSend(canbus_queue, &canbus_data, 0);
 
 #if CANBUS_DEBUG
         Serial.println(QueueError);
