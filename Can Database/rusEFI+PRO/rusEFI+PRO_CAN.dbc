@@ -129,6 +129,16 @@ BO_ 522 PRO1: 8 Vector__XXX
  SG_ FWBattV : 48|8@1+ (0.1,0) [0|4] "V" Vector__XXX
  SG_ RWBattV : 56|8@1+ (0.1,0) [0|4] "V" Vector__XXX
 
+BO_ 524 PRO3: 8 Vector__XXX
+ SG_ Enter : 0|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Back : 8|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Up : 16|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Down : 24|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Aux1 : 32|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Aux2 : 40|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Aux3 : 48|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Aux4 : 56|8@1+ (1,0) [0|5] "" Vector__XXX
+
 
 
 CM_ SG_ 3221225472 AFR "Current AFR Reading
@@ -199,4 +209,13 @@ CM_ SG_ 522 FWTemp "Front Wheel Temperature";
 CM_ SG_ 522 RWTemp "Rear Wheel Temperature";
 CM_ SG_ 522 FWBattV "Front Wheel Battery Voltage";
 CM_ SG_ 522 RWBattV "Rear Wheel Battery Voltage";
+CM_ BO_ 524 "Menu Buttons";
+CM_ SG_ 524 Enter "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ SG_ 524 Back "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ SG_ 524 Up "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ SG_ 524 Down "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ SG_ 524 Aux1 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ SG_ 524 Aux2 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ SG_ 524 Aux3 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ SG_ 524 Aux4 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
 
