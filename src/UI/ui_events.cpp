@@ -6,8 +6,8 @@
 #include "ui.h"
 #include "controllers/uiControl/ui_enums.h"
 #include "controllers/uiControl/ui_control.h"
-#include "controllers/uiControl/ui_control.h"
 #include "controllers/uiControl/config_manager.h"
+#include "controllers/uiControl/menu_manager.h"
 
 void ResetAction(lv_event_t *e)
 {
@@ -59,4 +59,25 @@ void Arc1Config(lv_event_t *e)
 void GaugeTChange(lv_event_t *e)
 {
 	dropDownChange();
+}
+
+void onChangeMenu1(lv_event_t * e)
+{
+
+	int numOptions = lv_roller_get_option_cnt(ui_Menu1);
+	lv_group_t * g = lv_group_get_default();
+
+	if (lv_roller_get_selected(ui_Menu1) == numOptions - 1)
+	{
+		lv_obj_add_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN);
+		lv_obj_add_flag(ui_Menu2, LV_OBJ_FLAG_HIDDEN);
+
+	}
+	else
+	{
+		lv_group_focus_next(g);
+	}
+	
+	
+	
 }
