@@ -42,3 +42,7 @@ def Arc5Config(event_struct):
 def GaugeTChange(event_struct):
     return
 
+
+def onChangeMenu1(event_struct):
+    return
+
