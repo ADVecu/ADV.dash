@@ -1,3 +1,8 @@
+/*
+    Console Prompt to generate the CAN Messages C++ code:
+    python -m cantools generate_c_source --no-floating-point-numbers --database-name rus_efi_can_verbose rusEFI+PRO_CAN.dbc
+*/
+
 #include <driver/twai.h>
 #include <driver/gpio.h>
 #include "rus_efi_can_verbose.h"
@@ -73,6 +78,7 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_base8_t rus_efi_can_verbose_base8;
     rus_efi_can_verbose_pro0_t rus_efi_can_verbose_pro0;
     rus_efi_can_verbose_pro1_t rus_efi_can_verbose_pro1;
+    rus_efi_can_verbose_pro3_t rus_efi_can_verbose_pro3;
 
     // Set the default values for the structs
     rus_efi_can_verbose_base0_init(&rus_efi_can_verbose_base0);
@@ -86,6 +92,7 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_base8_init(&rus_efi_can_verbose_base8);
     rus_efi_can_verbose_pro0_init(&rus_efi_can_verbose_pro0);
     rus_efi_can_verbose_pro1_init(&rus_efi_can_verbose_pro1);
+    rus_efi_can_verbose_pro3_init(&rus_efi_can_verbose_pro3);
 
     // Initialize the CAN message struct
     twai_message_t rx_msg;
@@ -152,6 +159,9 @@ void canbus_read(void *pvParameters)
             case RUS_EFI_CAN_VERBOSE_PRO1_FRAME_ID:
                 rus_efi_can_verbose_pro1_unpack(&rus_efi_can_verbose_pro1, rx_msg.data, rx_msg.data_length_code);
                 break;
+            case RUS_EFI_CAN_VERBOSE_PRO3_FRAME_ID:
+                rus_efi_can_verbose_pro3_unpack(&rus_efi_can_verbose_pro3, rx_msg.data, rx_msg.data_length_code);
+                break;
             }
         }
         else
@@ -201,6 +211,21 @@ void canbus_read(void *pvParameters)
         canbus_data.mcu_temp = rus_efi_can_verbose_base3.mcu_temp;
         canbus_data.fuel_pressure = rus_efi_can_verbose_base7.fp_low;
         canbus_data.o2_sensor = rus_efi_can_verbose_base7.lam1;
+
+        canbus_data.fwPressure = (rus_efi_can_verbose_pro1.fw_pressure * 0.01);
+        canbus_data.fwTemp = (rus_efi_can_verbose_pro1.fw_temp - 30);
+        canbus_data.fwBatteryVoltage = (rus_efi_can_verbose_pro1.fw_batt_v * 0.1);
+        canbus_data.rwPressure = (rus_efi_can_verbose_pro1.rw_pressure * 0.01);
+        canbus_data.rwTemp = (rus_efi_can_verbose_pro1.rw_temp - 30);
+        canbus_data.rwBatteryVoltage = (rus_efi_can_verbose_pro1.rw_batt_v * 0.1);
+
+        canbus_data.enterBT = rus_efi_can_verbose_pro3.enter;
+        canbus_data.backBT = rus_efi_can_verbose_pro3.back;
+        canbus_data.upBT = rus_efi_can_verbose_pro3.up;
+        canbus_data.downBT = rus_efi_can_verbose_pro3.down;
+        canbus_data.aux1BT = rus_efi_can_verbose_pro3.aux1;
+        canbus_data.aux2BT = rus_efi_can_verbose_pro3.aux2;
+        canbus_data.aux3BT = rus_efi_can_verbose_pro3.aux3;
 
         uint8_t QueueError;
 
