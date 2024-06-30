@@ -4,6 +4,7 @@
 #include <driver/twai.h>
 #include <driver/gpio.h>
 #include <Wire.h>
+#include "controllers/uiControl/menu_manager.h"
 #include "UI/ui.h"
 #include "muTimer.h"
 #include "controllers/canBus/can_bus.h"
@@ -17,6 +18,7 @@
 #include "controllers/sensors/bmp280.h"
 #include "controllers/uiControl/unit_manager.h"
 #include "controllers/comms/comms.h"
+
 //  #include "SparkFun_External_EEPROM.h"
 
 #define TFT_BL 2
@@ -29,6 +31,7 @@
 pcb_def pcb;                // pcb definitions struct
 rtc_control rtc_controller; // rtc control class
 bmp280 bmp280_controller;   // bmp280 control class
+Menu_manager menu_manager;
 
 bool pse;
 bool entry = true;
@@ -155,6 +158,55 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
   }
 }
 
+uint32_t keypad_get_key()
+{
+
+  return 0;
+}
+
+void keypad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
+{
+  static uint32_t last_key = 0;
+
+  /*Get whether the a key is pressed and save the pressed key*/
+  uint32_t act_key = menu_manager.getKeyPressed();
+  if (act_key != 0)
+  {
+    data->state = LV_INDEV_STATE_PRESSED;
+
+    /*Translate the keys to LVGL control characters according to your key definitions*/
+    switch (act_key)
+    {
+    case BACK:
+      act_key = LV_KEY_PREV;
+      break;
+    case UP:
+      act_key = LV_KEY_LEFT;
+      break;
+    case DOWN:
+      act_key = LV_KEY_RIGHT;
+      break;
+    case ENTER:
+      act_key = LV_KEY_ENTER;
+      break;
+    case AUX1:
+      lv_obj_clear_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN);
+      lv_group_focus_obj(ui_Menu1);
+      break;
+    }
+
+    last_key = act_key;
+    Serial.print("Key: ");
+    Serial.println(last_key);
+  }
+  else
+  {
+    data->state = LV_INDEV_STATE_RELEASED;
+  }
+
+  data->key = last_key;
+}
+
 led_control leds; // led control class
 
 /*******************************************************************************
@@ -202,6 +254,12 @@ void setup()
     lv_indev_drv_register(&indev_drv);
   }
 
+  static lv_indev_drv_t indev_drv_buttons;
+  lv_indev_drv_init(&indev_drv_buttons);
+  indev_drv_buttons.type = LV_INDEV_TYPE_KEYPAD;
+  indev_drv_buttons.read_cb = keypad_read;
+  lv_indev_t *keypad_indev = lv_indev_drv_register(&indev_drv_buttons);
+
   if (BOARD_HAS_SLEEP_CAPABILITY)
   {
     gpio_hold_dis(pcb.v5Enable);
@@ -224,6 +282,14 @@ void setup()
   // UI Initial Configurations
   ui_init_config();
 
+  // Group of UI Elements for control whit menu keys
+  lv_group_t* ui_menu_group = lv_group_create();
+  lv_group_add_obj(ui_menu_group, ui_Menu1);
+  lv_group_add_obj(ui_menu_group, ui_Menu2);
+  lv_indev_set_group(keypad_indev, ui_menu_group);
+  lv_group_set_default(ui_menu_group);
+  
+
   // Screen Manager Init
   if (BOARD_HAS_SLEEP_CAPABILITY)
   {
@@ -240,7 +306,7 @@ void setup()
     _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 2000, ui_MainScreen_screen_init);
   }
 
-  //SerialCommsInit();
+  // SerialCommsInit();
 
 #ifdef TFT_BL
   pinMode((gpio_num_t)pcb.tft_bl, OUTPUT);
