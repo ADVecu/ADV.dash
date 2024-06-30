@@ -3,6 +3,7 @@
 
 #include "database/database.h"
 #include <Arduino.h>
+#include <lvgl.h>
 
 extern Database db;
 extern TaskHandle_t ui_task_handle;

@@ -13,6 +13,7 @@
 #include <muTimer.h>
 #include "controllers/canBus/rus_efi_can_verbose.h"
 #include "alert_manager.h"
+#include "menu_manager.h"
 
 // Widgets
 #include "widgets/rpms_bar.h"
@@ -60,6 +61,8 @@ void ui_init_config()
         0,               /* Priority of the task */
         &ui_task_handle, /* Task handle. */
         APP_CPU_NUM);    /* Core where the task should run */
+
+    
 }
 
 /**
@@ -202,7 +205,16 @@ void ui_task(void *pvParameters)
                                                  rx_msg.fuel_level,
                                                  rx_msg.aux1_temp);
 
-                                // iterate through the arc gauges and update the values
+                // Send buttons data to the menu manager
+                menu_manager.Menu_manager_buttons_data(rx_msg.enterBT,
+                                                       rx_msg.backBT,
+                                                       rx_msg.upBT,
+                                                       rx_msg.downBT,
+                                                       rx_msg.aux1BT,
+                                                       rx_msg.aux2BT,
+                                                       rx_msg.aux3BT);
+
+                // iterate through the arc gauges and update the values
                 for (j = 0; j < 5; j++)
                 {
                     switch (gp_arc_array[j].getGaugeType())
@@ -376,7 +388,8 @@ void ui_task(void *pvParameters)
                 atmosphericData = atmosphericSensor.get_atmospheric_data();
 
                 // Set the clock info
-                clockInfo = timeUI.hours + ":" + timeUI.minutes + " | " + dateUI.day + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(atmosphericData.temperature, 1) + "°C";
+                //clockInfo = timeUI.hours + ":" + timeUI.minutes + " | " + dateUI.day + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(atmosphericData.temperature, 1) + "°C";
+                clockInfo = timeUI.hours + ":" + timeUI.minutes + " | " "56.326 KM" + " | " + String(atmosphericData.altitude, 0) + " MSNM";
 
                 _ui_label_set_property(ui_ClockLabel, _UI_LABEL_PROPERTY_TEXT, clockInfo.c_str());
             }
