@@ -46,3 +46,7 @@ def GaugeTChange(event_struct):
 def onChangeMenu1(event_struct):
     return
 
+
+def onChangeMenu2(event_struct):
+    return
+

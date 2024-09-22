@@ -2758,7 +2758,7 @@
                 "strtype": "BAR/Range",
                 "intarray": [
                   0,
-                  10000
+                  1000
                 ],
                 "InheritedType": 7
               },
@@ -37704,7 +37704,7 @@
               {
                 "nid": -1908111789,
                 "strtype": "ROLLER/Options",
-                "strval": "POPS BANGS\\nLAUNCH\\nDATALOG\\nQUICKSHIFT\\nRIDING MODE\\nTRIP A\\nTRIP B\\nTRIP INFO\\nSERVICE\\nSECURITY\\n",
+                "strval": "POPS & BANGS\\nLAUNCH\\nDATALOG\\nQUICKSHIFT\\nRIDING MODE\\nTRIP A\\nTRIP B\\nTRIP INFO\\nSERVICE\\nSECURITY\\nEXIT",
                 "InheritedType": 10
               },
               {
@@ -37972,7 +37972,7 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  144,
+                  152,
                   0
                 ],
                 "InheritedType": 7
@@ -38312,6 +38312,71 @@
                         "strtype": "MODIFY FLAG/Action",
                         "strval": "ADD",
                         "InheritedType": 3
+                      }
+                    ],
+                    "InheritedType": 10
+                  }
+                ],
+                "InheritedType": 4
+              },
+              {
+                "disabled": false,
+                "nid": 1057556835,
+                "strtype": "_event/EventHandler",
+                "strval": "VALUE_CHANGED",
+                "childs": [
+                  {
+                    "nid": -1244739066,
+                    "strtype": "_event/name",
+                    "strval": "Event7",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -1718895051,
+                    "strtype": "_event/condition_C",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -1267647020,
+                    "strtype": "_event/condition_P",
+                    "strval": "",
+                    "InheritedType": 10
+                  },
+                  {
+                    "nid": -807101454,
+                    "strtype": "_event/action",
+                    "strval": "CALL FUNCTION",
+                    "childs": [
+                      {
+                        "nid": -1022423644,
+                        "strtype": "CALL FUNCTION/Name",
+                        "strval": "CALL FUNCTION",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 469140600,
+                        "strtype": "CALL FUNCTION/Call",
+                        "strval": "<{Function_name}>( event_struct )",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": -88569813,
+                        "strtype": "CALL FUNCTION/CallC",
+                        "strval": "<{Function_name}>( e );",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 1933224995,
+                        "strtype": "CALL FUNCTION/Function_name",
+                        "strval": "onChangeMenu2",
+                        "InheritedType": 10
+                      },
+                      {
+                        "nid": 2075953185,
+                        "strtype": "CALL FUNCTION/Dont_export_function",
+                        "strval": "False",
+                        "InheritedType": 2
                       }
                     ],
                     "InheritedType": 10
@@ -39663,7 +39728,8 @@
                     "InheritedType": 2
                   }
                 ],
-                "saved_objtypeKey": "LABEL"
+                "saved_objtypeKey": "LABEL",
+                "tree_closed": true
               },
               {
                 "guid": "GUID22176552-390878S359463181",
@@ -40335,7 +40401,8 @@
                     "InheritedType": 2
                   }
                 ],
-                "saved_objtypeKey": "LABEL"
+                "saved_objtypeKey": "LABEL",
+                "tree_closed": true
               },
               {
                 "guid": "GUID52343729-392050S472153181",
@@ -41007,7 +41074,8 @@
                     "InheritedType": 2
                   }
                 ],
-                "saved_objtypeKey": "LABEL"
+                "saved_objtypeKey": "LABEL",
+                "tree_closed": true
               },
               {
                 "guid": "GUID82406452-393222S1983181",
@@ -41679,7 +41747,8 @@
                     "InheritedType": 2
                   }
                 ],
-                "saved_objtypeKey": "LABEL"
+                "saved_objtypeKey": "LABEL",
+                "tree_closed": true
               },
               {
                 "guid": "GUID32250501-394394S33723181",
@@ -42351,7 +42420,8 @@
                     "InheritedType": 2
                   }
                 ],
-                "saved_objtypeKey": "LABEL"
+                "saved_objtypeKey": "LABEL",
+                "tree_closed": true
               },
               {
                 "guid": "GUID3064455-394395S5403181",
@@ -42625,7 +42695,7 @@
                   {
                     "nid": 1722531514,
                     "strtype": "CHART/Number_of_points",
-                    "integer": 10,
+                    "integer": 50,
                     "InheritedType": 6
                   },
                   {
@@ -42656,7 +42726,7 @@
                     "strtype": "CHART/XMajor",
                     "intarray": [
                       10,
-                      5
+                      25
                     ],
                     "InheritedType": 7
                   },
@@ -42777,7 +42847,7 @@
                   {
                     "nid": 1124930011,
                     "strtype": "CHART/ChartData",
-                    "strval": "[{\"Axis\":0,\"Color\":[255,206,0,255],\"Series\":[0,10,20,40,80,80,40,20,10,0]}]",
+                    "strval": "[{\"Axis\":0,\"Color\":[255,206,0,255],\"Series\":[0,5,12,18,25,32,28,35,41,48,54,61,67,74,80,76,83,89,95,92,88,84,79,73,68,63,57,51,46,40,35,30,25,20,16,12,9,6,12,18,25,31,38,44,51,57,64,70,77,83,0]}]",
                     "InheritedType": 12
                   },
                   {
@@ -42930,7 +43000,7 @@
               {
                 "nid": 248543704,
                 "strtype": "OBJECT/Hidden",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -46842,7 +46912,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "C:\\Users\\danie\\Documents\\ADV.ecu\\ADV.dash\\src\\UI",
     "projectExportFolderPath": "C:\\Users\\danie\\Documents\\ADV.ecu\\ADV.dash\\SquerLine Project",
-    "backup_cnt": 3607,
+    "backup_cnt": 3673,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "CPP_FILE",
