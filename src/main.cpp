@@ -18,6 +18,7 @@
 #include "controllers/sensors/bmp280.h"
 #include "controllers/uiControl/unit_manager.h"
 #include "controllers/comms/comms.h"
+#include "controllers/eeprom/eeprom.h"
 
 //  #include "SparkFun_External_EEPROM.h"
 
@@ -192,6 +193,7 @@ void keypad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
     case AUX1:
       lv_obj_clear_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN);
       lv_group_focus_obj(ui_Menu1);
+      lv_roller_set_selected(ui_Menu1, 4, LV_ANIM_OFF);
       break;
     }
 
@@ -283,12 +285,11 @@ void setup()
   ui_init_config();
 
   // Group of UI Elements for control whit menu keys
-  lv_group_t* ui_menu_group = lv_group_create();
+  lv_group_t *ui_menu_group = lv_group_create();
   lv_group_add_obj(ui_menu_group, ui_Menu1);
   lv_group_add_obj(ui_menu_group, ui_Menu2);
   lv_indev_set_group(keypad_indev, ui_menu_group);
   lv_group_set_default(ui_menu_group);
-  
 
   // Screen Manager Init
   if (BOARD_HAS_SLEEP_CAPABILITY)

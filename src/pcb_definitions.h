@@ -28,7 +28,7 @@
  *******************************************************************************/
 
 // #define ADVdash7inch
-//#define ADVdash7inchV2SD
+// #define ADVdash7inchV2SD
 #define ADVdash5inch
 
 /*******************************************************************************
@@ -59,6 +59,7 @@
 
 #define BOARD_HAS_SLEEP_CAPABILITY false
 #define BOARD_HAS_TOUCH_CAPABILITY true
+#define ENABLE_ALERTS false
 
 struct pcb_def
 {
