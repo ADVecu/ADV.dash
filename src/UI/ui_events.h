@@ -17,6 +17,7 @@ void Arc3Config(lv_event_t * e);
 void Arc4Config(lv_event_t * e);
 void GaugeTChange(lv_event_t * e);
 void onChangeMenu1(lv_event_t * e);
+void onChangeMenu2(lv_event_t * e);
 
 #ifdef __cplusplus
 } /*extern "C"*/

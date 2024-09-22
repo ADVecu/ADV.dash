@@ -65,6 +65,7 @@ void onChangeMenu1(lv_event_t * e)
 {
 
 	int numOptions = lv_roller_get_option_cnt(ui_Menu1);
+	int selected = lv_roller_get_selected(ui_Menu1);
 	lv_group_t * g = lv_group_get_default();
 
 	if (lv_roller_get_selected(ui_Menu1) == numOptions - 1)
@@ -75,9 +76,17 @@ void onChangeMenu1(lv_event_t * e)
 	}
 	else
 	{
+		menu_manager.rideMenuSetSelectedOptions((rideMenuOptions)selected);
 		lv_group_focus_next(g);
 	}
 	
-	
-	
+}
+
+void onChangeMenu2(lv_event_t * e)
+{
+	int selected = lv_roller_get_selected(ui_Menu2);
+	rideMenuOptions option = menu_manager.getSelectedMenuOption();
+
+	menu_manager.manageMenuActions(option, selected);
+
 }

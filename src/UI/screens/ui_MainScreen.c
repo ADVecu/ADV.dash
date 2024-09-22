@@ -41,7 +41,7 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_style_blend_mode(ui_RedLineBar, LV_BLEND_MODE_MULTIPLY, LV_PART_INDICATOR | LV_STATE_DEFAULT);
 
     ui_RpmsBar = lv_bar_create(ui_MainScreen);
-    lv_bar_set_range(ui_RpmsBar, 0, 10000);
+    lv_bar_set_range(ui_RpmsBar, 0, 1000);
     lv_obj_set_width(ui_RpmsBar, 597);
     lv_obj_set_height(ui_RpmsBar, 40);
     lv_obj_set_x(ui_RpmsBar, -88);
@@ -1334,12 +1334,13 @@ void ui_MainScreen_screen_init(void)
 
     ui_Menu1 = lv_roller_create(ui_MainScreen);
     lv_roller_set_options(ui_Menu1,
-                          "POPS BANGS\nLAUNCH\nDATALOG\nQUICKSHIFT\nRIDING MODE\nTRIP A\nTRIP B\nTRIP INFO\nSERVICE\nSECURITY\n",
+                          "POPS & BANGS\nLAUNCH\nDATALOG\nQUICKSHIFT\nRIDING MODE\nTRIP A\nTRIP B\nTRIP INFO\nSERVICE\nSECURITY\nEXIT",
                           LV_ROLLER_MODE_NORMAL);
     lv_roller_set_selected(ui_Menu1, 4, LV_ANIM_OFF);
     lv_obj_set_height(ui_Menu1, 480);
     lv_obj_set_width(ui_Menu1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_align(ui_Menu1, LV_ALIGN_LEFT_MID);
+    lv_obj_add_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_obj_set_style_text_align(ui_Menu1, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_radius(ui_Menu1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_Menu1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1357,7 +1358,7 @@ void ui_MainScreen_screen_init(void)
     lv_roller_set_options(ui_Menu2, "Option 1\nOption 2\nOption 3\nOption 4\nOption 5\nOption 6", LV_ROLLER_MODE_NORMAL);
     lv_obj_set_height(ui_Menu2, 480);
     lv_obj_set_width(ui_Menu2, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_x(ui_Menu2, 144);
+    lv_obj_set_x(ui_Menu2, 152);
     lv_obj_set_y(ui_Menu2, 0);
     lv_obj_set_align(ui_Menu2, LV_ALIGN_LEFT_MID);
     lv_obj_add_flag(ui_Menu2, LV_OBJ_FLAG_HIDDEN);     /// Flags
@@ -1380,9 +1381,10 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_align(ui_Panel7, LV_ALIGN_CENTER);
     lv_obj_set_flex_flow(ui_Panel7, LV_FLEX_FLOW_ROW_WRAP);
     lv_obj_set_flex_align(ui_Panel7, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_SPACE_BETWEEN);
+    lv_obj_add_flag(ui_Panel7, LV_OBJ_FLAG_HIDDEN);     /// Flags
     lv_obj_clear_flag(ui_Panel7, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_bg_color(ui_Panel7, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Panel7, 245, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_Panel7, 240, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_pad_left(ui_Panel7, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_pad_right(ui_Panel7, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_pad_top(ui_Panel7, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1580,12 +1582,13 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_height(ui_Chart1, 177);
     lv_obj_set_align(ui_Chart1, LV_ALIGN_CENTER);
     lv_chart_set_type(ui_Chart1, LV_CHART_TYPE_LINE);
-    lv_chart_set_axis_tick(ui_Chart1, LV_CHART_AXIS_PRIMARY_X, 10, 5, 5, 2, true, 50);
+    lv_chart_set_point_count(ui_Chart1, 50);
+    lv_chart_set_axis_tick(ui_Chart1, LV_CHART_AXIS_PRIMARY_X, 10, 5, 25, 2, true, 50);
     lv_chart_set_axis_tick(ui_Chart1, LV_CHART_AXIS_PRIMARY_Y, 10, 5, 5, 2, true, 50);
     lv_chart_set_axis_tick(ui_Chart1, LV_CHART_AXIS_SECONDARY_Y, 10, 5, 0, 0, false, 25);
     lv_chart_series_t * ui_Chart1_series_1 = lv_chart_add_series(ui_Chart1, lv_color_hex(0xFFCE00),
                                                                  LV_CHART_AXIS_PRIMARY_Y);
-    static lv_coord_t ui_Chart1_series_1_array[] = { 0, 10, 20, 40, 80, 80, 40, 20, 10, 0 };
+    static lv_coord_t ui_Chart1_series_1_array[] = { 0, 5, 12, 18, 25, 32, 28, 35, 41, 48, 54, 61, 67, 74, 80, 76, 83, 89, 95, 92, 88, 84, 79, 73, 68, 63, 57, 51, 46, 40, 35, 30, 25, 20, 16, 12, 9, 6, 12, 18, 25, 31, 38, 44, 51, 57, 64, 70, 77, 83, 0 };
     lv_chart_set_ext_y_array(ui_Chart1, ui_Chart1_series_1, ui_Chart1_series_1_array);
     lv_obj_set_style_bg_color(ui_Chart1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Chart1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
