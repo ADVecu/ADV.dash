@@ -139,6 +139,14 @@ BO_ 524 PRO3: 8 Vector__XXX
  SG_ Aux3 : 48|8@1+ (1,0) [0|5] "" Vector__XXX
  SG_ Aux4 : 56|8@1+ (1,0) [0|5] "" Vector__XXX
 
+BO_ 525 PRO4: 8 Vector__XXX
+ SG_ EngineMode : 0|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ LCSerttings : 8|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ QuickShifter : 16|8@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ PopsAndBangs : 24|8@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ DataLog : 32|8@1+ (1,0) [0|2] "" Vector__XXX
+ SG_ SecurityLevel : 40|8@1+ (1,0) [0|3] "" Vector__XXX
+
 
 
 CM_ SG_ 3221225472 AFR "Current AFR Reading
@@ -218,4 +226,11 @@ CM_ SG_ 524 Aux1 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Doubl
 CM_ SG_ 524 Aux2 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
 CM_ SG_ 524 Aux3 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
 CM_ SG_ 524 Aux4 "0 = Not Pressed, 1 = Single Press, 2 = Long Pressed, 3 = Double Pressed";
+CM_ BO_ 525 "Dash Config Info";
+CM_ SG_ 525 EngineMode "Engine Table Trim";
+CM_ SG_ 525 LCSerttings "Launch control Active/Deactive and mode";
+CM_ SG_ 525 QuickShifter "QuickShifter Enable/Disable and mode";
+CM_ SG_ 525 PopsAndBangs "PopsAndBags Enable/Disable and mode";
+CM_ SG_ 525 DataLog "Datalog Enable/Disable";
+CM_ SG_ 525 SecurityLevel "Security Level";
 
