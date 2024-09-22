@@ -1,5 +1,7 @@
 #include "alert_manager.h"
 
+// TODO: Enable Alerts via User Interface
+
 CircularBuffer<byte, ALERTS_BUFFER_SIZE> alertBuffer;
 
 Alert_manager::Alert_manager()
@@ -34,7 +36,7 @@ void Alert_manager::alert_manager_data(uint16_t rpms,
 
 {
     // Check if the engine is running
-    if (rpms > _engineONrpms)
+    if (rpms > _engineONrpms && ENABLE_ALERTS)
     {
         isEngineRunning = true;
     }
@@ -55,7 +57,7 @@ void Alert_manager::alert_manager_data(uint16_t rpms,
         _oilTempAlert = (oil_temp - canbus_encode.temps) > _oilTempHighAlert ? true : false;
         _mapAlert = (map * canbus_encode.pressures) > _mapHighAlert ? true : false;
 
-        //Check
+        // Check
 
         // add all alerts to a array
         bool alerts[ALERTS_SIZE] = {_oilPressureAlert, _coolantTempAlert, _batteryVoltageAlert, _fuelPressureAlert, _fuelLevelAlert, _oilTempAlert, _mapAlert};

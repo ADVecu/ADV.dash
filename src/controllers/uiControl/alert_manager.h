@@ -8,6 +8,7 @@
 #include "controllers/canBus/can_bus.h"
 #include "ui_control.h"
 #include "CircularBuffer.hpp"
+#include "pcb_definitions.h"
 
 #define ALERTS_SIZE 7
 #define ALERTS_BUFFER_SIZE 5

@@ -14,6 +14,7 @@
 #include "controllers/canBus/rus_efi_can_verbose.h"
 #include "alert_manager.h"
 #include "menu_manager.h"
+#include "controllers/eeprom/eeprom.h"
 
 // Widgets
 #include "widgets/rpms_bar.h"
@@ -47,6 +48,8 @@ rtc_control rtc_UI;
 bmp280 atmosphericSensor;
 atmospheric_data atmosphericData;
 
+EEPROM_manager eeprom_manager;
+
 /**
  * @brief Initialize the UI configuration
  */
@@ -61,8 +64,6 @@ void ui_init_config()
         0,               /* Priority of the task */
         &ui_task_handle, /* Task handle. */
         APP_CPU_NUM);    /* Core where the task should run */
-
-    
 }
 
 /**
@@ -388,8 +389,10 @@ void ui_task(void *pvParameters)
                 atmosphericData = atmosphericSensor.get_atmospheric_data();
 
                 // Set the clock info
-                //clockInfo = timeUI.hours + ":" + timeUI.minutes + " | " + dateUI.day + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(atmosphericData.temperature, 1) + "°C";
-                clockInfo = timeUI.hours + ":" + timeUI.minutes + " | " "56.326 KM" + " | " + String(atmosphericData.altitude, 0) + " MSNM";
+                // clockInfo = timeUI.hours + ":" + timeUI.minutes + " | " + dateUI.day + "/" + String(dateUI.month) + "/" + String(dateUI.year) + " | " + String(atmosphericData.temperature, 1) + "°C";
+                clockInfo = timeUI.hours + ":" + timeUI.minutes + " | "
+                                                                  "56.326 KM" +
+                            " | " + String(atmosphericData.altitude, 0) + " MSNM";
 
                 _ui_label_set_property(ui_ClockLabel, _UI_LABEL_PROPERTY_TEXT, clockInfo.c_str());
             }
