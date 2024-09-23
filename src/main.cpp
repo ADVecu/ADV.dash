@@ -179,7 +179,11 @@ void keypad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
     switch (act_key)
     {
     case BACK:
-      act_key = LV_KEY_PREV;
+      if (lv_obj_has_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN) == false  && lv_obj_has_flag(ui_Menu2, LV_OBJ_FLAG_HIDDEN) == true){
+        lv_obj_add_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN);
+      }else{
+        act_key = LV_KEY_PREV;
+      }
       break;
     case UP:
       act_key = LV_KEY_LEFT;
@@ -188,7 +192,13 @@ void keypad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
       act_key = LV_KEY_RIGHT;
       break;
     case ENTER:
+    if (lv_obj_has_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN) == true){
+      lv_obj_clear_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN);
+      lv_group_focus_obj(ui_Menu1);
+      lv_roller_set_selected(ui_Menu1, 4, LV_ANIM_OFF);
+    }else{
       act_key = LV_KEY_ENTER;
+    }
       break;
     case AUX1:
       lv_obj_clear_flag(ui_Menu1, LV_OBJ_FLAG_HIDDEN);
