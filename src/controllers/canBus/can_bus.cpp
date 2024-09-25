@@ -191,8 +191,8 @@ void canbus_read(void *pvParameters)
         canbus_data.warning_counter = rus_efi_can_verbose_base0.warning_counter;
         canbus_data.last_error = rus_efi_can_verbose_base0.last_error;
         canbus_data.check_engine_act = rus_efi_can_verbose_base0.cel_act;
-        // canbus_data.current_gear = rus_efi_can_verbose_base0.current_gear;
-        canbus_data.current_gear = rus_efi_can_verbose_pro0.gear_sen;
+        canbus_data.current_gear = rus_efi_can_verbose_base0.current_gear;
+        //canbus_data.current_gear = rus_efi_can_verbose_pro0.gear_sen;
         canbus_data.rpms = rus_efi_can_verbose_base1.rpm;
         canbus_data.ignition_timing = rus_efi_can_verbose_base1.ignition_timing;
         canbus_data.inj_duty = rus_efi_can_verbose_base1.inj_duty;
