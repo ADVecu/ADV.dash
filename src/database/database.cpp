@@ -594,7 +594,7 @@ gauge_type Database::getPanelGaugeType(panel_number_t gaugeNumber)
         gaugeType = (gauge_type)preferences.getUChar("panelNumber5", (uint8_t)gauge_type::INJ_PWM);
         break;
     case PANEL_6:
-        gaugeType = (gauge_type)preferences.getUChar("panelNumber6", (uint8_t)gauge_type::WARNING_COUNT);
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber6", (uint8_t)gauge_type::AMBIENT_TEMP);
         break;
     }
 

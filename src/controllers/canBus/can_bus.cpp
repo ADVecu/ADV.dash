@@ -79,6 +79,7 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_pro0_t rus_efi_can_verbose_pro0;
     rus_efi_can_verbose_pro1_t rus_efi_can_verbose_pro1;
     rus_efi_can_verbose_pro3_t rus_efi_can_verbose_pro3;
+    rus_efi_can_verbose_pro5_t rus_efi_can_verbose_pro5;
 
     // Set the default values for the structs
     rus_efi_can_verbose_base0_init(&rus_efi_can_verbose_base0);
@@ -93,6 +94,7 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_pro0_init(&rus_efi_can_verbose_pro0);
     rus_efi_can_verbose_pro1_init(&rus_efi_can_verbose_pro1);
     rus_efi_can_verbose_pro3_init(&rus_efi_can_verbose_pro3);
+    rus_efi_can_verbose_pro5_init(&rus_efi_can_verbose_pro5);
 
     // Initialize the CAN message struct
     twai_message_t rx_msg;
@@ -162,6 +164,9 @@ void canbus_read(void *pvParameters)
             case RUS_EFI_CAN_VERBOSE_PRO3_FRAME_ID:
                 rus_efi_can_verbose_pro3_unpack(&rus_efi_can_verbose_pro3, rx_msg.data, rx_msg.data_length_code);
                 break;
+            case RUS_EFI_CAN_VERBOSE_PRO5_FRAME_ID:
+                rus_efi_can_verbose_pro5_unpack(&rus_efi_can_verbose_pro5, rx_msg.data, rx_msg.data_length_code);
+                break;
             }
         }
         else
@@ -218,6 +223,7 @@ void canbus_read(void *pvParameters)
         canbus_data.rwPressure = (rus_efi_can_verbose_pro1.rw_pressure * 0.01);
         canbus_data.rwTemp = (rus_efi_can_verbose_pro1.rw_temp - 30);
         canbus_data.rwBatteryVoltage = (rus_efi_can_verbose_pro1.rw_batt_v * 0.1);
+        canbus_data.ambientTemp = rus_efi_can_verbose_pro5.ambient_temp;
 
         canbus_data.enterBT = rus_efi_can_verbose_pro3.enter;
         canbus_data.backBT = rus_efi_can_verbose_pro3.back;

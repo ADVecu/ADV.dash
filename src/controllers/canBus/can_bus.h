@@ -38,6 +38,7 @@ typedef struct
     uint8_t rwPressure;
     int8_t rwTemp;
     uint8_t rwBatteryVoltage;
+    uint8_t ambientTemp;
     uint8_t enterBT;
     uint8_t backBT;
     uint8_t upBT;

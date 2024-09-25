@@ -40,7 +40,8 @@ enum gauge_type
     ING_TIMING,
     INJ_PWM,
     IGN_DUTY,
-    MCU_TEMP
+    MCU_TEMP,
+    AMBIENT_TEMP,
 
 };
 

@@ -48,6 +48,7 @@ struct panel_name_str
     const String inj_PWM = "PWM";
     const String ign_duty = "DUTY";
     const String mcu_temp = "MCUT";
+    const String ambient_Temp = "AMBT";
 };
 
 struct gauge_unit_str

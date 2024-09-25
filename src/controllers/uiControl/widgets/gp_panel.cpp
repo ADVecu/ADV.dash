@@ -100,6 +100,9 @@ gp_panel::gp_panel(uint16_t alertValue,
     case gauge_type::MCU_TEMP:
         _name = panel_name_strings.mcu_temp;
         break;
+    case gauge_type::AMBIENT_TEMP:
+        _name = panel_name_strings.ambient_Temp;
+        break;
    
     }
 

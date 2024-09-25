@@ -344,6 +344,9 @@ void ui_task(void *pvParameters)
                     case gauge_type::MCU_TEMP:
                         gp_panel_array[k].setValue(rx_msg.mcu_temp);
                         break;
+                    case gauge_type::AMBIENT_TEMP:
+                        gp_panel_array[k].setValue(rx_msg.ambientTemp);
+                        break;
                     }
                 }
             }
