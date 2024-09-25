@@ -277,6 +277,8 @@ void setup()
     gpio_hold_dis(pcb.v5Enable);
     pinMode(pcb.v5Enable, OUTPUT);    // Enable 5V
     digitalWrite(pcb.v5Enable, HIGH); // Enable 5V
+    pinMode(pcb.sw12v, INPUT_PULLUP); // 12V Switch
+    pinMode(pcb.wakeUp, INPUT_PULLUP); // WakeUp Switch
   }
 
   initUnitManager(); // Unit Manager Init
