@@ -107,9 +107,10 @@ void ledControlTask(void *pvParameters)
     {
         if (xQueuePeek(canbus_queue, &canbus_data, portMAX_DELAY) == pdTRUE && initAnimationComplete)
         {
-            ledsOn = map(canbus_data.rpms, 3000, 6000, LEDS_RPMS_START, LEDS_RPMS_END);
+            //TODO: Change Hardcoded values for rpms leds activation
+            ledsOn = map(canbus_data.rpms, 6000, 9000, LEDS_RPMS_START, LEDS_RPMS_END);
 
-            if (ledsOn != ledsOnPrev && canbus_data.rpms < 6000)
+            if (ledsOn != ledsOnPrev && canbus_data.rpms < 9000)
             {
                 for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
                 {
@@ -137,7 +138,7 @@ void ledControlTask(void *pvParameters)
                     commit();
                 }
             }
-            else if (canbus_data.rpms >= 6000)
+            else if (canbus_data.rpms >= 9000)
             {
                 if (FlashTimer.cycleOnOff(300, 300))
                 {
