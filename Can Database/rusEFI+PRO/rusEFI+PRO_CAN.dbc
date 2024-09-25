@@ -45,6 +45,7 @@ BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ NewSignal_0015 : 8|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ NewSignal_0016 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ NewSignal_0024 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0017 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 512 BASE0: 8 Vector__XXX
  SG_ WarningCounter : 0|16@1+ (1,0) [0|0] "" Vector__XXX
@@ -146,6 +147,19 @@ BO_ 525 PRO4: 8 Vector__XXX
  SG_ PopsAndBangs : 24|8@1+ (1,0) [0|5] "" Vector__XXX
  SG_ DataLog : 32|8@1+ (1,0) [0|2] "" Vector__XXX
  SG_ SecurityLevel : 40|8@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 526 PRO5: 8 Vector__XXX
+ SG_ OilPressure : 0|16@1+ (0.0333,0) [0|0] "%" Vector__XXX
+ SG_ FuelLevel : 16|8@1+ (0.5,0.5) [0|0] "%" Vector__XXX
+ SG_ AmbientTemp : 24|8@1+ (1,-40) [-40|200] "deg C" Vector__XXX
+ SG_ OilTemp : 32|8@1+ (1,-40) [-40|200] "deg C" Vector__XXX
+ SG_ CoolantLevel : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ HighBean : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DirIZQ : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DirDER : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ FogLight : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ LowBean : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sidestand : 46|1@1+ (1,0) [0|0] "" Vector__XXX
 
 
 
