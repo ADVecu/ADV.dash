@@ -216,6 +216,7 @@ void canbus_read(void *pvParameters)
         canbus_data.mcu_temp = rus_efi_can_verbose_base3.mcu_temp;
         canbus_data.fuel_pressure = rus_efi_can_verbose_base7.fp_low;
         canbus_data.o2_sensor = rus_efi_can_verbose_base7.lam1;
+        canbus_data.oil_temp = (rus_efi_can_verbose_base4_oil_temperature_is_in_range(rus_efi_can_verbose_base4.oil_temperature)) ? rus_efi_can_verbose_base4.oil_temperature : -40;
 
         canbus_data.fwPressure = (rus_efi_can_verbose_pro1.fw_pressure * 0.01);
         canbus_data.fwTemp = (rus_efi_can_verbose_pro1.fw_temp - 30);

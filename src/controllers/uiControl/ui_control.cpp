@@ -224,7 +224,7 @@ void ui_task(void *pvParameters)
                         gp_arc_array[j].setValue(rx_msg.coolant_temp);
                         break;
                     case gauge_type::OIL_TEMP:
-                        gp_arc_array[j].setValue(rx_msg.aux1_temp);
+                        gp_arc_array[j].setValue(rx_msg.oil_temp);
                         break;
                     case gauge_type::AIR_TEMP:
                         gp_arc_array[j].setValue(rx_msg.air_temp);
@@ -265,7 +265,7 @@ void ui_task(void *pvParameters)
                         gp_bar_array[i].setValue(rx_msg.coolant_temp);
                         break;
                     case gauge_type::OIL_TEMP:
-                        gp_bar_array[i].setValue(rx_msg.aux1_temp);
+                        gp_bar_array[i].setValue(rx_msg.oil_temp);
                         break;
                     case gauge_type::AIR_TEMP:
                         gp_bar_array[i].setValue(rx_msg.air_temp);
@@ -303,7 +303,7 @@ void ui_task(void *pvParameters)
                         gp_panel_array[k].setValue(rx_msg.coolant_temp);
                         break;
                     case gauge_type::OIL_TEMP:
-                        gp_panel_array[k].setValue(rx_msg.aux1_temp);
+                        gp_panel_array[k].setValue(rx_msg.oil_temp);
                         break;
                     case gauge_type::AIR_TEMP:
                         gp_panel_array[k].setValue(rx_msg.air_temp);

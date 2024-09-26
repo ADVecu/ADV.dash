@@ -32,6 +32,7 @@ typedef struct
     uint8_t mcu_temp;
     uint16_t fuel_pressure;
     uint16_t o2_sensor;
+    uint16_t oil_temp;
     uint8_t fwPressure;
     int8_t fwTemp;
     uint8_t fwBatteryVoltage;
