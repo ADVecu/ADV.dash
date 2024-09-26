@@ -1,0 +1,125 @@
+setTickRate(300)
+timeout = 3000
+
+gearSensor = Sensor.new("DetectedGear")
+gearSensor : setTimeout(timeout)
+
+swIN = 3
+swOUT = 0
+
+drlIN = 0
+lowBeanOUT = 2
+drlOUT = 1
+fogOUT = 3
+luxINA = 0
+
+dashOUT = 4
+oilswINA = 1
+sidestINA = 2
+coolantIN = 1
+
+dashPayLoad = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+
+canTimer = Timer.new()
+canTimer : reset()
+
+drlTimer = Timer.new()
+drlTimer : reset()
+
+startPwm(swOUT, 100, 0)
+startPwm(drlOUT, 100, 0)
+startPwm(lowBeanOUT, 100, 0)
+startPwm(fogOUT, 100, 0)
+startPwm(dashOUT, 100, 0)
+
+hexstr = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F" }
+
+function toHexString(num)
+	if num == 0 then
+		return '0'
+	end
+
+	local result = ""
+	while num > 0 do
+		local n = num % 16
+		result = hexstr[n + 1] ..result
+		num = math.floor(num / 16)
+	end
+	return result
+end
+
+function arrayToString(arr)
+	local str = ""
+	local index = 1
+	while arr[index] ~= nil do
+		str = str.." "..toHexString(arr[index])
+		index = index + 1
+	end
+	return str
+end
+
+function getTwoBytesMSB(data, offset, factor)
+	return (data[offset + 1] * 256 + data[offset + 2]) * factor
+end
+
+function getTwoBytesLSB(data, offset, factor)
+	return (data[offset + 2] * 256 + data[offset + 1]) * factor
+end
+
+function setTwoBytesLsb(data, offset, value)
+	value = math.floor(value)
+	data[offset + 2] = value >> 8
+	data[offset + 1] = value & 0xff
+end
+
+
+function onGEARFRAME(bus, id, dlc, data)
+	gearValue = data[1]
+	gearSensor : set(gearValue)
+end
+
+
+commTimer = Timer.new()
+commTimer : reset()
+
+commDelay = 20
+drlDelay = 5
+
+canRxAdd(1, 0x1FF, onGEARFRAME)
+
+function onTick()
+
+	if (getAuxDigital(swIN) == false) then
+		setPwmDuty(swOUT, 1)
+		setPwmDuty(drlOUT, 1)
+		commTimer : reset()
+		drlTimer : reset()
+	else
+		setPwmDuty(swOUT, 0)
+		if (drlTimer : getElapsedSeconds() > drlDelay) then
+			setPwmDuty(drlOUT, 0)
+		end
+	end
+
+	ambTemp = getSensor("AmbientTemperature")
+	fuelLevel = getSensor("FuelLevel")
+	oilPress = getSensor("OilPressure")
+	oilTemp = getSensor("OilTemperature")
+
+	setTwoBytesLsb(dashPayLoad, 0, oilPress)
+	dashPayLoad[3] = fuelLevel
+	dashPayLoad[4] = ambTemp
+	dashPayLoad[5] = oilTemp
+
+
+	txCan(1, 0x20E, 0, dashPayLoad)
+
+
+	if getOutput("isUsbConnected") == 1 then
+		commTimer : reset()
+	end
+	if (commTimer : getElapsedSeconds() > commDelay) and (getAuxDigital(swIN) == true) then
+		mcu_standby()
+	end
+
+end
