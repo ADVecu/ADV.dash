@@ -1,5 +1,5 @@
 
-#include "NeoPixelBusLg.h"
+#include <FastLED.h>
 #include "Arduino.h"
 #include "pcb_definitions.h"
 #include "led_control.h"
@@ -7,8 +7,7 @@
 #include "muTimer.h"
 
 xSemaphoreHandle semaphore = NULL;
-
-NeoPixelBusLg<DotStarRgbFeature, DotStarMethod> strip(LEDS_NUM, LEDS_PIN_CLOCK, LEDS_PIN);
+CRGB strip[LEDS_NUM];  
 
 TaskHandle_t ledWelcomeAnimTask;
 TaskHandle_t commit_task;
@@ -23,9 +22,9 @@ bool initAnimationComplete = false;
 void led_control::init_leds()
 {
 
-    strip.Begin();
-    strip.SetLuminance(50);
-    strip.Show();
+    FastLED.addLeds<APA102, LEDS_PIN, LEDS_PIN_CLOCK, RGB>(strip, LEDS_NUM);  
+    FastLED.setBrightness(50);
+    FastLED.show();
 
     xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 1, &ledWelcomeAnimTask, 0);
     xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 4, NULL, 0);
@@ -53,10 +52,10 @@ void led_control::ledsWelcomeAnimation(void *pvParameters)
         for (int i = 0; i < LEDS_NUM; i++)
         {
             // Set the i'th led to red
-            strip.SetPixelColor(i, HsbColor(hue += 0.1f, 1.0f, 1.0f));
+            strip[i] = CHSV(hue++, 255, 255);
 
             // Show the leds
-            strip.Show();
+            FastLED.show();
             // now that we've shown the leds, reset the i'th led to black
             // strip[i] = CRGB::Black;
             // Wait a little bit before we loop around and do it again
@@ -68,18 +67,18 @@ void led_control::ledsWelcomeAnimation(void *pvParameters)
         for (int i = (LEDS_NUM)-1; i >= 0; i--)
         {
             // Set the i'th led to red
-            strip.SetPixelColor(i, HsbColor(hue += 0.1f, 1.0f, 1.0f));
+            strip[i] = CHSV(hue++, 255, 255);
             // Show the leds
-            strip.Show();
+            FastLED.show();
             // now that we've shown the leds, reset the i'th led to black
-            strip.SetPixelColor(i, 0);
+            strip[i] = CRGB::Black;
 
             // Wait a little bit before we loop around and do it again
             delay(25);
         }
 
-        strip.ClearTo(0);
-        strip.Show();
+        FastLED.clear();
+        FastLED.show();
         initAnimationComplete = true;
         vTaskSuspend(NULL);
     }
@@ -93,8 +92,8 @@ void led_control::triggerWelcomeAnimation()
 
 void led_control::clearLeds()
 {
-    strip.ClearTo(0);
-    strip.Show();
+    FastLED.clear();
+    FastLED.show();
 }
 
 void ledControlTask(void *pvParameters)
@@ -114,7 +113,7 @@ void ledControlTask(void *pvParameters)
             {
                 for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
                 {
-                    strip.SetPixelColor(i, 0);
+                    strip[i] = 0;
                 }
 
                 if (canbus_data.rpms < 6000)
@@ -124,15 +123,15 @@ void ledControlTask(void *pvParameters)
                     {
                         if (i >= LEDS_RPMS_LOW && i <= LEDS_RPMS_MID)
                         {
-                            strip.SetPixelColor(i, RgbColor(0, 255, 0));
+                            strip[i].setRGB(0, 255, 0);
                         }
                         else if (i >= LEDS_RPMS_MID && i <= LEDS_RPMS_MAX)
                         {
-                            strip.SetPixelColor(i, RgbColor(255, 0, 0));
+                            strip[i].setRGB(255, 0, 0);
                         }
                         else
                         {
-                            strip.SetPixelColor(i, RgbColor(0, 0, 255));
+                            strip[i].setRGB(0, 0, 255);
                         }
                     }
                     commit();
@@ -148,14 +147,14 @@ void ledControlTask(void *pvParameters)
                     {
                         for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
                         {
-                            strip.SetPixelColor(i, RgbColor(255, 0, 0));
+                            strip[i].setRGB(255, 0, 0);
                         }
                     }
                     else
                     {
                         for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
                         {
-                            strip.SetPixelColor(i, 0);
+                            strip[i].setRGB(0, 0, 0);
                         }
                     }
 
@@ -167,14 +166,14 @@ void ledControlTask(void *pvParameters)
             {
                 indicatorLedStateP.FuelST = indicatorLedST.FuelST;
                 indicatorLedST.FuelST = true;
-                strip.SetPixelColor(FUEL_LED, RgbColor(255, 255, 51));
+                strip[FUEL_LED].setRGB(255, 0, 0);
                 commit();
             }
             else if (canbus_data.fuel_level > 20 && indicatorLedST.FuelST != indicatorLedStateP.FuelST)
             {
                 indicatorLedStateP.FuelST = indicatorLedST.FuelST;
                 indicatorLedST.FuelST = false;
-                strip.SetPixelColor(FUEL_LED, 0);
+                strip[FUEL_LED].setRGB(0, 0, 0);
                 commit();
             }
 
@@ -182,14 +181,14 @@ void ledControlTask(void *pvParameters)
             {
                 indicatorLedStateP.BatteryST = indicatorLedST.BatteryST;
                 indicatorLedST.BatteryST = true;
-                strip.SetPixelColor(BATTERY_LIGHT, RgbColor(255, 0, 0));
+                strip[BATTERY_LIGHT].setRGB(255, 0, 0);
                 commit();
             }
             else if (canbus_data.battery_voltage > 12000 && indicatorLedST.BatteryST != indicatorLedStateP.BatteryST)
             {
                 indicatorLedStateP.BatteryST = indicatorLedST.BatteryST;
                 indicatorLedST.BatteryST = false;
-                strip.SetPixelColor(BATTERY_LIGHT, 0);
+                strip[BATTERY_LIGHT].setRGB(0, 0, 0);
                 commit();
             }
 
@@ -197,14 +196,14 @@ void ledControlTask(void *pvParameters)
             {
                 indicatorLedStateP.RightTurnST = indicatorLedST.RightTurnST;
                 indicatorLedST.RightTurnST = true;
-                strip.SetPixelColor(RIGHT_DIR, RgbColor(0, 255, 0));
+                strip[RIGHT_DIR].setRGB(0, 255, 0);
                 commit();
             }
             else if (canbus_data.dir_der == 0 && indicatorLedST.RightTurnST != indicatorLedStateP.RightTurnST)
             {
                 indicatorLedStateP.RightTurnST = indicatorLedST.RightTurnST;
                 indicatorLedST.RightTurnST = false;
-                strip.SetPixelColor(RIGHT_DIR, 0);
+                strip[RIGHT_DIR].setRGB(0, 0, 0);
                 commit();
             }
 
@@ -212,14 +211,14 @@ void ledControlTask(void *pvParameters)
             {
                 indicatorLedStateP.LeftTurnST = indicatorLedST.LeftTurnST;
                 indicatorLedST.LeftTurnST = true;
-                strip.SetPixelColor(LEFT_DIR, RgbColor(0, 255, 0));
+                strip[LEFT_DIR].setRGB(0, 255, 0);
                 commit();
             }
             else if (canbus_data.dir_izq == 0 && indicatorLedST.LeftTurnST != indicatorLedStateP.LeftTurnST)
             {
                 indicatorLedStateP.LeftTurnST = indicatorLedST.LeftTurnST;
                 indicatorLedST.LeftTurnST = false;
-                strip.SetPixelColor(LEFT_DIR, 0);
+                strip[LEFT_DIR].setRGB(0, 0, 0);
                 commit();
             }
 
@@ -227,14 +226,14 @@ void ledControlTask(void *pvParameters)
             {
                 indicatorLedStateP.HighBeamST = indicatorLedST.HighBeamST;
                 indicatorLedST.HighBeamST = true;
-                strip.SetPixelColor(HIGH_BEAM, RgbColor(0, 0, 255));
+                strip[HIGH_BEAM].setRGB(0, 0, 255);
                 commit();
             }
             else if (canbus_data.high_bean == 0 && indicatorLedST.HighBeamST != indicatorLedStateP.HighBeamST)
             {
                 indicatorLedStateP.HighBeamST = indicatorLedST.HighBeamST;
                 indicatorLedST.HighBeamST = false;
-                strip.SetPixelColor(HIGH_BEAM, 0);
+                strip[HIGH_BEAM].setRGB(0, 0, 0);
                 commit();
             }
 
@@ -251,9 +250,7 @@ void commitTaskProcedure(void *arg)
     {
         while (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) != 1)
             ;
-        strip.Show();
-        while (!strip.CanShow())
-            ;
+        FastLED.show();
         xSemaphoreGive(semaphore);
     }
 }
