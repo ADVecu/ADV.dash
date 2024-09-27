@@ -4,6 +4,9 @@ timeout = 3000
 gearSensor = Sensor.new("DetectedGear")
 gearSensor : setTimeout(timeout)
 
+rpmSensor = Sensor.new("Rpm")
+rpmSensor : setTimeout(timeout)
+
 swIN = 3
 swOUT = 0
 
@@ -17,14 +20,33 @@ dashOUT = 4
 oilswINA = 1
 sidestINA = 2
 coolantIN = 1
+dirIzqIN = 5
+dirDerIN = 7
+highBeanIN = 3
 
 dashPayLoad = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
-
-canTimer = Timer.new()
-canTimer : reset()
+dashPayLoad2 = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
 
 drlTimer = Timer.new()
 drlTimer : reset()
+
+commTimer = Timer.new()
+commTimer : reset()
+
+lowBeanOnTimer = Timer.new()
+lowBeanOnTimer : reset()
+
+lowBeanOffTimer = Timer.new()
+lowBeanOffTimer : reset()
+
+commDelay = 20
+drlDelay = 5
+
+lowBeanVon = findSetting(lowBeanVon, 0.5)
+lowBeanVoff = findSetting(lowBeanVoff, 2)
+lowBeanDelayOn = findSetting(lowBeanDelayOn, 2)
+lowBeanDelayOff = findSetting(lowBeanDelayOff, 5)
+lowBeanON = false
 
 startPwm(swOUT, 100, 0)
 startPwm(drlOUT, 100, 0)
@@ -58,10 +80,6 @@ function arrayToString(arr)
 	return str
 end
 
-function getTwoBytesMSB(data, offset, factor)
-	return (data[offset + 1] * 256 + data[offset + 2]) * factor
-end
-
 function getTwoBytesLSB(data, offset, factor)
 	return (data[offset + 2] * 256 + data[offset + 1]) * factor
 end
@@ -72,22 +90,22 @@ function setTwoBytesLsb(data, offset, value)
 	data[offset + 1] = value & 0xff
 end
 
-
 function onGEARFRAME(bus, id, dlc, data)
 	gearValue = data[1]
 	gearSensor : set(gearValue)
 end
 
-
-commTimer = Timer.new()
-commTimer : reset()
-
-commDelay = 20
-drlDelay = 5
+function onRPMFRAME(bus, id, dlc, data)
+	local rpms = getTwoBytesLSB(data, 0, 1)
+	rpmSensor : set(rpms)
+end
 
 canRxAdd(1, 0x1FF, onGEARFRAME)
+canRxAdd(1, 0x201, onRPMFRAME)
 
 function onTick()
+
+-- SW MANAGER ///////////////////////////////////////////////
 
 	if (getAuxDigital(swIN) == false) then
 		setPwmDuty(swOUT, 1)
@@ -101,6 +119,37 @@ function onTick()
 		end
 	end
 
+-- /////////////////////////////////////////////////////////
+
+-- LOWBEAN MANAGER //////////////////////////////////////////
+
+	if(rpmSensor > 1000) and (getAuxAnalog(luxINA) > lowBeanVon) and (not lowBeanON) then
+		if (lowBeanOnTimer : getElapsedSeconds() > lowBeanDelayOn) then
+			setPwmDuty(lowBeanOUT, 1)
+			lowBeanON = true
+		end
+	else
+		lowBeanOnTimer : reset()
+	end
+
+	if(getAuxAnalog(luxINA) < lowBeanVoff) and (lowBeanON) then
+		if(lowBeanOffTimer : getElapsedSeconds() > lowBeanDelayOff) then
+			setPwmDuty(lowBeanOUT, 0)
+			lowBeanON = false
+		end
+	else
+		lowBeanOffTimer : reset()
+	end
+
+	if (rpmSensor < 1000) and (lowBeanON) then
+		setPwmDuty(lowBeanOUT, 0)
+		lowBeanON = false
+	end
+
+-- /////////////////////////////////////////////////////////
+
+-- DASH INFO ///////////////////////////////////////////////
+
 	ambTemp = getSensor("AmbientTemperature")
 	fuelLevel = getSensor("FuelLevel")
 	oilPress = getSensor("OilPressure")
@@ -111,9 +160,17 @@ function onTick()
 	dashPayLoad[4] = ambTemp
 	dashPayLoad[5] = oilTemp
 
-
+	if (getAuxDigital(coolantIN) == false) then dashPayLoad2[1] = 1 else dashPayLoad2[1] = 0
+	if (getAuxDigital(highBeanIN) == false) then dashPayLoad2[2] = 1 else dashPayLoad2[2] = 0
+	if (getAuxDigital(dirIzqIN) == false) then dashPayLoad2[3] = 1 else dashPayLoad2[3] = 0
+	if (getAuxDigital(dirDerIN) == false) then dashPayLoad2[4] = 1 else dashPayLoad2[4] = 0
+	
 	txCan(1, 0x20E, 0, dashPayLoad)
+	txCan(1, 0x20F, 0, dashPayLoad2)
 
+-- /////////////////////////////////////////////////////////
+
+-- SLEEP MANAGER //////////////////////////////////////////
 
 	if getOutput("isUsbConnected") == 1 then
 		commTimer : reset()
@@ -122,4 +179,5 @@ function onTick()
 		mcu_standby()
 	end
 
+-- /////////////////////////////////////////////////////////
 end

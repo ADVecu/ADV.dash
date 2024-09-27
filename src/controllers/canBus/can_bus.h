@@ -47,6 +47,9 @@ typedef struct
     uint8_t aux1BT;
     uint8_t aux2BT;
     uint8_t aux3BT;
+    uint8_t dir_izq;
+    uint8_t dir_der;
+    uint8_t high_bean;
 
 } canbus_data_t;
 

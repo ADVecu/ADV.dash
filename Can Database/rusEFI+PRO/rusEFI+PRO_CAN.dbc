@@ -46,6 +46,13 @@ BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ NewSignal_0016 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ NewSignal_0024 : 0|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ NewSignal_0017 : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ Sidestand : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ LowBean : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ FogLight : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DirDER : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DirIZQ : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ HighBean : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ CoolantLevel : 40|1@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 512 BASE0: 8 Vector__XXX
  SG_ WarningCounter : 0|16@1+ (1,0) [0|0] "" Vector__XXX
@@ -153,13 +160,15 @@ BO_ 526 PRO5: 8 Vector__XXX
  SG_ FuelLevel : 16|8@1+ (0.5,0.5) [0|0] "%" Vector__XXX
  SG_ AmbientTemp : 24|8@1+ (1,-40) [-40|200] "deg C" Vector__XXX
  SG_ OilTemp : 32|8@1+ (1,-40) [-40|200] "deg C" Vector__XXX
- SG_ CoolantLevel : 40|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ HighBean : 41|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ DirIZQ : 42|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ DirDER : 43|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ FogLight : 44|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ LowBean : 45|1@1+ (1,0) [0|0] "" Vector__XXX
- SG_ Sidestand : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 527 PRO6: 8 Vector__XXX
+ SG_ CoolantLevel : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ HighBean : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DirIZQ : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ DirDER : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ FogLight : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ LowBean : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ SideStand : 48|8@1+ (1,0) [0|0] "" Vector__XXX
 
 
 
@@ -247,4 +256,6 @@ CM_ SG_ 525 QuickShifter "QuickShifter Enable/Disable and mode";
 CM_ SG_ 525 PopsAndBangs "PopsAndBags Enable/Disable and mode";
 CM_ SG_ 525 DataLog "Datalog Enable/Disable";
 CM_ SG_ 525 SecurityLevel "Security Level";
+CM_ BO_ 526 "Analog Inputs DashController";
+CM_ BO_ 527 "Digital Inputs DashController";
 

@@ -80,6 +80,7 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_pro1_t rus_efi_can_verbose_pro1;
     rus_efi_can_verbose_pro3_t rus_efi_can_verbose_pro3;
     rus_efi_can_verbose_pro5_t rus_efi_can_verbose_pro5;
+    rus_efi_can_verbose_pro6_t rus_efi_can_verbose_pro6;
 
     // Set the default values for the structs
     rus_efi_can_verbose_base0_init(&rus_efi_can_verbose_base0);
@@ -95,6 +96,7 @@ void canbus_read(void *pvParameters)
     rus_efi_can_verbose_pro1_init(&rus_efi_can_verbose_pro1);
     rus_efi_can_verbose_pro3_init(&rus_efi_can_verbose_pro3);
     rus_efi_can_verbose_pro5_init(&rus_efi_can_verbose_pro5);
+    rus_efi_can_verbose_pro6_init(&rus_efi_can_verbose_pro6);
 
     // Initialize the CAN message struct
     twai_message_t rx_msg;
@@ -167,6 +169,9 @@ void canbus_read(void *pvParameters)
             case RUS_EFI_CAN_VERBOSE_PRO5_FRAME_ID:
                 rus_efi_can_verbose_pro5_unpack(&rus_efi_can_verbose_pro5, rx_msg.data, rx_msg.data_length_code);
                 break;
+            case RUS_EFI_CAN_VERBOSE_PRO6_FRAME_ID:
+                rus_efi_can_verbose_pro6_unpack(&rus_efi_can_verbose_pro6, rx_msg.data, rx_msg.data_length_code);
+                break;
             }
         }
         else
@@ -233,6 +238,10 @@ void canbus_read(void *pvParameters)
         canbus_data.aux1BT = rus_efi_can_verbose_pro3.aux1;
         canbus_data.aux2BT = rus_efi_can_verbose_pro3.aux2;
         canbus_data.aux3BT = rus_efi_can_verbose_pro3.aux3;
+
+        canbus_data.dir_izq = rus_efi_can_verbose_pro6.dir_izq;
+        canbus_data.dir_der = rus_efi_can_verbose_pro6.dir_der;
+        canbus_data.high_bean = rus_efi_can_verbose_pro6.high_bean;
 
         uint8_t QueueError;
 

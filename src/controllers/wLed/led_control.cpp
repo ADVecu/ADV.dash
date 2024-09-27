@@ -193,6 +193,51 @@ void ledControlTask(void *pvParameters)
                 commit();
             }
 
+            if (canbus_data.dir_der == 1 && indicatorLedST.RightTurnST != indicatorLedStateP.RightTurnST)
+            {
+                indicatorLedStateP.RightTurnST = indicatorLedST.RightTurnST;
+                indicatorLedST.RightTurnST = true;
+                strip.SetPixelColor(RIGHT_DIR, RgbColor(0, 255, 0));
+                commit();
+            }
+            else if (canbus_data.dir_der == 0 && indicatorLedST.RightTurnST != indicatorLedStateP.RightTurnST)
+            {
+                indicatorLedStateP.RightTurnST = indicatorLedST.RightTurnST;
+                indicatorLedST.RightTurnST = false;
+                strip.SetPixelColor(RIGHT_DIR, 0);
+                commit();
+            }
+
+            if (canbus_data.dir_izq == 1 && indicatorLedST.LeftTurnST != indicatorLedStateP.LeftTurnST)
+            {
+                indicatorLedStateP.LeftTurnST = indicatorLedST.LeftTurnST;
+                indicatorLedST.LeftTurnST = true;
+                strip.SetPixelColor(LEFT_DIR, RgbColor(0, 255, 0));
+                commit();
+            }
+            else if (canbus_data.dir_izq == 0 && indicatorLedST.LeftTurnST != indicatorLedStateP.LeftTurnST)
+            {
+                indicatorLedStateP.LeftTurnST = indicatorLedST.LeftTurnST;
+                indicatorLedST.LeftTurnST = false;
+                strip.SetPixelColor(LEFT_DIR, 0);
+                commit();
+            }
+
+            if (canbus_data.high_bean == 1 && indicatorLedST.HighBeamST != indicatorLedStateP.HighBeamST)
+            {
+                indicatorLedStateP.HighBeamST = indicatorLedST.HighBeamST;
+                indicatorLedST.HighBeamST = true;
+                strip.SetPixelColor(HIGH_BEAM, RgbColor(0, 0, 255));
+                commit();
+            }
+            else if (canbus_data.high_bean == 0 && indicatorLedST.HighBeamST != indicatorLedStateP.HighBeamST)
+            {
+                indicatorLedStateP.HighBeamST = indicatorLedST.HighBeamST;
+                indicatorLedST.HighBeamST = false;
+                strip.SetPixelColor(HIGH_BEAM, 0);
+                commit();
+            }
+
             ledsOnPrev = ledsOn;
 
             vTaskDelay( 10 / portTICK_PERIOD_MS );
