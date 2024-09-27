@@ -28,7 +28,7 @@ void led_control::init_leds()
     FastLED.show();
 
     xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 1, &ledWelcomeAnimTask, 0);
-    xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 4, NULL, 0);
+    xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 2, NULL, 0);
 
     commit_task = NULL;
     semaphore = xSemaphoreCreateBinary();
@@ -38,7 +38,7 @@ void led_control::init_leds()
         "ShowRunnerTask",    /* name of task. */
         10000,               /* Stack size of task */
         NULL,                /* parameter of the task */
-        10,                  /* priority of the task */
+        2,                  /* priority of the task */
         &commit_task,        /* Task handle to keep track of created task */
         0);
 }

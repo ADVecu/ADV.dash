@@ -21,7 +21,7 @@ previousSwitchState = false
 qsDuration = 0.1 -- 0.1 second / 100ms
 qsDelay = findSetting("QS-Delay", 0)
 qsVoltage = findSetting("QS-ActVolts", 2.8)
-qsTimingAdd = findSetting("QS-TimingAdd", -50)
+qsTimingAdd = findSetting("QS-TimingAdd", -50) * -1
 qsSkipRatio = findSetting("QS-SkipRatio", 0.95)
 qsTPS = findSetting("QS-TPSvalue", 20)
 qsTableIndex = findCurveIndex("QS-CutTime")
@@ -90,8 +90,9 @@ function onTick()
 	local switchState = getAuxAnalog(0) > qsVoltage
 	local tps = getSensor("Tps1")
 	local rpms = getSensor("Rpm")
-	qsDuration = curve(qsTableIndex, rpms)
+	qsDuration = curve(qsTableIndex, rpms) / 1000
 	--print(tps)
+    --print(qsDuration)
 
 	local isStartOfSequence = switchState and (not previousSwitchState)
 
