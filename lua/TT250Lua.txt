@@ -1,0 +1,103 @@
+timeout = 3000
+setTickRate(300)
+
+gearSensor = Sensor.new("DetectedGear")
+gearSensor : setTimeout(timeout)
+
+ambSensor = Sensor.new("AmbientTemperature")
+ambSensor : setTimeout(timeout)
+
+oilPressSensor = Sensor.new("OilPressure")
+oilPressSensor : setTimeout(timeout)
+
+fuelLevelSensor = Sensor.new("FuelLevel")
+fuelLevelSensor : setTimeout(timeout)
+
+oilTempSensor = Sensor.new("OilTemperature")
+oilTempSensor : setTimeout(timeout)
+
+previousSwitchState = false
+
+qsDelay = 0 -- no delay
+qsDuration = 0.1 -- 0.1 second / 100ms
+
+qsTimer = Timer.new()
+
+hexstr = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "A", "B", "C", "D", "E", "F" }
+
+function toHexString(num)
+	if num == 0 then
+		return '0'
+	end
+
+	local result = ""
+	while num > 0 do
+		local n = num % 16
+		result = hexstr[n + 1] ..result
+		num = math.floor(num / 16)
+	end
+	return result
+end
+
+function arrayToString(arr)
+	local str = ""
+	local index = 1
+	while arr[index] ~= nil do
+		str = str.." "..toHexString(arr[index])
+		index = index + 1
+	end
+	return str
+end
+
+function getTwoBytesLSB(data, offset, factor)
+	return (data[offset + 2] * 256 + data[offset + 1]) * factor
+end
+
+function printPacket(bus, id, dlc, data)
+	print('Received ' ..arrayToString(data))
+end
+
+function onGEARFRAME(bus, id, dlc, data)
+	gearValue = data[1]
+	gearSensor : set(gearValue)
+
+end
+
+function onDASHDATA(bus, id, dlc, data)
+	
+	local oilPress = getTwoBytesLSB(data, 0, 1)
+	local ambTemp = data[4]
+	local fuelLevel = data[3]
+	local oilTemp = data[5]
+
+	ambSensor : set(ambTemp)
+	oilPressSensor : set(oilPress)
+	fuelLevelSensor : set(fuelLevel)
+	oilTempSensor : set(oilTemp)
+	
+end
+
+canRxAdd(1, 0x1FF, onGEARFRAME)
+canRxAdd(1, 0x20E, onDASHDATA)
+
+function onTick()
+
+	local switchState = getAuxAnalog(0) > 2.3
+
+	local isStartOfSequence = switchState and (not previousSwitchState)
+
+	if isStartOfSequence then
+		qsTimer : reset()
+	end
+
+	local timeSinceStartOfSequence = qsTimer : getElapsedSeconds()
+	if timeSinceStartOfSequence >= qsDelay and timeSinceStartOfSequence <= qsDelay + qsDuration then
+		setTimingAdd(-20)
+		setSparkHardSkipRatio(0.75)
+
+	else
+		setTimingAdd(0)
+		setSparkHardSkipRatio(0)
+	end
+
+end

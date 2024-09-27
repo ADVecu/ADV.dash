@@ -7,6 +7,8 @@ gearSensor : setTimeout(timeout)
 rpmSensor = Sensor.new("Rpm")
 rpmSensor : setTimeout(timeout)
 
+rpms = 0
+
 swIN = 3
 swOUT = 0
 
@@ -42,10 +44,10 @@ lowBeanOffTimer : reset()
 commDelay = 20
 drlDelay = 5
 
-lowBeanVon = findSetting(lowBeanVon, 0.5)
-lowBeanVoff = findSetting(lowBeanVoff, 2)
-lowBeanDelayOn = findSetting(lowBeanDelayOn, 2)
-lowBeanDelayOff = findSetting(lowBeanDelayOff, 5)
+lowBeanVon = findSetting("lowBeanVon", 0.5)
+lowBeanVoff = findSetting("lowBeanVoff", 2)
+lowBeanDelayOn = findSetting("lowBeanDelayOn", 2)
+lowBeanDelayOff = findSetting("lowBeanDelayOff", 5)
 lowBeanON = false
 
 startPwm(swOUT, 100, 0)
@@ -96,7 +98,7 @@ function onGEARFRAME(bus, id, dlc, data)
 end
 
 function onRPMFRAME(bus, id, dlc, data)
-	local rpms = getTwoBytesLSB(data, 0, 1)
+	rpms = getTwoBytesLSB(data, 0, 1)
 	rpmSensor : set(rpms)
 end
 
@@ -122,8 +124,8 @@ function onTick()
 -- /////////////////////////////////////////////////////////
 
 -- LOWBEAN MANAGER //////////////////////////////////////////
-
-	if(rpmSensor > 1000) and (getAuxAnalog(luxINA) > lowBeanVon) and (not lowBeanON) then
+	
+	if(rpms> 1000) and (getAuxAnalog(luxINA) < lowBeanVon) and (lowBeanON == false) then
 		if (lowBeanOnTimer : getElapsedSeconds() > lowBeanDelayOn) then
 			setPwmDuty(lowBeanOUT, 1)
 			lowBeanON = true
@@ -132,7 +134,7 @@ function onTick()
 		lowBeanOnTimer : reset()
 	end
 
-	if(getAuxAnalog(luxINA) < lowBeanVoff) and (lowBeanON) then
+	if(getAuxAnalog(luxINA) > lowBeanVoff) and (lowBeanON == true) then
 		if(lowBeanOffTimer : getElapsedSeconds() > lowBeanDelayOff) then
 			setPwmDuty(lowBeanOUT, 0)
 			lowBeanON = false
@@ -141,7 +143,7 @@ function onTick()
 		lowBeanOffTimer : reset()
 	end
 
-	if (rpmSensor < 1000) and (lowBeanON) then
+	if (rpms < 1000) and (lowBeanON) then
 		setPwmDuty(lowBeanOUT, 0)
 		lowBeanON = false
 	end
@@ -160,10 +162,10 @@ function onTick()
 	dashPayLoad[4] = ambTemp
 	dashPayLoad[5] = oilTemp
 
-	if (getAuxDigital(coolantIN) == false) then dashPayLoad2[1] = 1 else dashPayLoad2[1] = 0
-	if (getAuxDigital(highBeanIN) == false) then dashPayLoad2[2] = 1 else dashPayLoad2[2] = 0
-	if (getAuxDigital(dirIzqIN) == false) then dashPayLoad2[3] = 1 else dashPayLoad2[3] = 0
-	if (getAuxDigital(dirDerIN) == false) then dashPayLoad2[4] = 1 else dashPayLoad2[4] = 0
+	if (getAuxDigital(coolantIN) == false) then dashPayLoad2[1] = 1 else dashPayLoad2[1] = 0 end
+	if (getAuxDigital(highBeanIN) == false) then dashPayLoad2[2] = 1 else dashPayLoad2[2] = 0 end
+	if (getAuxDigital(dirIzqIN) == false) then dashPayLoad2[3] = 1 else dashPayLoad2[3] = 0 end
+	if (getAuxDigital(dirDerIN) == false) then dashPayLoad2[4] = 1 else dashPayLoad2[4] = 0 end
 	
 	txCan(1, 0x20E, 0, dashPayLoad)
 	txCan(1, 0x20F, 0, dashPayLoad2)
