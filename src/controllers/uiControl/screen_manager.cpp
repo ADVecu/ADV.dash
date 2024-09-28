@@ -3,6 +3,7 @@
 #include "pcb_definitions.h"
 #include "UI/ui.h"
 #include "muTimer.h"
+#include "controllers/canBus/can_bus.h"
 #include "controllers/uiControl/screen_manager.h"
 #include "controllers/wLed/led_control.h"
 
@@ -23,11 +24,9 @@ bool mainScreen = true;
 bool finalScreen = true;
 bool finalOff = true;
 
-muTimer testTimer4;
-muTimer testTimer5;
-muTimer testTimer6;
-muTimer testTimer7;
-muTimer testTimer8;
+muTimer delayOffScreen;
+muTimer delaySleep;
+muTimer keepAliveRate;
 
 void screen_manager_init()
 {
@@ -40,8 +39,8 @@ void screen_manager_init()
         NULL,            /* Task handle to keep track of created task */
         1);
 
-    esp_sleep_enable_ext1_wakeup(0xC00, ESP_EXT1_WAKEUP_ANY_LOW); // 1 = High, 0 = Low
-
+    esp_sleep_enable_ext0_wakeup(pcb2.sw12v,1); //1 = High, 0 = Low
+/*
     wakeUpMask = esp_sleep_get_ext1_wakeup_status();
     if (wakeUpMask != 0)
     {
@@ -51,6 +50,7 @@ void screen_manager_init()
     {
         wakeUpGPIO = 0;
     }
+    */
 }
 
 void screen_manager(void *pvParameters)
@@ -58,74 +58,40 @@ void screen_manager(void *pvParameters)
     while (1)
     {
         sw12vState = digitalRead(pcb2.sw12v);
-        wakeUpState = digitalRead(pcb2.wakeUp);
+        //wakeUpState = digitalRead(pcb2.wakeUp);
 
-        if (sw12vState == HIGH && wakeUpState == HIGH && wakeUpGPIO == 0)
+        if (sw12vState == HIGH)
         {
-            delay(2000);
-            ledControl2.clearLeds();
-            digitalWrite(pcb2.v5Enable, LOW);
-            gpio_hold_en(pcb2.v5Enable);
-            esp_deep_sleep_start();
-        }
-
-        if (!isOn && sw12vState == HIGH && wakeUpState == LOW || wakeUpGPIO == pcb2.wakeUp)
-        {
-            if (testTimer4.delayOn(animScreen, 1000))
+            if (delayOffScreen.delayOn(sw12vState, 1000))
             {
-                lv_obj_set_style_opa(ui_proIMG, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-                titleAnim_Animation(ui_welcomeLabel, 0);
-                carAnim_Animation(ui_carIMG, 2000);
-                bannerAnim_Animation(ui_bannerTextA, 2500);
-                proAnim_Animation(ui_proBannerIMG, 2500);
-
-                animScreen = false;
+                lv_scr_load_anim(ui_FinalScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 1000, false);
             }
 
-            if (testTimer6.delayOn(sw12vState, 60000))
+            if (delaySleep.delayOn(sw12vState, 25000))
             {
                 ledControl2.clearLeds();
                 digitalWrite(pcb2.v5Enable, LOW);
                 gpio_hold_en(pcb2.v5Enable);
                 esp_deep_sleep_start();
-            }
+            }   
         }
 
-        if (!sw12vState && mainScreen)
+        if (sw12vState == LOW)
         {
+            lv_obj_t *currentScreen = lv_scr_act();
 
-            ui_MainScreen_screen_init();
-            lv_scr_load_anim(ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 1000, false);
-
-            mainScreen = false;
-            isOn = true;
-            sw12vState = false;
-            Serial.println("Main Screen");
-        }
-
-        if (isOn && sw12vState == HIGH)
-        {
-            if (testTimer7.delayOn(finalScreen, 1000))
+            if ((currentScreen != ui_MainScreen) && (currentScreen != ui_WelcomeScreen))
             {
-                _ui_screen_change(&ui_FinalScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 0, ui_FinalScreen_screen_init);
+                lv_scr_load_anim(ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 1000, false);
+            } 
 
-                finalScreen = false;
-                mainScreen = true;
-                isOn = false;
-                isOff = true;
-            }
-        }
-
-        if (isOff && sw12vState == HIGH)
-        {
-            if (testTimer8.delayOn(finalOff, 30000))
+            if (keepAliveRate.cycleTrigger(1000))
             {
-                ledControl2.clearLeds();
-                digitalWrite(pcb2.v5Enable, LOW);
-                gpio_hold_en(pcb2.v5Enable);
-                esp_deep_sleep_start();
+                send_keep_alive_frame();
             }
+
+            delaySleep.delayReset();
+            delayOffScreen.delayReset();
         }
 
         vTaskDelay(10);

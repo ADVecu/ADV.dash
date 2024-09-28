@@ -73,5 +73,6 @@ extern canbus_encode_msg canbus_encode;
 
 void canbus_init();
 void canbus_read(void *pvParameters);
+void send_keep_alive_frame();
 
 #endif // CAN_BUS_H_

@@ -60,6 +60,7 @@ void canbus_init()
 
     // Task to read the CAN bus
     xTaskCreatePinnedToCore(canbus_read, "canbus_read", 10000, NULL, 1, NULL, APP_CPU_NUM);
+
 }
 
 // read the CAN bus for messages
@@ -255,4 +256,20 @@ void canbus_read(void *pvParameters)
         Serial.println(QueueError);
 #endif
     }
+}
+
+void send_keep_alive_frame()
+{
+       twai_message_t tx_msg;
+         tx_msg.identifier = 0x212;
+            tx_msg.data_length_code = 8;
+            tx_msg.data[0] = 0x00;
+            tx_msg.data[1] = 0x00;
+            tx_msg.data[2] = 0x00;
+            tx_msg.data[3] = 0x00;
+            tx_msg.data[4] = 0x00;
+            tx_msg.data[5] = 0x00;
+            tx_msg.data[6] = 0x00;
+            tx_msg.data[7] = 0x00;
+            twai_transmit(&tx_msg, pdMS_TO_TICKS(1000));
 }
