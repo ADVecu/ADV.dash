@@ -42630,7 +42630,7 @@
               {
                 "nid": -1487233414,
                 "strtype": "OBJECT/Name",
-                "strval": "Image1",
+                "strval": "LeftArrow",
                 "InheritedType": 10
               },
               {
@@ -42661,8 +42661,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -278,
-                  -67
+                  -367,
+                  -143
                 ],
                 "InheritedType": 7
               },
@@ -42691,7 +42691,7 @@
               {
                 "nid": 552255471,
                 "strtype": "OBJECT/Hidden",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -42882,14 +42882,13 @@
               },
               {
                 "nid": 565540091,
-                "flags": 1048576,
                 "strtype": "IMAGE/Image",
                 "InheritedType": 1
               },
               {
                 "nid": 225710062,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets/leftArrow.png",
+                "strval": "assets/leftArrow50.png",
                 "InheritedType": 5
               },
               {
@@ -42930,12 +42929,6 @@
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": -16541610,
-                        "strtype": "_style/Transform_scale",
-                        "integer": 70,
-                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -42947,7 +42940,8 @@
                 "InheritedType": 11
               }
             ],
-            "saved_objtypeKey": "IMAGE"
+            "saved_objtypeKey": "IMAGE",
+            "tree_closed": true
           },
           {
             "guid": "GUID79209162-794050S4943271",
@@ -42957,7 +42951,7 @@
               {
                 "nid": 669272289,
                 "strtype": "OBJECT/Name",
-                "strval": "Image2",
+                "strval": "RightArrow",
                 "InheritedType": 10
               },
               {
@@ -42988,8 +42982,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  447,
-                  -67
+                  366,
+                  -143
                 ],
                 "InheritedType": 7
               },
@@ -43018,7 +43012,7 @@
               {
                 "nid": 1935278019,
                 "strtype": "OBJECT/Hidden",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -43215,7 +43209,7 @@
               {
                 "nid": 1741266186,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets/righArrow.png",
+                "strval": "assets/righArrow50.png",
                 "InheritedType": 5
               },
               {
@@ -43256,12 +43250,6 @@
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": 1347889480,
-                        "strtype": "_style/Transform_scale",
-                        "integer": 70,
-                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -43283,7 +43271,7 @@
               {
                 "nid": -140500684,
                 "strtype": "OBJECT/Name",
-                "strval": "Image3",
+                "strval": "LowBean",
                 "InheritedType": 10
               },
               {
@@ -43314,8 +43302,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  347,
-                  397
+                  113,
+                  205
                 ],
                 "InheritedType": 7
               },
@@ -43541,7 +43529,7 @@
               {
                 "nid": 1239143889,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets/lowBean.png",
+                "strval": "assets/lowBean50.png",
                 "InheritedType": 5
               },
               {
@@ -43576,18 +43564,12 @@
                         "nid": -21109230,
                         "strtype": "_style/Image_reColor",
                         "intarray": [
-                          43,
-                          192,
-                          3,
+                          41,
+                          41,
+                          41,
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": 482150300,
-                        "strtype": "_style/Transform_scale",
-                        "integer": 25,
-                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -43609,7 +43591,7 @@
               {
                 "nid": 629311025,
                 "strtype": "OBJECT/Name",
-                "strval": "Image4",
+                "strval": "HighBean",
                 "InheritedType": 10
               },
               {
@@ -43640,8 +43622,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  404,
-                  372
+                  175,
+                  205
                 ],
                 "InheritedType": 7
               },
@@ -43867,7 +43849,7 @@
               {
                 "nid": 727096530,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets/highBean.png",
+                "strval": "assets/highBean50.png",
                 "InheritedType": 5
               },
               {
@@ -43902,18 +43884,12 @@
                         "nid": 469000330,
                         "strtype": "_style/Image_reColor",
                         "intarray": [
-                          7,
-                          0,
-                          255,
+                          41,
+                          41,
+                          41,
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": -1133946537,
-                        "strtype": "_style/Transform_scale",
-                        "integer": 25,
-                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -43935,7 +43911,7 @@
               {
                 "nid": 299597976,
                 "strtype": "OBJECT/Name",
-                "strval": "Image5",
+                "strval": "FogLight",
                 "InheritedType": 10
               },
               {
@@ -43966,8 +43942,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  444,
-                  376
+                  237,
+                  205
                 ],
                 "InheritedType": 7
               },
@@ -44193,7 +44169,7 @@
               {
                 "nid": 970333845,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets/fogLight.png",
+                "strval": "assets/fogLight50.png",
                 "InheritedType": 5
               },
               {
@@ -44228,18 +44204,12 @@
                         "nid": -907231069,
                         "strtype": "_style/Image_reColor",
                         "intarray": [
-                          197,
-                          195,
-                          0,
+                          41,
+                          41,
+                          41,
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": -956584178,
-                        "strtype": "_style/Transform_scale",
-                        "integer": 25,
-                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -44261,7 +44231,7 @@
               {
                 "nid": -1177303286,
                 "strtype": "OBJECT/Name",
-                "strval": "Image6",
+                "strval": "CoolantLvl",
                 "InheritedType": 10
               },
               {
@@ -44292,8 +44262,8 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -123,
-                  342
+                  -229,
+                  -93
                 ],
                 "InheritedType": 7
               },
@@ -44322,7 +44292,7 @@
               {
                 "nid": -362560649,
                 "strtype": "OBJECT/Hidden",
-                "strval": "False",
+                "strval": "True",
                 "InheritedType": 2
               },
               {
@@ -44519,7 +44489,7 @@
               {
                 "nid": -335757602,
                 "strtype": "IMAGE/Asset",
-                "strval": "assets/coolant.png",
+                "strval": "assets/coolant50.png",
                 "InheritedType": 5
               },
               {
@@ -44560,12 +44530,6 @@
                           255
                         ],
                         "InheritedType": 7
-                      },
-                      {
-                        "nid": 1205233535,
-                        "strtype": "_style/Transform_scale",
-                        "integer": 30,
-                        "InheritedType": 6
                       }
                     ],
                     "InheritedType": 1
@@ -48243,7 +48207,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "C:\\Users\\danie\\Documents\\ADV.ecu\\ADV.dash\\src\\UI",
     "projectExportFolderPath": "C:\\Users\\danie\\Documents\\ADV.ecu\\ADV.dash\\SquerLine Project",
-    "backup_cnt": 3677,
+    "backup_cnt": 3685,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "CPP_FILE",
