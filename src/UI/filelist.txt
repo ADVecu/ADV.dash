@@ -18,7 +18,12 @@ images/ui_img_arcscalerb_png.c
 images/ui_img_arcscale_png.c
 images/ui_img_barscalerb_png.c
 images/ui_img_barscalered_png.c
-images/ui_img_oilpress_png.c
+images/ui_img_leftarrow_png.c
+images/ui_img_righarrow_png.c
+images/ui_img_lowbean_png.c
+images/ui_img_highbean_png.c
+images/ui_img_foglight_png.c
+images/ui_img_coolant_png.c
 images/ui_img_advecu200_png.c
 images/ui_img_rpmscalev2_png.c
 images/ui_img_usersett50_png.c
