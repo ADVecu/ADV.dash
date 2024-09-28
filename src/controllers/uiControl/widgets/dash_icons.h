@@ -6,8 +6,8 @@
 #include "../ui_enums.h"
 #include <muTimer.h>
 
-#define TURN_SIGNAL_ON_TIME 1000
-#define TURN_SIGNAL_OFF_TIME 1000
+#define TURN_SIGNAL_ON_TIME 500
+#define TURN_SIGNAL_OFF_TIME 500
 
 #define LOW_BEAN_COLOR 0x09A803
 #define HIGH_BEAN_COLOR 0x1103A8
