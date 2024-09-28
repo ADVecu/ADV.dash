@@ -242,6 +242,9 @@ void canbus_read(void *pvParameters)
         canbus_data.dir_izq = rus_efi_can_verbose_pro6.dir_izq;
         canbus_data.dir_der = rus_efi_can_verbose_pro6.dir_der;
         canbus_data.high_bean = rus_efi_can_verbose_pro6.high_bean;
+        canbus_data.low_bean = rus_efi_can_verbose_pro6.low_bean;
+        canbus_data.fog_light = rus_efi_can_verbose_pro6.fog_light;
+        canbus_data.coolant_level = rus_efi_can_verbose_pro6.coolant_level;
 
         uint8_t QueueError;
 

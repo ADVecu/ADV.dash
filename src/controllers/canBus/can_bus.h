@@ -50,6 +50,9 @@ typedef struct
     uint8_t dir_izq;
     uint8_t dir_der;
     uint8_t high_bean;
+    uint8_t low_bean;
+    uint8_t fog_light;
+    uint8_t coolant_level;
 
 } canbus_data_t;
 
