@@ -23,8 +23,8 @@ oilswINA = 1
 sidestINA = 2
 coolantIN = 1
 dirIzqIN = 5
-dirDerIN = 7
-highBeanIN = 3
+dirDerIN = 4
+highBeanIN = 2
 
 dashPayLoad = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
 dashPayLoad2 = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
@@ -41,6 +41,12 @@ lowBeanOnTimer : reset()
 lowBeanOffTimer = Timer.new()
 lowBeanOffTimer : reset()
 
+fogLightOnTimer = Timer.new()
+fogLightOnTimer : reset()
+
+fogLightOffTimer = Timer.new()
+fogLightOffTimer : reset()
+
 commDelay = 20
 drlDelay = 5
 
@@ -49,6 +55,10 @@ lowBeanVoff = findSetting("lowBeanVoff", 2)
 lowBeanDelayOn = findSetting("lowBeanDelayOn", 2)
 lowBeanDelayOff = findSetting("lowBeanDelayOff", 5)
 lowBeanON = false
+
+fogLightON = false
+fogLightDelayOn = 1
+fogLightDelayOff = 5
 
 startPwm(swOUT, 100, 0)
 startPwm(drlOUT, 100, 0)
@@ -143,9 +153,37 @@ function onTick()
 		lowBeanOffTimer : reset()
 	end
 
-	if (rpms < 1000) and (lowBeanON) then
+	if (rpms < 1000) and (lowBeanON) or  (getAuxDigital(swIN) == true) then
 		setPwmDuty(lowBeanOUT, 0)
 		lowBeanON = false
+	end
+
+-- /////////////////////////////////////////////////////////
+
+-- FOGLIGHT MANAGER ////////////////////////////////////////
+
+	if (getAuxDigital(drlIN) == true) and (rpms > 1000) then
+		if (fogLightOnTimer : getElapsedSeconds() > fogLightDelayOn) then
+			setPwmDuty(fogOUT, 1)
+			fogLightON = true
+		end
+	else
+		fogLightOnTimer : reset()
+	end
+
+
+	if (getAuxDigital(drlIN) == false) then
+		setPwmDuty(fogOUT, 0)
+		fogLightON = false
+	end
+
+	if (getAuxDigital(drlIN) == true) and (rpms < 1000) then
+		if (fogLightOffTimer : getElapsedSeconds() > fogLightDelayOff) then
+			setPwmDuty(fogOUT, 0)
+			fogLightON = false
+		end
+	else
+		fogLightOffTimer : reset()
 	end
 
 -- /////////////////////////////////////////////////////////
@@ -166,6 +204,13 @@ function onTick()
 	if (getAuxDigital(highBeanIN) == false) then dashPayLoad2[2] = 1 else dashPayLoad2[2] = 0 end
 	if (getAuxDigital(dirIzqIN) == false) then dashPayLoad2[3] = 1 else dashPayLoad2[3] = 0 end
 	if (getAuxDigital(dirDerIN) == false) then dashPayLoad2[4] = 1 else dashPayLoad2[4] = 0 end
+	if (fogLightON == true) then dashPayLoad2[5] = 1 else dashPayLoad2[5] = 0 end
+	if (lowBeanON == true) then dashPayLoad2[6] = 1 else dashPayLoad2[6] = 0 end
+	
+	-- print("Coolant: " ..dashPayLoad2[1])
+	-- print("Hig Bean: " ..dashPayLoad2[2])
+	-- print("Dir IZQ: " ..dashPayLoad2[3])
+	-- print("Dir DER:  " ..dashPayLoad2[4])
 	
 	txCan(1, 0x20E, 0, dashPayLoad)
 	txCan(1, 0x20F, 0, dashPayLoad2)
