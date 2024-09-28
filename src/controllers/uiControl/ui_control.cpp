@@ -24,6 +24,7 @@
 #include "widgets/tps_bar.h"
 #include "widgets/speed_panel.h"
 #include "widgets/gear_panel.h"
+#include "widgets/dash_icons.h"
 
 // Database instance
 Database db;
@@ -168,6 +169,9 @@ void ui_task(void *pvParameters)
 
     // Alert Manager
     Alert_manager alert_manager;
+
+    // Dash Icons Manager
+    DashIcons dash_icons;
 
     bool canReady = false;
 
@@ -350,6 +354,11 @@ void ui_task(void *pvParameters)
                     }
                 }
             }
+
+            // Update the dash icons
+            dash_icons.TurnSignalsManager(rx_msg.dir_izq, rx_msg.dir_der);  // Turn signals
+            dash_icons.LightsManager(rx_msg.high_bean, rx_msg.low_bean, rx_msg.fog_light); // Lights
+            dash_icons.CoolantLevelManager(rx_msg.coolant_level); // Coolant level
         }
         else
         {
