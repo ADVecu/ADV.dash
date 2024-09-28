@@ -186,8 +186,8 @@ void ui_task(void *pvParameters)
             // Set the flag to true
             canReady = true;
 
-            if (DataRate.cycleTrigger(50))
-            {
+            //if (DataRate.cycleTrigger(50))
+            //{
                 // Update the rpms bar
                 rpmsBar.setRPMs(rx_msg.rpms);
 
@@ -256,10 +256,10 @@ void ui_task(void *pvParameters)
                         break;
                     }
                 }
-            }
+           // }
 
             // iterate through the bar gauges and update the values
-            if (barDataRate.cycleTrigger(200))
+            if (barDataRate.cycleTrigger(500))
             {
                 for (i = 0; i < 4; i++)
                 {
@@ -297,7 +297,7 @@ void ui_task(void *pvParameters)
             }
 
             // iterate through the panel gauges and update the values
-            if (panelDataRate.cycleTrigger(200))
+            if (panelDataRate.cycleTrigger(500))
             {
                 for (k = 0; k < 6; k++)
                 {
