@@ -1580,10 +1580,10 @@ void ui_MainScreen_screen_init(void)
     lv_img_set_src(ui_LeftArrow, &ui_img_leftarrow50_png);
     lv_obj_set_width(ui_LeftArrow, LV_SIZE_CONTENT);   /// 238
     lv_obj_set_height(ui_LeftArrow, LV_SIZE_CONTENT);    /// 222
-    lv_obj_set_x(ui_LeftArrow, -367);
+    lv_obj_set_x(ui_LeftArrow, -371);
     lv_obj_set_y(ui_LeftArrow, -143);
     lv_obj_set_align(ui_LeftArrow, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_LeftArrow, LV_OBJ_FLAG_HIDDEN | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_add_flag(ui_LeftArrow, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_LeftArrow, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_img_recolor(ui_LeftArrow, lv_color_hex(0x0FB201), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_img_recolor_opa(ui_LeftArrow, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1595,7 +1595,7 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_x(ui_RightArrow, 366);
     lv_obj_set_y(ui_RightArrow, -143);
     lv_obj_set_align(ui_RightArrow, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_RightArrow, LV_OBJ_FLAG_HIDDEN | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_add_flag(ui_RightArrow, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_RightArrow, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_img_recolor(ui_RightArrow, lv_color_hex(0x0FB201), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_img_recolor_opa(ui_RightArrow, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1641,9 +1641,9 @@ void ui_MainScreen_screen_init(void)
     lv_obj_set_width(ui_CoolantLvl, LV_SIZE_CONTENT);   /// 543
     lv_obj_set_height(ui_CoolantLvl, LV_SIZE_CONTENT);    /// 384
     lv_obj_set_x(ui_CoolantLvl, -229);
-    lv_obj_set_y(ui_CoolantLvl, -93);
+    lv_obj_set_y(ui_CoolantLvl, -91);
     lv_obj_set_align(ui_CoolantLvl, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_CoolantLvl, LV_OBJ_FLAG_HIDDEN | LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_add_flag(ui_CoolantLvl, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_CoolantLvl, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_img_recolor(ui_CoolantLvl, lv_color_hex(0xE00606), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_img_recolor_opa(ui_CoolantLvl, 255, LV_PART_MAIN | LV_STATE_DEFAULT);

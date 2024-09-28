@@ -42661,7 +42661,7 @@
                 "flags": 17,
                 "strtype": "OBJECT/Position",
                 "intarray": [
-                  -367,
+                  -371,
                   -143
                 ],
                 "InheritedType": 7
@@ -42691,7 +42691,7 @@
               {
                 "nid": 552255471,
                 "strtype": "OBJECT/Hidden",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -43012,7 +43012,7 @@
               {
                 "nid": 1935278019,
                 "strtype": "OBJECT/Hidden",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -44263,7 +44263,7 @@
                 "strtype": "OBJECT/Position",
                 "intarray": [
                   -229,
-                  -93
+                  -91
                 ],
                 "InheritedType": 7
               },
@@ -44292,7 +44292,7 @@
               {
                 "nid": -362560649,
                 "strtype": "OBJECT/Hidden",
-                "strval": "True",
+                "strval": "False",
                 "InheritedType": 2
               },
               {
@@ -48207,7 +48207,7 @@
     "theme_color2": 0,
     "uiExportFolderPath": "C:\\Users\\danie\\Documents\\ADV.ecu\\ADV.dash\\src\\UI",
     "projectExportFolderPath": "C:\\Users\\danie\\Documents\\ADV.ecu\\ADV.dash\\SquerLine Project",
-    "backup_cnt": 3685,
+    "backup_cnt": 3699,
     "autosave_cnt": 0,
     "lvgl_version": "8.3.6",
     "callfuncsexport": "CPP_FILE",
