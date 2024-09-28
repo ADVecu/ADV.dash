@@ -114,7 +114,7 @@ void ledControlTask(void *pvParameters)
             {
                 for (int i = LEDS_RPMS_START; i < LEDS_RPMS_END; i++)
                 {
-                    strip[i] = 0;
+                    strip[i].setRGB(0, 0, 0);
                 }
 
                 if (canbus_data.rpms < 6000)
@@ -162,7 +162,7 @@ void ledControlTask(void *pvParameters)
                     commit();
                 } // reset
             }
-
+            /*
             if (canbus_data.fuel_level <= 20 && indicatorLedST.FuelST != indicatorLedStateP.FuelST)
             {
                 indicatorLedStateP.FuelST = indicatorLedST.FuelST;
@@ -238,6 +238,7 @@ void ledControlTask(void *pvParameters)
                 commit();
             }
 
+            */
             ledsOnPrev = ledsOn;
 
             vTaskDelay( 10 / portTICK_PERIOD_MS );
