@@ -49,6 +49,13 @@ struct panel_name_str
     const String ign_duty = "DUTY";
     const String mcu_temp = "MCUT";
     const String ambient_Temp = "AMBT";
+    const String fw_Press = "FWP";
+    const String fw_Temp = "FWT";
+    const String rw_Press = "RWP";
+    const String rw_Temp = "RWT";
+    const String fuel_Trim = "TRIM";
+    const String fuel_Flow = "FLOW";
+    const String fuel_Used = "USED";
 };
 
 struct gauge_unit_str

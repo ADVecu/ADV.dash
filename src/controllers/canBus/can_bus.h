@@ -40,6 +40,9 @@ typedef struct
     int8_t rwTemp;
     uint8_t rwBatteryVoltage;
     uint8_t ambientTemp;
+    uint16_t fuel_trim;
+    uint16_t fuel_flow;
+    uint16_t fuel_used;
     uint8_t enterBT;
     uint8_t backBT;
     uint8_t upBT;
@@ -67,6 +70,8 @@ struct canbus_encode_msg
     float lambda;
     float afr;
     float tps;
+    float fuel_flow;
+    int8_t tyre_temp;
 };
 
 extern canbus_encode_msg canbus_encode;
