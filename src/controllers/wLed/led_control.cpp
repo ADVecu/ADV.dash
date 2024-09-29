@@ -27,8 +27,8 @@ void led_control::init_leds()
     FastLED.setBrightness(50);
     FastLED.show();
 
-    xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 1, &ledWelcomeAnimTask, 0);
-    xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 2, NULL, 0);
+    xTaskCreatePinnedToCore(this->ledsWelcomeAnimation, "leds_Welcome", 10000, NULL, 2, &ledWelcomeAnimTask, 0);
+    xTaskCreatePinnedToCore(ledControlTask, "ledControlTask", 10000, NULL, 1, NULL, 0);
 
     commit_task = NULL;
     semaphore = xSemaphoreCreateBinary();
