@@ -40,6 +40,7 @@ muTimer mainScreenClockTimer;
 muTimer panelDataRate;
 muTimer barDataRate;
 muTimer DataRate;
+muTimer IconsDataRate;
 
 rtc_date dateUI;
 rtc_time timeUI;
@@ -186,8 +187,8 @@ void ui_task(void *pvParameters)
             // Set the flag to true
             canReady = true;
 
-            //if (DataRate.cycleTrigger(50))
-            //{
+            if (DataRate.cycleTrigger(50))
+            {
                 // Update the rpms bar
                 rpmsBar.setRPMs(rx_msg.rpms);
 
@@ -256,7 +257,7 @@ void ui_task(void *pvParameters)
                         break;
                     }
                 }
-           // }
+            }
 
             // iterate through the bar gauges and update the values
             if (barDataRate.cycleTrigger(500))
@@ -356,9 +357,12 @@ void ui_task(void *pvParameters)
             }
 
             // Update the dash icons
+            if(IconsDataRate.cycleTrigger(200))
+            {
             dash_icons.TurnSignalsManager(rx_msg.dir_izq, rx_msg.dir_der);  // Turn signals
             dash_icons.LightsManager(rx_msg.high_bean, rx_msg.low_bean, rx_msg.fog_light); // Lights
             dash_icons.CoolantLevelManager(rx_msg.coolant_level); // Coolant level
+            }
         }
         else
         {
