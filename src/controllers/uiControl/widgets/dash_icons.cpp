@@ -8,7 +8,7 @@ DashIcons::DashIcons()
     // Constructor
     lv_obj_add_flag(ui_LeftArrow, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_RightArrow, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_CoolantLvl, LV_OBJ_FLAG_HIDDEN);
+    //lv_obj_add_flag(ui_CoolantLvl, LV_OBJ_FLAG_HIDDEN);
     
 }
 
