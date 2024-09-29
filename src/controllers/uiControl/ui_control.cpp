@@ -352,6 +352,27 @@ void ui_task(void *pvParameters)
                     case gauge_type::AMBIENT_TEMP:
                         gp_panel_array[k].setValue(rx_msg.ambientTemp);
                         break;
+                    case gauge_type::FW_PRESS:
+                        gp_panel_array[k].setValue(rx_msg.fwPressure);
+                        break;
+                    case gauge_type::FW_TEMP:
+                        gp_panel_array[k].setValue(rx_msg.fwTemp);
+                        break;
+                    case gauge_type::RW_PRESS:
+                        gp_panel_array[k].setValue(rx_msg.rwPressure);
+                        break;
+                    case gauge_type::RW_TEMP:
+                        gp_panel_array[k].setValue(rx_msg.rwTemp);
+                        break;
+                    case gauge_type::FUEL_TRIM:
+                        gp_panel_array[k].setValue(rx_msg.fuel_trim);
+                        break;
+                    case gauge_type::FUEL_FLOW:
+                        gp_panel_array[k].setValue(rx_msg.fuel_flow);
+                        break;
+                    case gauge_type::FUEL_USED:
+                        gp_panel_array[k].setValue(rx_msg.fuel_used);
+                        break;
                     }
                 }
             }

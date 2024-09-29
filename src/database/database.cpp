@@ -579,22 +579,22 @@ gauge_type Database::getPanelGaugeType(panel_number_t gaugeNumber)
     switch (gaugeNumber)
     {
     case PANEL_1:
-        gaugeType = (gauge_type)preferences.getUChar("panelNumber1", (uint8_t)gauge_type::MCU_TEMP);
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber1", (uint8_t)gauge_type::RW_PRESS);
         break;
     case PANEL_2:
-        gaugeType = (gauge_type)preferences.getUChar("panelNumber2", (uint8_t)gauge_type::ING_TIMING);
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber2", (uint8_t)gauge_type::FW_PRESS);
         break;
     case PANEL_3:
-        gaugeType = (gauge_type)preferences.getUChar("panelNumber3", (uint8_t)gauge_type::IGN_DUTY);
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber3", (uint8_t)gauge_type::AMBIENT_TEMP);
         break;
     case PANEL_4:
-        gaugeType = (gauge_type)preferences.getUChar("panelNumber4", (uint8_t)gauge_type::INJ_DUTY);
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber4", (uint8_t)gauge_type::FUEL_TRIM);
         break;
     case PANEL_5:
-        gaugeType = (gauge_type)preferences.getUChar("panelNumber5", (uint8_t)gauge_type::INJ_PWM);
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber5", (uint8_t)gauge_type::FUEL_FLOW);
         break;
     case PANEL_6:
-        gaugeType = (gauge_type)preferences.getUChar("panelNumber6", (uint8_t)gauge_type::AMBIENT_TEMP);
+        gaugeType = (gauge_type)preferences.getUChar("panelNumber6", (uint8_t)gauge_type::FUEL_USED);
         break;
     }
 

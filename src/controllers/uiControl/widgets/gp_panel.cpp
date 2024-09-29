@@ -103,7 +103,28 @@ gp_panel::gp_panel(uint16_t alertValue,
     case gauge_type::AMBIENT_TEMP:
         _name = panel_name_strings.ambient_Temp;
         break;
-   
+    case gauge_type::FW_PRESS:
+        _name = panel_name_strings.fw_Press;
+        break;
+    case gauge_type::FW_TEMP:
+        _name = panel_name_strings.fw_Temp;
+        break;
+    case gauge_type::RW_PRESS:
+        _name = panel_name_strings.rw_Press;
+        break;
+    case gauge_type::RW_TEMP:
+        _name = panel_name_strings.rw_Temp;
+        break;
+    case gauge_type::FUEL_TRIM:
+        _name = panel_name_strings.fuel_Trim;
+        break;
+    case gauge_type::FUEL_FLOW:
+        _name = panel_name_strings.fuel_Flow;
+        break;
+    case gauge_type::FUEL_USED:
+        _name = panel_name_strings.fuel_Used;
+        break;
+
     }
 
     // Set the panel name
@@ -160,6 +181,24 @@ void gp_panel::setValue(int16_t value)
         case gauge_type::MCU_TEMP:
         case gauge_type::AIR_TEMP:
             panelValue = (value - canbus_encode.temps);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 0).c_str());
+            break;
+        
+        case gauge_type::FW_PRESS:
+        case gauge_type::RW_PRESS:
+        case gauge_type::FUEL_TRIM:
+            panelValue = (value * canbus_encode.tps);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 2).c_str());
+            break;
+
+        case gauge_type::FUEL_FLOW:
+            panelValue = (value * canbus_encode.fuel_flow);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 2).c_str());
+            break;
+
+        case gauge_type::FW_TEMP:
+        case gauge_type::RW_TEMP:
+            panelValue = (value - canbus_encode.tyre_temp);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 0).c_str());
             break;
 

@@ -42,6 +42,13 @@ enum gauge_type
     IGN_DUTY,
     MCU_TEMP,
     AMBIENT_TEMP,
+    FW_PRESS,
+    FW_TEMP,
+    RW_PRESS,
+    RW_TEMP,
+    FUEL_TRIM,
+    FUEL_FLOW,
+    FUEL_USED
 
 };
 
