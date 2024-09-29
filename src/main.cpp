@@ -307,6 +307,7 @@ void setup()
   if (BOARD_HAS_SLEEP_CAPABILITY)
   {
     screen_manager_init();
+    _ui_screen_change(&ui_MainScreen, LV_SCR_LOAD_ANIM_OVER_RIGHT, 100, 2000, ui_MainScreen_screen_init);
   }
 
   if (RMPS_LEDS)
