@@ -186,6 +186,10 @@ void gp_panel::setValue(int16_t value)
         
         case gauge_type::FW_PRESS:
         case gauge_type::RW_PRESS:
+            panelValue = (value * canbus_encode.tyre_press);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 2).c_str());
+            break;
+        
         case gauge_type::FUEL_TRIM:
             panelValue = (value * canbus_encode.tps);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 2).c_str());

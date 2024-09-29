@@ -57,6 +57,7 @@ void canbus_init()
     canbus_encode.tps = 0.01;
     canbus_encode.fuel_flow = 0.005;
     canbus_encode.tyre_temp = -30;
+    canbus_encode.tyre_press = 0.1;
 
 
     // Create a queue to handle CAN messages traduced by the canbus_read task
