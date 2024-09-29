@@ -272,4 +272,6 @@ void send_keep_alive_frame()
             tx_msg.data[6] = 0x00;
             tx_msg.data[7] = 0x00;
             twai_transmit(&tx_msg, pdMS_TO_TICKS(1000));
+
+            Serial.println("Keep Alive Frame Sent");
 }
