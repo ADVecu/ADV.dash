@@ -24,6 +24,7 @@ images/ui_img_lowbean50_png.c
 images/ui_img_highbean50_png.c
 images/ui_img_foglight50_png.c
 images/ui_img_coolant50_png.c
+images/ui_img_pngwing_com_png.c
 images/ui_img_advecu200_png.c
 images/ui_img_rpmscalev2_png.c
 images/ui_img_usersett50_png.c

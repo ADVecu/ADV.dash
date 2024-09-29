@@ -15,7 +15,7 @@ void ui_FinalScreen_screen_init(void)
     ui_Label5 = lv_label_create(ui_FinalScreen);
     lv_obj_set_width(ui_Label5, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Label5, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Label5, -95);
+    lv_obj_set_x(ui_Label5, 90);
     lv_obj_set_y(ui_Label5, 0);
     lv_obj_set_align(ui_Label5, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Label5, "MAX RPMS :\nMAX CTL :\nMAX IAT :\nMAX VSS :\nMIN OIL PRESS :\nTIME :");
@@ -25,10 +25,10 @@ void ui_FinalScreen_screen_init(void)
     ui_Label6 = lv_label_create(ui_FinalScreen);
     lv_obj_set_width(ui_Label6, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Label6, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Label6, 94);
+    lv_obj_set_x(ui_Label6, 281);
     lv_obj_set_y(ui_Label6, 0);
     lv_obj_set_align(ui_Label6, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label6, "8500\n105 °C\n45 °C\n130 km/h\n20 PSI\n102 min");
+    lv_label_set_text(ui_Label6, "7523\n82 °C\n45 °C\n75 km/h\n30 KPA\n27 min");
     lv_obj_set_style_text_font(ui_Label6, &ui_font_ArameBold30, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_bannerTextA2 = lv_textarea_create(ui_FinalScreen);
@@ -60,6 +60,18 @@ void ui_FinalScreen_screen_init(void)
     lv_obj_set_align(ui_proBannerIMG2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_proBannerIMG2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_proBannerIMG2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_Image1 = lv_img_create(ui_FinalScreen);
+    lv_img_set_src(ui_Image1, &ui_img_pngwing_com_png);
+    lv_obj_set_width(ui_Image1, LV_SIZE_CONTENT);   /// 300
+    lv_obj_set_height(ui_Image1, LV_SIZE_CONTENT);    /// 179
+    lv_obj_set_x(ui_Image1, -205);
+    lv_obj_set_y(ui_Image1, -11);
+    lv_obj_set_align(ui_Image1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_img_recolor(ui_Image1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_img_recolor_opa(ui_Image1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     lv_obj_add_event_cb(ui_FinalScreen, ui_event_FinalScreen, LV_EVENT_ALL, NULL);
 

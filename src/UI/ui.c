@@ -186,17 +186,18 @@ lv_obj_t * ui_Label5;
 lv_obj_t * ui_Label6;
 lv_obj_t * ui_bannerTextA2;
 lv_obj_t * ui_proBannerIMG2;
+lv_obj_t * ui_Image1;
 lv_obj_t * ui____initial_actions0;
 const lv_img_dsc_t * ui_imgset_advecu[1] = {&ui_img_advecu200_png};
-const lv_img_dsc_t * ui_imgset_e[1] = {&ui_img_e30_png};
-const lv_img_dsc_t * ui_imgset_rpmscalev[1] = {&ui_img_rpmscalev2_png};
-const lv_img_dsc_t * ui_imgset_usersett[1] = {&ui_img_usersett50_png};
 const lv_img_dsc_t * ui_imgset_coolant[1] = {&ui_img_coolant50_png};
+const lv_img_dsc_t * ui_imgset_e[1] = {&ui_img_e30_png};
 const lv_img_dsc_t * ui_imgset_foglight[1] = {&ui_img_foglight50_png};
 const lv_img_dsc_t * ui_imgset_highbean[1] = {&ui_img_highbean50_png};
 const lv_img_dsc_t * ui_imgset_leftarrow[1] = {&ui_img_leftarrow50_png};
 const lv_img_dsc_t * ui_imgset_lowbean[1] = {&ui_img_lowbean50_png};
 const lv_img_dsc_t * ui_imgset_righarrow[1] = {&ui_img_righarrow50_png};
+const lv_img_dsc_t * ui_imgset_rpmscalev[1] = {&ui_img_rpmscalev2_png};
+const lv_img_dsc_t * ui_imgset_usersett[1] = {&ui_img_usersett50_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16

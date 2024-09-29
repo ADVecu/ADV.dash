@@ -186,6 +186,7 @@ extern lv_obj_t * ui_Label5;
 extern lv_obj_t * ui_Label6;
 extern lv_obj_t * ui_bannerTextA2;
 extern lv_obj_t * ui_proBannerIMG2;
+extern lv_obj_t * ui_Image1;
 extern lv_obj_t * ui____initial_actions0;
 
 
@@ -207,6 +208,7 @@ LV_IMG_DECLARE(ui_img_lowbean50_png);    // assets/lowBean50.png
 LV_IMG_DECLARE(ui_img_highbean50_png);    // assets/highBean50.png
 LV_IMG_DECLARE(ui_img_foglight50_png);    // assets/fogLight50.png
 LV_IMG_DECLARE(ui_img_coolant50_png);    // assets/coolant50.png
+LV_IMG_DECLARE(ui_img_pngwing_com_png);    // assets/pngwing.com.png
 LV_IMG_DECLARE(ui_img_advecu200_png);    // assets/Advecu200.png
 LV_IMG_DECLARE(ui_img_rpmscalev2_png);    // assets/RPMscalev2.png
 LV_IMG_DECLARE(ui_img_usersett50_png);    // assets/userSett50.png
