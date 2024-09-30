@@ -57,7 +57,7 @@ void canbus_init()
     canbus_encode.tps = 0.01;
     canbus_encode.fuel_flow = 0.005;
     canbus_encode.tyre_temp = -30;
-    canbus_encode.tyre_press = 0.1;
+    canbus_encode.tyre_press = 0.01;
 
 
     // Create a queue to handle CAN messages traduced by the canbus_read task
@@ -231,10 +231,10 @@ void canbus_read(void *pvParameters)
         canbus_data.fuel_flow = rus_efi_can_verbose_base6.fuel_flow;
         canbus_data.fuel_used = rus_efi_can_verbose_base6.fuel_used;
 
-        canbus_data.fwPressure = (rus_efi_can_verbose_pro1.fw_pressure * 0.01);
+        canbus_data.fwPressure = rus_efi_can_verbose_pro1.fw_pressure;
         canbus_data.fwTemp = (rus_efi_can_verbose_pro1.fw_temp - 30);
         canbus_data.fwBatteryVoltage = (rus_efi_can_verbose_pro1.fw_batt_v * 0.1);
-        canbus_data.rwPressure = (rus_efi_can_verbose_pro1.rw_pressure * 0.01);
+        canbus_data.rwPressure = rus_efi_can_verbose_pro1.rw_pressure;
         canbus_data.rwTemp = (rus_efi_can_verbose_pro1.rw_temp - 30);
         canbus_data.rwBatteryVoltage = (rus_efi_can_verbose_pro1.rw_batt_v * 0.1);
         canbus_data.ambientTemp = rus_efi_can_verbose_pro5.ambient_temp;
