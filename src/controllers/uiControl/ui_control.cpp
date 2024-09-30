@@ -187,7 +187,7 @@ void ui_task(void *pvParameters)
             // Set the flag to true
             canReady = true;
 
-            if (DataRate.cycleTrigger(50))
+            if (DataRate.cycleTrigger(100))
             {
                 // Update the rpms bar
                 rpmsBar.setRPMs(rx_msg.rpms);
@@ -378,7 +378,7 @@ void ui_task(void *pvParameters)
             }
 
             // Update the dash icons
-            if(IconsDataRate.cycleTrigger(200))
+            if(IconsDataRate.cycleTrigger(500))
             {
             dash_icons.TurnSignalsManager(rx_msg.dir_izq, rx_msg.dir_der);  // Turn signals
             dash_icons.LightsManager(rx_msg.high_bean, rx_msg.low_bean, rx_msg.fog_light); // Lights
