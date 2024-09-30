@@ -206,6 +206,11 @@ void gp_panel::setValue(int16_t value)
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 0).c_str());
             break;
 
+        case gauge_type::FUEL_USED:
+            panelValue = (value / 730);
+            _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 2).c_str());
+            break;
+
         default:
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(value).c_str());
             break;
