@@ -3,7 +3,6 @@
 #include <muTimer.h>
 #include "controllers/canBus/can_bus.h"
 
-
 muTimer batteryTimerPanel;
 
 gp_panel::gp_panel(uint16_t alertValue,
@@ -124,7 +123,6 @@ gp_panel::gp_panel(uint16_t alertValue,
     case gauge_type::FUEL_USED:
         _name = panel_name_strings.fuel_Used;
         break;
-
     }
 
     // Set the panel name
@@ -136,7 +134,7 @@ void gp_panel::setValue(int16_t value)
 
     float panelValue;
 
-    if (_previousValue != value )
+    if (_previousValue != value)
     {
         _previousValue = value;
 
@@ -144,7 +142,6 @@ void gp_panel::setValue(int16_t value)
         switch (_gaugeType)
         {
         case gauge_type::BATTERY_VOLTAGE:
-
 
             if (batteryTimerPanel.cycleTrigger(1000))
             {
@@ -159,23 +156,23 @@ void gp_panel::setValue(int16_t value)
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
             panelValue * 10;
             break;
-        
+
         case gauge_type::INJ_DUTY:
         case gauge_type::IGN_DUTY:
             panelValue = (value * canbus_encode.levels_duty);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 0).c_str());
             break;
-        
+
         case gauge_type::ING_TIMING:
             panelValue = (value * canbus_encode.ign_advance);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
             break;
-    
+
         case gauge_type::INJ_PWM:
             panelValue = (value * canbus_encode.pwm);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
             break;
-        
+
         case gauge_type::COOLANT_TEMP:
         case gauge_type::OIL_TEMP:
         case gauge_type::MCU_TEMP:
@@ -183,13 +180,13 @@ void gp_panel::setValue(int16_t value)
             panelValue = (value - canbus_encode.temps);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 0).c_str());
             break;
-        
+
         case gauge_type::FW_PRESS:
         case gauge_type::RW_PRESS:
             panelValue = (value * canbus_encode.tyre_press);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 1).c_str());
             break;
-        
+
         case gauge_type::FUEL_TRIM:
             panelValue = (value * canbus_encode.tps);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 2).c_str());
@@ -207,7 +204,7 @@ void gp_panel::setValue(int16_t value)
             break;
 
         case gauge_type::FUEL_USED:
-            panelValue = (value / 730);
+            panelValue = (value);
             _ui_label_set_property(_panelValue, _UI_LABEL_PROPERTY_TEXT, String(panelValue, 2).c_str());
             break;
 
@@ -225,8 +222,6 @@ void gp_panel::setValue(int16_t value)
         {
             lv_obj_set_style_border_color(_panel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
         }
-
-        
     }
 }
 
